@@ -4,17 +4,14 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start:debug": "node --inspect app.js", 
+    "start:debug": "node --inspect app.js",
     "watch": "webpack --watch --mode=development",
-    "build": "webpack --mode=production", 
+    "build": "webpack --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-
   "browserslist": [
     "defaults"
   ],
-  
-  
   "name": "js_project_pokeviser",
   "version": "1.0.0",
   "description": "Poke Viser Web Application",
