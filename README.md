@@ -1,7 +1,5 @@
-************************
-****** Poke Viser ******
-**** Web Application ***
-************************
+# Poke Viser
+## Web Application
 
 * Core functionality
     - Display stats of selected Pokemon.
@@ -34,7 +32,10 @@
         - https://github.com/ZeChrales/PogoAssets
     - Pokeres for 2d images of Pokemon
         - https://pokeres.bastionbot.org/images/pokemon/1.png
+    - Pokemonaaah for Hex Codes of Pokemon type colors
+        - http://www.pokemonaaah.net/artsyfartsy/colordex/
     - Webpack to bundle JavaScript code
+    
 
 * Implementation Timeline
     - Friday Afternoon & Weekend
@@ -69,4 +70,4 @@
         - Finish final touches of CSS.
 
 * Bonus Features
-    - N/A# PokeViser
+    - N/A
