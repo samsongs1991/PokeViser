@@ -8,7 +8,6 @@ const path = require('path');
 console.log(process.env.API_KEY === "banana");
 // *******************************************
 
-
 // put environmental variables defined in .env file on process.env
 require('dotenv').config(); 
 
