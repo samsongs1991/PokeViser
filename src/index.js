@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
     // [name, array of types --> types.type.name (1 or 2 items)]
-    const POKEMON_NAMES = [];
+    const POKEMON_NAMES = []; // instead of making 900 calls, find an API with list of all current pokemon and make 1 call
     for(let i = 1; i <= 898; i++) {
         fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
         .then( res => res.json())
-        .then( data => POKEMON_NAMES.push([data.species.name, data.types]));
+        .then( data => POKEMON_NAMES.push([data.name, data.types]));
     }
 
 // -------------------------------------------------------------------------
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             event.preventDefault();
 
                             // load new page with selected pokemon stats
-                            loadIndividualStatsPage();
+                            loadIndividualStatsPage(selected_pokemon);
                     });
 
         const selection_container = document.createElement("section");
@@ -289,22 +289,62 @@ document.addEventListener("DOMContentLoaded", () => {
             
     }
 
-    function loadIndividualStatsPage() {
+    function loadIndividualStatsPage(list_of_pokemon_objects) {
         const main = document.querySelector("main");
         main.innerHTML = "";
 
-        // all butons
+        // --------------------------------------------------------
+        // not yet appended in html page
         const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
         const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
-        const back_button = ; // will perform action within page to view prev pokemon
-        const forward_button = ; // will perform action within page to view next pokemon
+        // --------------------------------------------------------
 
-        const stats_container = ; // container for all stats and images
-        const sprites = ; // for scrolling view of selected Pokemon
-        const stats_1 = ; // for stats
-        const stats_2 = ; // for stats
-        const stats_3 = ; // for stats
-        const image = ; // for nice image of pokemon
+        const prev_button = document.createElement("button"); // will perform action within page to view prev pokemon
+        const next_button = document.createElement("button"); // will perform action within page to view next pokemon
+
+        const stats_container = document.createElement("div"); // container for all stats and images
+        const sprites = document.createElement("section"); // for scrolling view of selected Pokemon
+            sprites.setAttribute("id", "sprites");
+        const image = document.createElement("img"); // for nice image of pokemon
+            image.setAttribute("id", "image")
+            image.setAttribute("height", "500px");
+        const stats_1 = document.createElement("section"); // for stats - strengths/weaknesses
+            stats_1.setAttribute("id", "stats_1");
+        const stats_2 = document.createElement("section"); // for stats - atk, def, etc
+            stats_2.setAttribute("id", "stats_2");
+        const main_stats_container = document.createElement("div") // for containing center row of stats1 - img - stats2        
+        const stats_3 = document.createElement("section"); // for stats - description
+            stats_3.setAttribute("id", "stats_3");
+
+        main.appendChild(prev_button);        
+        main.appendChild(stats_container);
+        main.appendChild(next_button);        
+
+        stats_container.appendChild(sprites);
+        stats_container.appendChild(main_stats_container);
+        stats_container.appendChild(stats_3);
+
+        main_stats_container.appendChild(stats_1);
+        main_stats_container.appendChild(image);
+        main_stats_container.appendChild(stats_2);
+        
+        // create current_pokemon variable to keep track of what's currently being viewed
+        // prev/next button will cycle through list of pokemon and change what is current_pokemon
+        for(let pokemon_name in list_of_pokemon_objects) { // load sprites
+            let pokemon = list_of_pokemon_objects[pokemon_name];
+            let img_url = pokemon.sprites.front_default;
+            let sprite_img = document.createElement("img");
+            sprite_img.setAttribute("src", img_url);
+            sprites.appendChild(sprite_img);
+        }
+
+        const name_arr = Object.keys(list_of_pokemon_objects);
+        let current_pokemon = name_arr[0];
+
+        loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+
+
+
     }
 
     function loadGroupStatsPage() {
@@ -316,13 +356,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 // -------------------------------------------------------------------------
-// Object.prototype custom functions
+    // function to get number of keys in the obj --> length of obj
     function size(object) {
         let count = 0;
         for(let k in object) { 
             count++;
         }
         return count;
+    }
+
+    // function to load html structure of individual stats page
+    function loadIndividualStatsPage_structure() {
+        const main = document.querySelector("main");
+        main.innerHTML = "";
+
+        const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
+        const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
+
+        const prev_button = document.createElement("button"); // will perform action within page to view prev pokemon
+        const next_button = document.createElement("button"); // will perform action within page to view next pokemon
+
+        const stats_container = document.createElement("div"); // container for all stats and images
+        const sprites = document.createElement("section"); // for scrolling view of selected Pokemon
+        const image = document.createElement("img"); // for nice image of pokemon
+        const stats_1 = document.createElement("section"); // for stats - strengths/weaknesses
+        const stats_2 = document.createElement("section"); // for stats - atk, def, etc
+        const main_stats_container = document.createElement("div") // for containing center row of stats1 - img - stats2
+        const stats_3 = document.createElement("section"); // for stats - description
+
+        main.appendChild(prev_button);        
+        main.appendChild(stats_container);
+        main.appendChild(next_button);        
+
+        stats_container.appendChild(sprites);
+        stats_container.appendChild(main_stats_container);
+        stats_container.appendChild(stats_3);
+
+        main_stats_container.appendChild(stats_1);
+        main_stats_container.appendChild(image);
+        main_stats_container.appendChild(stats_2);
+    }
+
+    // update individual pokemon stats being viewed
+    function loadIndividualStats(data) {
+        // update stats1, image, stats2, stats3
+
+        // data.height in decimetres
+        // data.weight in hectograms
+        // data.types
+        // data.stats
+        // 
+
+        const stats_1 = document.getElementById("stats_1");
+            stats_1.innerHTML = ""; // set info within
+            
+
+
+        const image = document.getElementById("image");
+            image.setAttribute("src", `https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`);
+
+        const stats_2 = document.getElementById("stats_2");
+            stats_2.innerHTML = ""; // set info within
+
+        const stats_3 = document.getElementById("stats_3");
+            stats_3.innerHTML = ""; // set info within
     }
 // -------------------------------------------------------------------------
 
@@ -336,8 +433,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // -------------------------------------------------------------------------
 // TO WORK ON LATER - BONUS
+//
 // instead of auto suggest just being a single suggestion, 
 //  - make it an entire selection of auto suggestions
+//
 // refactor all code
 // - especially loadMainSearchPage
+//
 // add button to remove from selected pokemon list
+//
+// check if selected pokemon list has at least 1 pokemon
