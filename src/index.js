@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 // -------------------------------------------------------------------------
+// initial webpage setup for user 
     const body = document.querySelector("body");
 
     loadTitlePage();
@@ -152,9 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const search_label = document.createElement("label");
                 search_label.innerHTML = "Search by name: ";
                 searchbar.appendChild(search_label);
-
-
-
             const search_input = document.createElement("input");
                 search_input.setAttribute("type", "text");
                 search_input.setAttribute("name", "search_input");
@@ -191,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 select_button.addEventListener(
                     "click", function(event) {
                         event.preventDefault();
-                        if(selected_pokemon.length >= 6) {
+                        if(size(selected_pokemon) >= 6) {
                             if(main.children.length === 4)  main.children.item(3).remove();
                             const error = document.createElement("p");
                             error.setAttribute("name", "error");
@@ -257,8 +255,26 @@ document.addEventListener("DOMContentLoaded", () => {
             main.appendChild(selection_container);
             
     }
+
+// -------------------------------------------------------------------------
+// Object.prototype custom functions
+    function size(object) {
+        let count = 0;
+        for(let k in object) { 
+            count++;
+        }
+        return count;
+    }
 // -------------------------------------------------------------------------
 
 })
 
 // apply filter to auto suggestions
+
+// collect values of all checked boxes in an array
+const filters_to_apply = [];
+let boxes = document.querySelectorAll("input[type='checkbox']");
+boxes.forEach(box => {
+    filters_to_apply.push(box.value);
+});
+console.log(filters_to_apply);
