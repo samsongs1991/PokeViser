@@ -1,27 +1,25 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
 
     // TYPES contains all Pokemon types and their hex color codes
     const TYPES = {
-        "Normal": "AAB09F",
-        "Fire": "EA7A3C",
-        "Water": "539AE2",
-        "Electric": "E5C531",
-        "Grass": "71C558",
-        "Ice": "70CBD4",
-        "Fighting": "CB5F48",
-        "Poison": "B468B7",
-        "Ground": "CC9F4F",
-        "Flying": "7DA6DE",
-        "Psychic": "E5709B",
-        "Bug": "94BC4A",
-        "Rock": "B2A061",
-        "Ghost": "846AB6",
-        "Dragon": "6A7BAF ",
-        "Dark": "736C75 ",
-        "Steel": "89A1B0",
-        "Fairy": "E397D1"
+        "normal": "AAB09F",
+        "fire": "EA7A3C",
+        "water": "539AE2",
+        "electric": "E5C531",
+        "grass": "71C558",
+        "ice": "70CBD4",
+        "fighting": "CB5F48",
+        "poison": "B468B7",
+        "ground": "CC9F4F",
+        "flying": "7DA6DE",
+        "psychic": "E5709B",
+        "bug": "94BC4A",
+        "rock": "B2A061",
+        "ghost": "846AB6",
+        "dragon": "6A7BAF ",
+        "dark": "736C75 ",
+        "steel": "89A1B0",
+        "fairy": "E397D1"
     };
 
     // POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
@@ -66,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function goToSearchPage() {
-        // clear the title page
         body.innerHTML = ""; 
 
         loadHeader();
@@ -129,7 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadMainSearchPage() {
+        const selected_pokemon = {};
+
         const main = document.createElement("main");
+
         const filter_container = document.createElement("section");
         const filter = document.createElement("form");
             const filter_label = document.createElement("label");
@@ -139,39 +139,126 @@ document.addEventListener("DOMContentLoaded", () => {
                 let filter_option = document.createElement("input");
                     filter_option.setAttribute("type", "checkbox");
                     filter_option.setAttribute("name", type);
+                    filter_option.setAttribute("value", type);
                 let filter_option_label = document.createElement("label");
-                    filter_option_label.innerHTML = type;
+                    filter_option_label.innerHTML = type[0].toUpperCase() + type.slice(1);
 
                     filter.appendChild(filter_option);
                     filter.appendChild(filter_option_label);
             };
+
         const searchbar_container = document.createElement("section");
         const searchbar = document.createElement("form");
             const search_label = document.createElement("label");
                 search_label.innerHTML = "Search by name: ";
                 searchbar.appendChild(search_label);
+
+
+
             const search_input = document.createElement("input");
                 search_input.setAttribute("type", "text");
                 search_input.setAttribute("name", "search_input");
                 search_input.setAttribute("value", "");
                 search_input.setAttribute("placeholder", "Name of Pokemon");
                 searchbar.appendChild(search_input);
-            const submit_button = document.createElement("input");
-                submit_button.setAttribute("type", "submit");
-                submit_button.setAttribute("value", "Search");
-                searchbar.appendChild(submit_button);
-                submit_button.addEventListener(
+
+                // -----------------------------------------------------------
+                // auto suggestion code for search input
+                const autosuggestion_container = document.createElement("div");
+                const autosuggestion = document.createElement("p");
+                setInterval(function() {
+                    if(search_input.value.length === 0) {
+                        autosuggestion.innerHTML = "";
+                    } else if(search_input.value.length !== 0) {
+                        let partial_name = search_input.value;
+                        for(let i = 0; i < POKEMON_NAMES.length; i++) {
+                            let name = POKEMON_NAMES[i];
+                            if(name.startsWith(partial_name)) {
+                                autosuggestion.innerHTML = name;
+                                break;
+                            }
+                        }
+                    }
+                }, 100);
+                autosuggestion_container.appendChild(autosuggestion);
+                searchbar_container.appendChild(autosuggestion_container);
+                // -----------------------------------------------------------
+
+            const select_button = document.createElement("input");
+                select_button.setAttribute("type", "submit");
+                select_button.setAttribute("value", "Add to list");
+                searchbar.appendChild(select_button);
+                select_button.addEventListener(
                     "click", function(event) {
                         event.preventDefault();
+                        if(selected_pokemon.length >= 6) {
+                            if(main.children.length === 4)  main.children.item(3).remove();
+                            const error = document.createElement("p");
+                            error.setAttribute("name", "error");
+                            error.innerHTML = "Cannot select more than 6 Pokemon";
+                            main.appendChild(error);
+                            setTimeout(() => {
+                                error.remove();
+                            }, 5000);                        
+                        } else {
+                            const value = search_input.value.toLowerCase();
+                            if(selected_pokemon[value]) {
+                                if(main.children.length === 4)  main.children.item(3).remove();
+                                const error = document.createElement("p");
+                                error.setAttribute("name", "error");
+                                error.innerHTML = "Pokemon already selected";
+                                main.appendChild(error);
+                                setTimeout(() => {
+                                    error.remove();
+                                }, 5000);
+                            } else if(POKEMON_NAMES.includes(value)) {
+                                if(main.children.length === 4)  main.children.item(3).remove();
+                                search_input.value = "";
+                                fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
+                                .then( res => res.json())
+                                .then( data => selected_pokemon[value] = data);
+                                const item = document.createElement("li");
+                                item.innerHTML = value;
+                                selection.appendChild(item);
+                                console.log(selected_pokemon);
+                            } else {
+                                if(main.children.length === 4)  main.children.item(3).remove();
+                                const error = document.createElement("p");
+                                error.setAttribute("name", "error");
+                                error.innerHTML = "Invalid Pokemon name";
+                                main.appendChild(error);
+                                setTimeout(() => {
+                                    error.remove();
+                                }, 5000);
+                            }
+                        }
                     }
                 );
+            const search_button = document.createElement("input");
+                    search_button.setAttribute("type", "submit");
+                    search_button.setAttribute("value", "Search");
+                    searchbar.appendChild(search_button);
+                    search_button.addEventListener(
+                        "click", function(event) {
+                            event.preventDefault();
 
+                            // load new page with selected pokemon stats
+                    });
+
+        const selection_container = document.createElement("section");
+        const selection = document.createElement("ul");
+            
             body.appendChild(main);
             filter_container.appendChild(filter);
             searchbar_container.appendChild(searchbar);
+            selection_container.appendChild(selection);
             main.appendChild(filter_container);
             main.appendChild(searchbar_container);
+            main.appendChild(selection_container);
+            
     }
 // -------------------------------------------------------------------------
 
 })
+
+// apply filter to auto suggestions
