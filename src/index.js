@@ -23,11 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
+    // [name, array of types --> types.type.name (1 or 2 items)]
     const POKEMON_NAMES = [];
     for(let i = 1; i <= 898; i++) {
         fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
         .then( res => res.json())
-        .then( data => POKEMON_NAMES.push(data.species.name));
+        .then( data => POKEMON_NAMES.push([data.species.name, data.types]));
     }
 
 // -------------------------------------------------------------------------
@@ -164,16 +165,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 // auto suggestion code for search input
                 const autosuggestion_container = document.createElement("div");
                 const autosuggestion = document.createElement("p");
+                
                 setInterval(function() {
-                    if(search_input.value.length === 0) {
-                        autosuggestion.innerHTML = "";
-                    } else if(search_input.value.length !== 0) {
-                        let partial_name = search_input.value;
-                        for(let i = 0; i < POKEMON_NAMES.length; i++) {
-                            let name = POKEMON_NAMES[i];
-                            if(name.startsWith(partial_name)) {
-                                autosuggestion.innerHTML = name;
+                    autosuggestion.innerHTML = ""; // since the function runs on interval, empty auto suggestion to be filled if there's a match
+
+                    let filters_to_apply = [];
+                    let boxes = document.querySelectorAll("input[type='checkbox']");
+                    boxes.forEach(box => {
+                        if(box.checked) {
+                            filters_to_apply.push(box.value);
+                        }
+                    });
+
+                    let partial_name = search_input.value;
+
+                    for(let i = 0; i < POKEMON_NAMES.length; i++) { // iterate through every pokemon
+                        if(partial_name.length === 0) {
+                            break;
+                        }
+
+                        let current_pokemon = POKEMON_NAMES[i];
+                        let current_pokemon_name = current_pokemon[0];
+
+                        if(current_pokemon_name.startsWith(partial_name)) { // if user input matches the current pokemon
+                            if(filters_to_apply.length === 0) { // no filter case
+                                autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
                                 break;
+                            } else { // filter case
+                                let exit = false;
+                            
+                                let current_pokemon_types = current_pokemon[1];
+
+                                current_pokemon_types.forEach(type_obj => {
+                                    if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
+                                        autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
+                                        exit = true;
+                                    }
+                                });
+                                
+                                if(exit) {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -199,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 error.remove();
                             }, 5000);                        
                         } else {
-                            const value = search_input.value.toLowerCase();
+                            const value = autosuggestion.innerHTML
                             if(selected_pokemon[value]) {
                                 if(main.children.length === 4)  main.children.item(3).remove();
                                 const error = document.createElement("p");
@@ -209,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 setTimeout(() => {
                                     error.remove();
                                 }, 5000);
-                            } else if(POKEMON_NAMES.includes(value)) {
+                            } else if(value) {
                                 if(main.children.length === 4)  main.children.item(3).remove();
                                 search_input.value = "";
                                 fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
@@ -241,6 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             event.preventDefault();
 
                             // load new page with selected pokemon stats
+                            loadIndividualStatsPage();
                     });
 
         const selection_container = document.createElement("section");
@@ -256,6 +289,32 @@ document.addEventListener("DOMContentLoaded", () => {
             
     }
 
+    function loadIndividualStatsPage() {
+        const main = document.querySelector("main");
+        main.innerHTML = "";
+
+        // all butons
+        const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
+        const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
+        const back_button = ; // will perform action within page to view prev pokemon
+        const forward_button = ; // will perform action within page to view next pokemon
+
+        const stats_container = ; // container for all stats and images
+        const sprites = ; // for scrolling view of selected Pokemon
+        const stats_1 = ; // for stats
+        const stats_2 = ; // for stats
+        const stats_3 = ; // for stats
+        const image = ; // for nice image of pokemon
+    }
+
+    function loadGroupStatsPage() {
+
+    }
+
+    function loadSizeComparisonPage() {
+
+    }
+
 // -------------------------------------------------------------------------
 // Object.prototype custom functions
     function size(object) {
@@ -269,12 +328,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 })
 
-// apply filter to auto suggestions
 
-// collect values of all checked boxes in an array
-const filters_to_apply = [];
-let boxes = document.querySelectorAll("input[type='checkbox']");
-boxes.forEach(box => {
-    filters_to_apply.push(box.value);
-});
-console.log(filters_to_apply);
+
+
+
+
+
+// -------------------------------------------------------------------------
+// TO WORK ON LATER - BONUS
+// instead of auto suggest just being a single suggestion, 
+//  - make it an entire selection of auto suggestions
+// refactor all code
+// - especially loadMainSearchPage
+// add button to remove from selected pokemon list
