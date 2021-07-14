@@ -315,8 +315,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const name_arr = Object.keys(list_of_pokemon_objects);
         let current_pokemon = name_arr[0];
 
-
         loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+
+        const prev_button = document.getElementById("prev");
+            prev_button.addEventListener("click", (event) => {
+                let idx = name_arr.indexOf(current_pokemon);
+                if(idx === 0) {
+                    current_pokemon = name_arr[name_arr.length - 1];
+                } else {
+                    current_pokemon = name_arr[idx - 1];
+                }
+            });
+        const next_button = document.getElementById("next");
+            next_button.addEventListener("click", (event) => {
+                let idx = name_arr.indexOf(current_pokemon);
+                if(idx === name_arr.length - 1) {
+                    current_pokemon = name_arr[0];
+                } else {
+                    current_pokemon = name_arr[idx + 1];
+                }
+            });
 
     }
 
@@ -350,7 +368,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // --------------------------------------------------------
 
         const prev_button = document.createElement("button"); // will perform action within page to view prev pokemon
+            prev_button.setAttribute("id", "prev");
+            prev_button.innerHTML = "PREV";
         const next_button = document.createElement("button"); // will perform action within page to view next pokemon
+            next_button.setAttribute("id", "next");
+            next_button.innerHTML = "NEXT";
 
         const stats_container = document.createElement("div"); // container for all stats and images
         const sprites = document.createElement("section"); // for scrolling view of selected Pokemon
@@ -395,10 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 stats_1_info.appendChild(is_mythical);
             const height = document.createElement("li");
                 stats_1_info.appendChild(height);
-                height.innerHTML = `${Math.floor((data.height / 3.048) * 100) / 100} feet`; // height in decimeters
+                height.innerHTML = `Height:  ${Math.floor((data.height / 3.048) * 100) / 100} feet`; // height in decimeters
             const weight = document.createElement("li");
                 stats_1_info.appendChild(weight);
-                weight.innerHTML = `${Math.floor((data.weight / 4.536) * 100) / 100} lbs`; // weight in hectograms
+                weight.innerHTML = `Weight:  ${Math.floor((data.weight / 4.536) * 100) / 100} lbs`; // weight in hectograms
 
         const image = document.getElementById("image");
             image.setAttribute("src", `https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`);
@@ -413,28 +435,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 stats_2.appendChild(stats_2_info);
             const hp = document.createElement("li");
                 stats_2_info.appendChild(hp);
-                hp.innerHTML = `${data.stats[0].base_stat} HP`;
+                hp.innerHTML = `HP:  ${data.stats[0].base_stat}`;
             const attack = document.createElement("li");
                 stats_2_info.appendChild(attack);
-                attack.innerHTML = `${data.stats[1].base_stat} ATTACK`;
+                attack.innerHTML = `Attack:  ${data.stats[1].base_stat}`;
             const defense = document.createElement("li");
                 stats_2_info.appendChild(defense);
-                defense.innerHTML = `${data.stats[2].base_stat} DEFENSE`;
+                defense.innerHTML = `Defense:  ${data.stats[2].base_stat}`;
             const special_attack = document.createElement("li");
                 stats_2_info.appendChild(special_attack);
-                special_attack.innerHTML = `${data.stats[3].base_stat} SPECIAL ATTACK`;
+                special_attack.innerHTML = `Special Attack: ${data.stats[3].base_stat}`;
             const special_defense = document.createElement("li");
                 stats_2_info.appendChild(special_defense);
-                special_defense.innerHTML = `${data.stats[4].base_stat} SPECIAL DEFENSE`;
+                special_defense.innerHTML = `Special Defense:  ${data.stats[4].base_stat}`;
             const speed = document.createElement("li");
                 stats_2_info.appendChild(speed);
-                speed.innerHTML = `${data.stats[5].base_stat} SPEED`;
+                speed.innerHTML = `Speed:  ${data.stats[5].base_stat}`;
 
         const stats_3 = document.getElementById("stats_3");
             stats_3.innerHTML = ""; 
             const stats_3_info = document.createElement("ul");
                 stats_3.appendChild(stats_3_info);
-            
+            const type_1 = document.createElement("li");
+                stats_3_info.appendChild(type_1);
+                let type_1_name = data.types[0].type.name;
+                type_1.innerHTML = `Primary Type:  ${type_1_name[0].toUpperCase() + type_1_name.slice(1)}`;
+            const type_2 = document.createElement("li");
+            if(data.types[1] !== undefined) {
+                stats_3_info.appendChild(type_2);
+                let type_2_name = data.types[1].type.name;
+                type_2.innerHTML = `Secondary Type:  ${type_2_name[0].toUpperCase() + type_2_name.slice(1)}`;
+            }
 
         fetch(data.species.url) // set the contents of all stats fields
         .then(res => res.json())
@@ -448,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             let random_text = getRandom(flavor_texts);
-            flavor_text.innerHTML = random_text; // SET flavor_text
+            flavor_text.innerHTML = `Description: ${random_text}`; // SET flavor_text
             if(data.is_baby) {
                 is_baby.innerHTML = "Baby: Yes"; // SET baby?
             } else {
@@ -468,10 +499,68 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-
-        console.log(data);
-        // fetch()
-        // .then();
+        for(let i = 0; i < 2; i++) {
+            if(data.types[i] !== undefined) {
+                fetch(data.types[i].type.url)
+                .then(res => res.json())
+                .then(data => {
+                    let double_damage_data = data.damage_relations.double_damage_from;
+                    if(double_damage_data.length > 0) {
+                        const weakness = document.createElement("li");
+                            weakness.innerHTML = "Receives double damage from ";
+                            for(let i = 0; i < double_damage_data.length; i++) {
+                                let damage_type = double_damage_data[i].name;
+                                if(i === double_damage_data.length - 1) {
+                                    weakness.innerHTML += damage_type + ".";
+                                } else {
+                                    weakness.innerHTML += damage_type + ", ";
+                                }
+                            }
+                            if(i === 0) {
+                                type_1.appendChild(weakness);
+                            } else {
+                                type_2.appendChild(weakness);
+                            }
+                    }
+                    let half_damage_data = data.damage_relations.half_damage_from;
+                    if(half_damage_data.length > 0) {
+                        const strength = document.createElement("li");
+                            strength.innerHTML = "Receives half damage from ";
+                            for(let i = 0; i < half_damage_data.length; i++) {
+                                let damage_type = half_damage_data[i].name;
+                                if(i === half_damage_data.length - 1) {
+                                    strength.innerHTML += damage_type + ".";
+                                } else {
+                                    strength.innerHTML += damage_type + ", ";
+                                }
+                            }
+                            if(i === 0) {
+                                type_1.appendChild(strength);
+                            } else {
+                                type_2.appendChild(strength);
+                            }                    
+                    }
+                    let no_damage_data = data.damage_relations.no_damage_from;
+                    if(no_damage_data.length > 0) {
+                        const immunity = document.createElement("li");
+                            immunity.innerHTML = "Receives zero damage from ";
+                            for(let i = 0; i < no_damage_data.length; i++) {
+                                let damage_type = no_damage_data[i].name;
+                                if(i === no_damage_data.length -1) {
+                                    immunity.innerHTML += damage_type + ".";
+                                } else {
+                                    immunity.innerHTML += damage_type + ", ";
+                                }
+                            }
+                            if(i === 0) {
+                                type_1.appendChild(immunity);
+                            } else {
+                                type_2.appendChild(immunity);
+                            }                    
+                    }
+                });
+            }
+        }
     }
 
     // get random el from the array
