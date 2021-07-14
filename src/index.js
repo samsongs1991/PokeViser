@@ -42,27 +42,48 @@ document.addEventListener("DOMContentLoaded", () => {
             body.innerHTML = ""; 
 
         const outer_container = document.createElement("div");
+            outer_container.setAttribute("id", "outer_container");
             body.appendChild(outer_container);
     
         const title_container = document.createElement("div");
-        const title = document.createElement("p");
-            title.innerHTML = "Poke Viser";
+        const title = document.createElement("img");
+            title.setAttribute("id", "title");
+            title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
+            title.setAttribute("alt", "Poke Viser logo");
+            title.addEventListener("click", goToSearchPage);
             title_container.appendChild(title);
             outer_container.appendChild(title_container);
     
-        const logo_container = document.createElement("div");
-        const logo = document.createElement("img");
-            logo.addEventListener("click", goToSearchPage);
-            logo.setAttribute("src", "");
-            logo.setAttribute("alt", "Poke Viser logo");
-            logo_container.appendChild(logo);
-            outer_container.appendChild(logo_container);
-    
         const instructions_container = document.createElement("div");
+            instructions_container.setAttribute("id", "instructions_container");
         const instructions = document.createElement("p");
-            instructions.innerHTML = "Instructions: ";
+            instructions.setAttribute("id", "instructions");
+            instructions.innerHTML = "INSTRUCTIONS";
+            const instructions_text = document.createElement("p");
+                instructions_text.setAttribute("id", "instructions_text");
+                instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar to input the name of a Pokemon. Use the filters to tell the auto suggestor to only display Pokemon of a type you have selected. You can select up to 6 Pokemon to view and when you are ready click the VIEW STATS button to learn all about the Pokemon you selected.";
             instructions_container.appendChild(instructions);
+            instructions_container.appendChild(instructions_text);
             outer_container.appendChild(instructions_container);
+
+
+        const red_background = document.createElement("div");
+            red_background.setAttribute("id", "red");
+        const black_background = document.createElement("div");
+            black_background.setAttribute("id", "black");
+        const white_background = document.createElement("div");
+            white_background.setAttribute("id", "white");
+        const black_circle = document.createElement("div");
+            black_circle.setAttribute("id", "b_circle");
+        const white_circle = document.createElement("div");
+            white_circle.setAttribute("id", "w_circle");
+            white_circle.addEventListener("click", goToSearchPage);
+
+        body.appendChild(red_background);
+        body.appendChild(black_background);
+        body.appendChild(white_background);
+        body.appendChild(black_circle);
+        body.appendChild(white_circle);        
     }
 
     function goToSearchPage() {
@@ -78,15 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
             body.appendChild(header);
 
         const title_container = document.createElement("div");
-        const title = document.createElement("p");
-            title.innerHTML = "Poke Viser";
+        const title = document.createElement("img");
+            title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
             title.addEventListener("click", goToSearchPage);
             title_container.appendChild(title);
-        const logo = document.createElement("img");
-            logo.addEventListener("click", goToSearchPage);
-            logo.setAttribute("src", "");
-            logo.setAttribute("alt", "Poke Viser logo");
-            title_container.appendChild(logo);
         const navbar = document.createElement("nav");
         const navlist = document.createElement("ul");
         const home = document.createElement("li");
