@@ -56,12 +56,14 @@
     top: 267px;
     height: 240px;
     width: 240px;
+    cursor: pointer;
 }
 
 #title {
     left: 500px;
     top: 200px;
     position: absolute;
+    cursor: pointer;
 }
 
 #instructions_container {
@@ -82,9 +84,28 @@
 // Header and Footer
 header {
     display: flex;
+    justify-content: space-between;
+}
+
+#logo {
+    width: 300px;
 }
 
 footer {
-    display:flex;
+    position: fixed;
+    display: block;
+    bottom: 0px;
+    width: 100%;
 }
+
+#footer_list {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
+
+#footer_list li {
+    width: 200px;
+}
+
 // -----------------------------------------------------------
