@@ -82,6 +82,7 @@
 }
 // -----------------------------------------------------------
 // Header and Footer
+
 header {
     display: flex;
     justify-content: space-between;
@@ -108,4 +109,16 @@ footer {
     width: 200px;
 }
 
+// -----------------------------------------------------------
+// Background video
+
+#background_video {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+    
 // -----------------------------------------------------------
