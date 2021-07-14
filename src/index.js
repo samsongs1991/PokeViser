@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     // TYPES contains all Pokemon types and their hex color codes
     const TYPES = {
         "normal": "AAB09F",
@@ -27,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const POKEMON_NAMES = []; // instead of making 900 calls, find an API with list of all current pokemon and make 1 call
     for(let i = 1; i <= 898; i++) {
         fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-        .then( res => res.json())
-        .then( data => POKEMON_NAMES.push([data.name, data.types]));
+        .then(res => res.json())
+        .then(data => POKEMON_NAMES.push([data.name, data.types]));
     }
 
 // -------------------------------------------------------------------------
@@ -178,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     let partial_name = search_input.value;
+                    partial_name = partial_name.toLowerCase();
 
                     for(let i = 0; i < POKEMON_NAMES.length; i++) { // iterate through every pokemon
                         if(partial_name.length === 0) {
@@ -189,6 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         if(current_pokemon_name.startsWith(partial_name)) { // if user input matches the current pokemon
                             if(filters_to_apply.length === 0) { // no filter case
+                                if(partial_name === "mew") {
+                                    current_pokemon_name = "mew";
+                                }
                                 autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
                                 break;
                             } else { // filter case
@@ -196,12 +199,19 @@ document.addEventListener("DOMContentLoaded", () => {
                             
                                 let current_pokemon_types = current_pokemon[1];
 
-                                current_pokemon_types.forEach(type_obj => {
-                                    if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                        autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
-                                        exit = true;
-                                    }
-                                });
+                                if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
+                                    autosuggestion.innerHTML = "mew"; // set auto suggestion
+                                    exit = true;
+                                } else {
+                                    current_pokemon_types.forEach(type_obj => {
+                                        if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
+                                            autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
+                                            exit = true;
+                                        }
+                                    });
+                                }
+
+
                                 
                                 if(exit) {
                                     break;
@@ -250,7 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 const item = document.createElement("li");
                                 item.innerHTML = value;
                                 selection.appendChild(item);
-                                console.log(selected_pokemon);
                             } else {
                                 if(main.children.length === 4)  main.children.item(3).remove();
                                 const error = document.createElement("p");
@@ -290,6 +299,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadIndividualStatsPage(list_of_pokemon_objects) {
+        loadIndividualStatsPage_structure();
+        
+        // create current_pokemon variable to keep track of what's currently being viewed
+        // prev/next button will cycle through list of pokemon and change what is current_pokemon
+        const sprites = document.getElementById("sprites");
+        for(let pokemon_name in list_of_pokemon_objects) { // load sprites
+            let pokemon = list_of_pokemon_objects[pokemon_name];
+            let img_url = pokemon.sprites.front_default;
+            let sprite_img = document.createElement("img");
+            sprite_img.setAttribute("src", img_url);
+            sprites.appendChild(sprite_img);
+        }
+
+        const name_arr = Object.keys(list_of_pokemon_objects);
+        let current_pokemon = name_arr[0];
+
+
+        loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+
+    }
+
+    function loadGroupStatsPage() {
+
+    }
+
+    function loadSizeComparisonPage() {
+
+    }
+
+// -------------------------------------------------------------------------
+    // function to get number of keys in the obj --> length of obj
+    function size(object) {
+        let count = 0;
+        for(let k in object) { 
+            count++;
+        }
+        return count;
+    }
+
+    // function to load html structure of individual stats page
+    function loadIndividualStatsPage_structure() {
         const main = document.querySelector("main");
         main.innerHTML = "";
 
@@ -327,100 +377,109 @@ document.addEventListener("DOMContentLoaded", () => {
         main_stats_container.appendChild(stats_1);
         main_stats_container.appendChild(image);
         main_stats_container.appendChild(stats_2);
-        
-        // create current_pokemon variable to keep track of what's currently being viewed
-        // prev/next button will cycle through list of pokemon and change what is current_pokemon
-        for(let pokemon_name in list_of_pokemon_objects) { // load sprites
-            let pokemon = list_of_pokemon_objects[pokemon_name];
-            let img_url = pokemon.sprites.front_default;
-            let sprite_img = document.createElement("img");
-            sprite_img.setAttribute("src", img_url);
-            sprites.appendChild(sprite_img);
-        }
-
-        const name_arr = Object.keys(list_of_pokemon_objects);
-        let current_pokemon = name_arr[0];
-
-        loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
-
-
-
-    }
-
-    function loadGroupStatsPage() {
-
-    }
-
-    function loadSizeComparisonPage() {
-
-    }
-
-// -------------------------------------------------------------------------
-    // function to get number of keys in the obj --> length of obj
-    function size(object) {
-        let count = 0;
-        for(let k in object) { 
-            count++;
-        }
-        return count;
-    }
-
-    // function to load html structure of individual stats page
-    function loadIndividualStatsPage_structure() {
-        const main = document.querySelector("main");
-        main.innerHTML = "";
-
-        const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
-        const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
-
-        const prev_button = document.createElement("button"); // will perform action within page to view prev pokemon
-        const next_button = document.createElement("button"); // will perform action within page to view next pokemon
-
-        const stats_container = document.createElement("div"); // container for all stats and images
-        const sprites = document.createElement("section"); // for scrolling view of selected Pokemon
-        const image = document.createElement("img"); // for nice image of pokemon
-        const stats_1 = document.createElement("section"); // for stats - strengths/weaknesses
-        const stats_2 = document.createElement("section"); // for stats - atk, def, etc
-        const main_stats_container = document.createElement("div") // for containing center row of stats1 - img - stats2
-        const stats_3 = document.createElement("section"); // for stats - description
-
-        main.appendChild(prev_button);        
-        main.appendChild(stats_container);
-        main.appendChild(next_button);        
-
-        stats_container.appendChild(sprites);
-        stats_container.appendChild(main_stats_container);
-        stats_container.appendChild(stats_3);
-
-        main_stats_container.appendChild(stats_1);
-        main_stats_container.appendChild(image);
-        main_stats_container.appendChild(stats_2);
     }
 
     // update individual pokemon stats being viewed
     function loadIndividualStats(data) {
-        // update stats1, image, stats2, stats3
-
-        // data.height in decimetres
-        // data.weight in hectograms
-        // data.types
-        // data.stats
-        // 
-
         const stats_1 = document.getElementById("stats_1");
-            stats_1.innerHTML = ""; // set info within
-            
-
+            stats_1.innerHTML = "";
+            const stats_1_info = document.createElement("ul");
+                stats_1.appendChild(stats_1_info);
+            const flavor_text = document.createElement("li");
+                stats_1_info.appendChild(flavor_text);
+            const is_baby = document.createElement("li");
+                stats_1_info.appendChild(is_baby);
+            const is_legendary = document.createElement("li");
+                stats_1_info.appendChild(is_legendary);
+            const is_mythical = document.createElement("li");
+                stats_1_info.appendChild(is_mythical);
+            const height = document.createElement("li");
+                stats_1_info.appendChild(height);
+                height.innerHTML = `${Math.floor((data.height / 3.048) * 100) / 100} feet`; // height in decimeters
+            const weight = document.createElement("li");
+                stats_1_info.appendChild(weight);
+                weight.innerHTML = `${Math.floor((data.weight / 4.536) * 100) / 100} lbs`; // weight in hectograms
 
         const image = document.getElementById("image");
             image.setAttribute("src", `https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`);
+            image.setAttribute("alt", `Image of ${data.name}`);
+            image.onerror = () => {
+                image.setAttribute("src", data.sprites.front_default);
+            }
 
         const stats_2 = document.getElementById("stats_2");
-            stats_2.innerHTML = ""; // set info within
+            stats_2.innerHTML = "";
+            const stats_2_info = document.createElement("ul");
+                stats_2.appendChild(stats_2_info);
+            const hp = document.createElement("li");
+                stats_2_info.appendChild(hp);
+                hp.innerHTML = `${data.stats[0].base_stat} HP`;
+            const attack = document.createElement("li");
+                stats_2_info.appendChild(attack);
+                attack.innerHTML = `${data.stats[1].base_stat} ATTACK`;
+            const defense = document.createElement("li");
+                stats_2_info.appendChild(defense);
+                defense.innerHTML = `${data.stats[2].base_stat} DEFENSE`;
+            const special_attack = document.createElement("li");
+                stats_2_info.appendChild(special_attack);
+                special_attack.innerHTML = `${data.stats[3].base_stat} SPECIAL ATTACK`;
+            const special_defense = document.createElement("li");
+                stats_2_info.appendChild(special_defense);
+                special_defense.innerHTML = `${data.stats[4].base_stat} SPECIAL DEFENSE`;
+            const speed = document.createElement("li");
+                stats_2_info.appendChild(speed);
+                speed.innerHTML = `${data.stats[5].base_stat} SPEED`;
 
         const stats_3 = document.getElementById("stats_3");
-            stats_3.innerHTML = ""; // set info within
+            stats_3.innerHTML = ""; 
+            const stats_3_info = document.createElement("ul");
+                stats_3.appendChild(stats_3_info);
+            
+
+        fetch(data.species.url) // set the contents of all stats fields
+        .then(res => res.json())
+        .then(data => {
+            let flavor_data = data.flavor_text_entries;
+            let flavor_texts = [];
+            for(let i = 0; i < flavor_data.length; i++) {
+                let flavor = flavor_data[i];
+                if(flavor.language.name === "en") {
+                    flavor_texts.push(flavor.flavor_text);
+                }
+            }
+            let random_text = getRandom(flavor_texts);
+            flavor_text.innerHTML = random_text; // SET flavor_text
+            if(data.is_baby) {
+                is_baby.innerHTML = "Baby: Yes"; // SET baby?
+            } else {
+                is_baby.innerHTML = "Baby: No"; 
+            }
+
+            if(data.is_legendary) {
+                is_legendary.innerHTML = "Legendary: Yes"; // SET legendary?
+            } else {
+                is_legendary.innerHTML = "Legendary: No";
+            }
+
+            if(data.is_mythical) {
+                is_mythical.innerHTML = "Mythical: Yes"; // SET mythical?
+            } else {
+                is_mythical.innerHTML = "Mythical: No";
+            }
+        });
+
+
+        console.log(data);
+        // fetch()
+        // .then();
     }
+
+    // get random el from the array
+    function getRandom(array) {
+        let random_index = Math.floor(Math.random() * array.length);
+        return array[random_index];
+    }
+
 // -------------------------------------------------------------------------
 
 })
@@ -443,3 +502,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // add button to remove from selected pokemon list
 //
 // check if selected pokemon list has at least 1 pokemon
+//
+// add evolution chain to stats_2
+// data.species.url --> .evolution_chain.url
