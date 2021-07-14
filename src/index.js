@@ -616,3 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //
 // add evolution chain to stats_2
 // data.species.url --> .evolution_chain.url
+//
+// add random pokemon button on search page
+//
+// adding different language options
