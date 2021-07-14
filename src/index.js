@@ -38,7 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // -------------------------------------------------------------------------
 
     function loadTitlePage() {
-        body.innerHTML = ""; 
+        const body = document.querySelector("body");
+            body.innerHTML = ""; 
 
         const outer_container = document.createElement("div");
             body.appendChild(outer_container);
@@ -275,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             const search_button = document.createElement("input");
                     search_button.setAttribute("type", "submit");
-                    search_button.setAttribute("value", "Search");
+                    search_button.setAttribute("value", "View Stats");
                     searchbar.appendChild(search_button);
                     search_button.addEventListener(
                         "click", function(event) {
@@ -316,7 +317,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let current_pokemon = name_arr[0];
 
         loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+        const view_all_button = document.getElementById("view_all");
+        view_all_button.addEventListener("click", (event) => {
+            loadGroupStatsPage(list_of_pokemon_objects);
+        });
 
+        
         const prev_button = document.getElementById("prev");
             prev_button.addEventListener("click", (event) => {
                 let idx = name_arr.indexOf(current_pokemon);
@@ -325,6 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     current_pokemon = name_arr[idx - 1];
                 }
+                loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
             });
         const next_button = document.getElementById("next");
             next_button.addEventListener("click", (event) => {
@@ -334,11 +341,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     current_pokemon = name_arr[idx + 1];
                 }
+                loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
             });
 
     }
 
-    function loadGroupStatsPage() {
+    function loadGroupStatsPage(list_of_pokemon_objects) {
+        const main = document.querySelector("main");
+            main.innerHTML ="";
+
+        console.log(list_of_pokemon_objects);
+
+        // iterate through pokemon
+        // - create a new article element
+        // - append it to main
+        // - - append an image to article
+        // - - append types and damage relations to article
+
 
     }
 
@@ -361,12 +380,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const main = document.querySelector("main");
         main.innerHTML = "";
 
-        // --------------------------------------------------------
-        // not yet appended in html page
-        const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
-        const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
-        // --------------------------------------------------------
-
         const prev_button = document.createElement("button"); // will perform action within page to view prev pokemon
             prev_button.setAttribute("id", "prev");
             prev_button.innerHTML = "PREV";
@@ -388,6 +401,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const stats_3 = document.createElement("section"); // for stats - description
             stats_3.setAttribute("id", "stats_3");
 
+        const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
+            view_all_button.innerHTML = "View all selections";
+            view_all_button.setAttribute("id", "view_all");
+        const view_size_button = document.createElement("button"); // will invoke loadSizeComparisonPage
+            view_size_button.innerHTML = "View size comparisons";
+            // view_size_button.addEventListener();
+
         main.appendChild(prev_button);        
         main.appendChild(stats_container);
         main.appendChild(next_button);        
@@ -395,6 +415,8 @@ document.addEventListener("DOMContentLoaded", () => {
         stats_container.appendChild(sprites);
         stats_container.appendChild(main_stats_container);
         stats_container.appendChild(stats_3);
+        stats_container.appendChild(view_all_button);
+        stats_container.appendChild(view_size_button);
 
         main_stats_container.appendChild(stats_1);
         main_stats_container.appendChild(image);
