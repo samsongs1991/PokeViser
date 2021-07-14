@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function goToSearchPage() {
         body.innerHTML = ""; 
-
+        loadBackgroundVid();
         loadHeader();
         loadMainSearchPage();
         loadFooter();
@@ -129,32 +129,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadFooter() {
         const footer = document.createElement("footer");
-        const footer_list = document.createElement("ul");
+        const footer_list = document.createElement("div");
             footer_list.setAttribute("id", "footer_list");
         const contact_link = document.createElement("a");
-        const contact = document.createElement("li");
-            contact.innerHTML = "Email: samsongs1991@gmail.com";
-        const github = document.createElement("li");
+        const contact = document.createElement("p");
+            contact.innerHTML = "samsongs1991@gmail.com";
+        const github = document.createElement("p");
             github.innerHTML = "My GitHub";
         const github_link = document.createElement("a");
             github_link.setAttribute("href", "https://www.github.com/samsongs1991/PokeViser");
             github_link.appendChild(github);
-        const IP = document.createElement("li");
-            IP.innerHTML = "Pokemon IP and rights belong to Nintendo";
+        const IP = document.createElement("p");
+            IP.innerHTML = "Pokemon belongs to Nintendo";
 
             body.appendChild(footer);
             footer.appendChild(footer_list);
             contact_link.appendChild(contact);
-            footer_list.appendChild(github_link);
-            footer_list.appendChild(contact_link);
             footer_list.appendChild(IP);
+            footer_list.appendChild(contact_link);
+            footer_list.appendChild(github_link);
     }
 
     function loadMainSearchPage() {
         const selected_pokemon = {};
 
         const main = document.createElement("main");
-
+            main.setAttribute("id", "searchpage");
         const filter_container = document.createElement("section");
         const filter = document.createElement("form");
             const filter_label = document.createElement("label");
@@ -173,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
         const searchbar_container = document.createElement("section");
+            searchbar_container.setAttribute("id", "searchbar_container");
         const searchbar = document.createElement("form");
             const search_label = document.createElement("label");
                 search_label.innerHTML = "Search by name: ";
@@ -256,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click", function(event) {
                         event.preventDefault();
                         if(size(selected_pokemon) >= 6) {
-                            if(main.children.length === 5)  main.children.item(4).remove();
+                            if(main.children.length === 4)  main.children.item(3).remove();
                             const error = document.createElement("p");
                             error.setAttribute("name", "error");
                             error.innerHTML = "Cannot select more than 6 Pokemon";
@@ -267,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         } else {
                             const value = autosuggestion.innerHTML
                             if(selected_pokemon[value]) {
-                                if(main.children.length === 5)  main.children.item(4).remove();
+                                if(main.children.length === 4)  main.children.item(3).remove();
                                 const error = document.createElement("p");
                                 error.setAttribute("name", "error");
                                 error.innerHTML = "Pokemon already selected";
@@ -276,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     error.remove();
                                 }, 5000);
                             } else if(value) {
-                                if(main.children.length === 5)  main.children.item(4).remove();
+                                if(main.children.length === 4)  main.children.item(3).remove();
                                 search_input.value = "";
                                 fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
                                 .then( res => res.json())
@@ -285,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 item.innerHTML = value;
                                 selection.appendChild(item);
                             } else {
-                                if(main.children.length === 5)  main.children.item(4).remove();
+                                if(main.children.length === 4)  main.children.item(3).remove();
                                 const error = document.createElement("p");
                                 error.setAttribute("name", "error");
                                 error.innerHTML = "Invalid Pokemon name";
@@ -388,6 +389,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    function loadBackgroundVid() {
+        const body = document.querySelector("body");
+        const video = document.createElement("video");
+            video.setAttribute("autoplay", "");
+            video.setAttribute("muted", "");
+            video.setAttribute("loop", "");
+            video.setAttribute("id", "background_video");
+        const source = document.createElement("source");
+            source.setAttribute("src", "resources/pokeviser_background.mp4");
+            source.setAttribute("type", "video/mp4");
+
+        body.appendChild(video);
+        video.appendChild(source);
+    }
+    
 // -------------------------------------------------------------------------
     // function to get number of keys in the obj --> length of obj
     function size(object) {

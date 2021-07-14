@@ -1,6 +1,15 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
 #red, #black, #white, #b_circle, #w_circle {
   position: absolute;
   opacity: 1;
@@ -57,52 +66,138 @@
   height: 240px;
   width: 240px;
   cursor: pointer;
+  box-shadow: 0px 0px 200px 30px red;
 }
 
 #title {
   left: 500px;
-  top: 200px;
+  top: 90px;
   position: absolute;
   cursor: pointer;
 }
 
 #instructions_container {
   left: 500px;
-  top: 525px;
+  top: 550px;
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #instructions_text {
   width: 500px;
   text-align: center;
+  font-size: 16px;
+  font-weight: lighter;
+  color: #3b3b3b;
 }
 
 header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   display: flex;
+  height: 10%;
   justify-content: space-between;
+  background-color: black;
+  opacity: 1;
+  color: white;
 }
 
 #logo {
   width: 300px;
 }
 
+#logo:hover {
+  cursor: pointer;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+nav ul li {
+  margin: 15px;
+  font-size: 24px;
+}
+
+nav ul li:hover {
+  text-shadow: 0px 0px 10px white;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 footer {
-  position: fixed;
-  display: block;
+  position: absolute;
   bottom: 0px;
-  width: 100%;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  height: 10%;
+  justify-content: space-between;
+  background-color: black;
+  opacity: 1;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+footer:hover {
+  opacity: 1;
 }
 
 #footer_list {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
-  justify-content: space-around;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  font-weight: lighter;
+  margin-top: 13px;
 }
 
-#footer_list li {
-  width: 200px;
+#footer_list p {
+  width: 300px;
+  margin: 0;
+}
+
+#background_video {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+
+#searchpage {
+  display: flex;
+  min-width: 25%;
+  min-height: 100%;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 275px;
+}
+
+#searchpage section {
+  width: 300px;
+  height: 200px;
+  border: 2px solid #0011ff;
+  background-color: white;
+  opacity: 0.8;
+  margin: 10px;
+  border-radius: 5%;
+  transition: all 0.2s ease;
+}
+
+#searchpage section:hover {
+  opacity: 1;
 }
