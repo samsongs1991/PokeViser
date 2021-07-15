@@ -168,17 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const filter_label = document.createElement("label");
                 filter_label.innerHTML = "Filters: ";
                 filter.appendChild(filter_label);
-            for(let type in TYPES) {
-                let filter_option = document.createElement("input");
-                    filter_option.setAttribute("type", "checkbox");
-                    filter_option.setAttribute("name", type);
-                    filter_option.setAttribute("value", type);
-                let filter_option_label = document.createElement("label");
-                    filter_option_label.innerHTML = type[0].toUpperCase() + type.slice(1);
-
-                    filter.appendChild(filter_option);
-                    filter.appendChild(filter_option_label);
-            };
+            createFilterOptions(TYPES, filter);
 
         const searchbar_container = document.createElement("section");
             searchbar_container.setAttribute("id", "searchbar_container");
@@ -201,19 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     autosuggestion.setAttribute("id", "autosuggestion");
                 
                 setInterval(function() {
-                    autosuggestion.innerHTML = ""; // since the function runs on interval, empty auto suggestion to be filled if there's a match
-
-                    let filters_to_apply = [];
-                    let boxes = document.querySelectorAll("input[type='checkbox']");
-                    boxes.forEach(box => {
-                        if(box.checked) {
-                            filters_to_apply.push(box.value);
-                        }
-                    });
-
+                    autosuggestion.innerHTML = "";
+                    let filters_to_apply = getUserFilters();
                     let partial_name = search_input.value;
                     partial_name = partial_name.toLowerCase();
-
                     for(let i = 0; i < POKEMON_NAMES.length; i++) { // iterate through every pokemon
                         if(partial_name.length === 0) {
                             break;
@@ -222,15 +203,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         let current_pokemon = POKEMON_NAMES[i];
                         let current_pokemon_name = current_pokemon[0];
 
-                        if(current_pokemon_name.startsWith(partial_name)) { // if user input matches the current pokemon
-                            if(filters_to_apply.length === 0) { // no filter case
-                                if(partial_name === "mew") {
-                                    current_pokemon_name = "Mew";
-                                }
-                                if(partial_name === "pidgeot") {
-                                    current_pokemon_name = "Pidgeot";
-                                }
-                                autosuggestion.innerHTML = current_pokemon_name[0].toUpperCase() + current_pokemon_name.slice(1); // set auto suggestion
+                        if(current_pokemon_name.startsWith(partial_name)) {
+                            if(filters_to_apply.length === 0) {
+                                if(isException(partial_name, current_pokemon_name)) {
+                                    current_pokemon_name = partial_name;
+                                };
+                                autosuggestion.innerHTML = capitalize(current_pokemon_name);
                                 break;
                             } else { // filter case
                                 let exit = false;
@@ -246,10 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 } else if(partial_name === "pidgeot" && filters_to_apply.includes("flying")) {
                                     autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
                                     exit = true;
-                                } else {
+                                } 
+                                
+                                else {
                                     current_pokemon_types.forEach(type_obj => {
                                         if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                            autosuggestion.innerHTML = current_pokemon_name[0].toUpperCase() + current_pokemon_name.slice(1); // set auto suggestion
+                                            autosuggestion.innerHTML = capitalize(current_pokemon_name);
                                             exit = true;
                                         }
                                     });
@@ -270,47 +250,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 select_button.setAttribute("type", "submit");
                 select_button.setAttribute("value", "Add to list");
                 button_container.appendChild(select_button);
-                select_button.addEventListener(
-                    "click", function(event) {
+                select_button.addEventListener("click", (event) => {
                         event.preventDefault();
                         if(size(selected_pokemon) >= 6) {
-                            displayErrorListFull();
+                            displayErrorListFull(searchbar_container);
                         } else {
                             const value = autosuggestion.innerHTML;
                             if(selected_pokemon[value]) {
-                                displayErrorAlreadySelected();
-                                // if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
-                                // const error = document.createElement("p");
-                                // error.setAttribute("name", "error");
-                                // error.innerHTML = "Pokemon already selected";
-                                // searchbar_container.appendChild(error);
-                                // setTimeout(() => {
-                                //     error.remove();
-                                // }, 5000);
+                                displayErrorAlreadySelected(searchbar_container);
                             } else if(value) {
-                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
-                                search_input.value = "";
-                                fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
-                                .then( res => res.json())
-                                .then( data => selected_pokemon[value] = data);
-                                const item = document.createElement("li");
-                                    item.setAttribute("id", value);
-                                    item.addEventListener("click", (event) => {
-                                        delete selected_pokemon[value];
-                                        let remove_item = document.getElementById(value);
-                                        selection.removeChild(remove_item);
-                                    });
-                                item.innerHTML = value;
-                                selection.appendChild(item);
+                                addToList(searchbar_container, search_input, value, selected_pokemon, selection);
                             } else {
-                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
-                                const error = document.createElement("p");
-                                error.setAttribute("name", "error");
-                                error.innerHTML = "Invalid Pokemon name";
-                                searchbar_container.appendChild(error);
-                                setTimeout(() => {
-                                    error.remove();
-                                }, 5000);
+                                displayErrorInvalidName(searchbar_container);
                             }
                         }
                     }
@@ -321,6 +272,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 random_button.setAttribute("value", "Random");
                 button_container.appendChild(random_button);
                 random_button.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    // --------------------------------------------------------------------
+                    // it works but able to exceed 6 for a short time
+                    if(size(selected_pokemon) >= 6) {
+                        displayErrorListFull(searchbar_container);
+                    } else {
+                        let valid_random = false;
+                        let random_pokemon = getRandomEl(POKEMON_NAMES);
+                        while(valid_random === false) {
+                            if(selected_pokemon[capitalize(random_pokemon[0])]) {
+                                random_pokemon = getRandomEl(POKEMON_NAMES);
+                            } else {
+                                valid_random = true;
+                            }
+                        }
+                        addToList(searchbar_container, search_input, capitalize(random_pokemon[0]), selected_pokemon, selection);
+                    }
+                    // --------------------------------------------------------------------
 
                 });
 
@@ -329,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 search_button.setAttribute("value", "View stats");
                 button_container.appendChild(search_button);
                 search_button.addEventListener(
-                    "click", function(event) {
+                    "click", (event) => {
                         event.preventDefault();
                         if(size(selected_pokemon) > 0) {
                             loadIndividualStatsPage(selected_pokemon);
@@ -524,6 +494,8 @@ document.addEventListener("DOMContentLoaded", () => {
             stats_1.innerHTML = "";
             const stats_1_info = document.createElement("ul");
                 stats_1.appendChild(stats_1_info);
+            const name = document.createElement("li");
+                stats_1_info.appendChild(name);
             const flavor_text = document.createElement("li");
                 stats_1_info.appendChild(flavor_text);
             const is_baby = document.createElement("li");
@@ -589,6 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(data.species.url) // set the contents of all stats fields
         .then(res => res.json())
         .then(data => {
+            name.innerHTML = `Name: ${capitalize(data.name)}`;
             let flavor_data = data.flavor_text_entries;
             let flavor_texts = [];
             for(let i = 0; i < flavor_data.length; i++) {
@@ -597,7 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     flavor_texts.push(flavor.flavor_text);
                 }
             }
-            let random_text = getRandom(flavor_texts);
+            let random_text = getRandomEl(flavor_texts);
             flavor_text.innerHTML = `Description: ${random_text}`; // SET flavor_text
             if(data.is_baby) {
                 is_baby.innerHTML = "Baby: Yes"; // SET baby?
@@ -683,14 +656,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // get random el from the array
-    function getRandom(array) {
+    function getRandomEl(array) {
         let random_index = Math.floor(Math.random() * array.length);
         return array[random_index];
     }
 
+    // checks if there's already an error message on main search page - removes it if true 
+    function errorAlreadyExists(searchbar_container) {
+        if(searchbar_container.children.length === 3) {
+            searchbar_container.children.item(2).remove();
+        }
+    }
+
     // displays error message for "can't select more than 6 Pokemon"
-    function displayErrorListFull() {
-        if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
+    function displayErrorListFull(searchbar_container) {
+        errorAlreadyExists(searchbar_container);
         const error = document.createElement("p");
         error.setAttribute("name", "error");
         error.innerHTML = "Cannot select more than 6 Pokemon";
@@ -701,8 +681,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // displays error message for "Pokemon already selected"
-    function displayErrorAlreadySelected() {
-        if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
+    function displayErrorAlreadySelected(searchbar_container) {
+        errorAlreadyExists(searchbar_container);
         const error = document.createElement("p");
         error.setAttribute("name", "error");
         error.innerHTML = "Pokemon already selected";
@@ -710,6 +690,82 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             error.remove();
         }, 5000);
+    }
+
+    // add item to selected Pokemon list
+    function addToList(searchbar_container, search_input, value, selected_pokemon, selection) {
+        errorAlreadyExists(searchbar_container);
+        search_input.value = "";
+        fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
+        .then( res => res.json())
+        .then( data => selected_pokemon[value] = data);
+        const item = document.createElement("li");
+            item.setAttribute("id", value);
+            item.addEventListener("click", (event) => {
+                delete selected_pokemon[value];
+                let remove_item = document.getElementById(value);
+                selection.removeChild(remove_item);
+            });
+        item.innerHTML = value;
+        selection.appendChild(item);
+    }
+
+    // displays error message for "User input does match any pokemon name"
+    function displayErrorInvalidName(searchbar_container) {
+        errorAlreadyExists(searchbar_container);
+        const error = document.createElement("p");
+        error.setAttribute("name", "error");
+        error.innerHTML = "Invalid Pokemon name";
+        searchbar_container.appendChild(error);
+        setTimeout(() => {
+            error.remove();
+        }, 5000);
+    }
+
+    // creates filter options
+    function createFilterOptions(TYPES, filter) {
+        for(let type in TYPES) {
+            let filter_option = document.createElement("input");
+                filter_option.setAttribute("type", "checkbox");
+                filter_option.setAttribute("value", type);
+
+            let filter_option_label = document.createElement("label");
+                filter_option_label.innerHTML = capitalize(type);
+    
+            filter.appendChild(filter_option);
+            filter.appendChild(filter_option_label);
+        };
+    }
+
+    // returns array of user filter choices
+    function getUserFilters() {
+        let filters_to_apply = [];
+        let boxes = document.querySelectorAll("input[type='checkbox']");
+        boxes.forEach(box => {
+            if(box.checked) {
+                filters_to_apply.push(box.value);
+            }
+        });
+        
+        return filters_to_apply;
+    }
+
+    // auto suggest has bugs for specific pokemon names like "mew"
+    // it will suggest "mewtwo" instead of "mew" so there is no way to select "mew"
+    // checks if user input is an exception to the auto suggest feature
+    // if so, returns boolean 
+    function isException(partial_name, current_pokemon_name) {
+        const names = ["mew", "pidgeot"];
+        let bool = false;
+        if(names.includes(partial_name)) {
+            bool = true;
+        }
+        return bool;
+    }
+
+    // capitalizes: pokemon --> Pokemon
+    function capitalize(word) {
+        return word[0].toUpperCase() + word.slice(1).toLowerCase();
     }
 
 // -------------------------------------------------------------------------
