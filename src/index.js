@@ -1,3 +1,6 @@
+// import {loadTitlePage, goToSearchPage} from "./scripts/logic.js"; 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     // TYPES contains all Pokemon types and their hex color codes
     const TYPES = {
@@ -32,69 +35,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // -------------------------------------------------------------------------
 // initial webpage setup for user 
-    const body = document.querySelector("body");
-
     loadTitlePage();
 // -------------------------------------------------------------------------
 
     function loadTitlePage() {
         const body = document.querySelector("body");
-            body.innerHTML = ""; 
-
         const outer_container = document.createElement("div");
-            outer_container.setAttribute("id", "outer_container");
-            body.appendChild(outer_container);
-    
         const title_container = document.createElement("div");
-            title_container.setAttribute("id", "title_container");
         const title = document.createElement("img");
-            title.setAttribute("class", "hidden");
-            title.setAttribute("id", "title");
-            // title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
-            title.setAttribute("src", "resources/pokeviser_img.png");
-            title.setAttribute("alt", "Poke Viser logo");
-            
-            window.setTimeout(() => {
-                title.setAttribute("class", "load");
-            }, 1000);
-            
-            title.addEventListener("click", goToSearchPage);
-            title_container.appendChild(title);
-            outer_container.appendChild(title_container);
-    
         const instructions_container = document.createElement("div");
-            instructions_container.setAttribute("id", "instructions_container");
         const instructions = document.createElement("p");
-            instructions.setAttribute("id", "instructions");
-            instructions.innerHTML = "INSTRUCTIONS";
-            const instructions_text = document.createElement("p");
-                instructions_text.setAttribute("id", "instructions_text");
-                instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar to input the name of a Pokemon. Use the filters to tell the auto suggestor to only display Pokemon of a type you have selected. You can select up to 6 Pokemon to view and when you are ready click the VIEW STATS button to learn all about the Pokemon you selected.";
-            instructions_container.appendChild(instructions);
-            instructions_container.appendChild(instructions_text);
-            outer_container.appendChild(instructions_container);
+        const instructions_text = document.createElement("p");
 
+        body.innerHTML = ""; 
+        
+        outer_container.setAttribute("id", "outer_container");
+        title_container.setAttribute("id", "title_container");
+        title.setAttribute("class", "hidden");
+        title.setAttribute("id", "title");
+        title.setAttribute("src", "resources/pokeviser_img.png");
+        title.setAttribute("alt", "Poke Viser logo");
+        instructions_container.setAttribute("id", "instructions_container");
+        instructions.setAttribute("id", "instructions");
+        instructions_text.setAttribute("id", "instructions_text");
 
+        window.setTimeout(() => {
+            title.setAttribute("class", "load");
+        }, 1000);
+        
+        instructions.innerHTML = "INSTRUCTIONS";
+        instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar to input the name of a Pokemon. Use the filters to tell the auto suggestor to only display Pokemon of a type you have selected. You can select up to 6 Pokemon to view and when you are ready click the VIEW STATS button to learn all about the Pokemon you selected.";
+        
+        title.addEventListener("click", goToSearchPage);
+        
+        body.appendChild(outer_container);
+        outer_container.appendChild(title_container);
+        outer_container.appendChild(instructions_container);
+        title_container.appendChild(title);
+        instructions_container.appendChild(instructions);
+        instructions_container.appendChild(instructions_text);
+        
+        // background of title page for CSS purposes only
         const red_background = document.createElement("div");
-            red_background.setAttribute("id", "red");
         const black_background = document.createElement("div");
-            black_background.setAttribute("id", "black");
         const white_background = document.createElement("div");
-            white_background.setAttribute("id", "white");
         const black_circle = document.createElement("div");
-            black_circle.setAttribute("id", "b_circle");
         const white_circle = document.createElement("div");
-            white_circle.setAttribute("id", "w_circle");
-            white_circle.addEventListener("click", goToSearchPage);
 
         body.appendChild(red_background);
         body.appendChild(black_background);
         body.appendChild(white_background);
         body.appendChild(black_circle);
-        body.appendChild(white_circle);        
+        body.appendChild(white_circle);  
+
+        red_background.setAttribute("id", "red");
+        black_background.setAttribute("id", "black");
+        white_background.setAttribute("id", "white");
+        black_circle.setAttribute("id", "b_circle");
+        white_circle.setAttribute("id", "w_circle");
+
+        white_circle.addEventListener("click", goToSearchPage);
     }
 
     function goToSearchPage() {
+        const body = document.querySelector("body");
         body.innerHTML = ""; 
         loadBackgroundVid();
         loadHeader();
@@ -103,61 +107,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadHeader() {
+        const body = document.querySelector("body");
         const header = document.createElement("header");
-            body.appendChild(header);
-
         const title_container = document.createElement("div");
         const title = document.createElement("img");
-            // title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
-            title.setAttribute("src", "resources/pokeviser_img.png");
-            title.setAttribute("id", "logo");
-            title.addEventListener("click", goToSearchPage);
-            title_container.appendChild(title);
         const navbar = document.createElement("nav");
         const navlist = document.createElement("ul");
         const home = document.createElement("li");
-            home.innerHTML = "Home";
-            home.addEventListener("click", loadTitlePage);
         const search = document.createElement("li");
-            search.innerHTML = "Poke Search";
-            search.addEventListener("click", goToSearchPage);
         const about = document.createElement("li");
-            about.innerHTML = "About";
-            // Need to link the About to a separate page loading new 
-            // content with descriptions about stuff
+        
+        body.appendChild(header);
+        header.appendChild(title_container);
+        header.appendChild(navbar);
+        title_container.appendChild(title);
+        navbar.appendChild(navlist);
+        navlist.appendChild(home);
+        navlist.appendChild(search);
+        navlist.appendChild(about);
 
-            navlist.appendChild(home);
-            navlist.appendChild(search);
-            navlist.appendChild(about);
-            navbar.appendChild(navlist);
-            header.appendChild(title_container);
-            header.appendChild(navbar);
+        title.setAttribute("src", "resources/pokeviser_img.png");
+        title.setAttribute("id", "logo");
+        
+        title.addEventListener("click", goToSearchPage);
+        home.addEventListener("click", loadTitlePage);
+        search.addEventListener("click", goToSearchPage);
+            
+        home.innerHTML = "Home";
+        search.innerHTML = "Poke Search";
+        about.innerHTML = "About";
     }
 
     function loadFooter() {
+        const body = document.querySelector("body");
         const footer = document.createElement("footer");
         const footer_list = document.createElement("div");
-            footer_list.setAttribute("id", "footer_list");
-        const contact_link = document.createElement("a");
-        const contact = document.createElement("p");
-            contact.innerHTML = "samsongs1991@gmail.com";
-        const github = document.createElement("p");
-            github.innerHTML = "My GitHub";
-        const github_link = document.createElement("a");
-            github_link.setAttribute("href", "https://www.github.com/samsongs1991/PokeViser");
-            github_link.appendChild(github);
         const IP = document.createElement("p");
-            IP.innerHTML = "Pokemon belongs to Nintendo";
+        const email_link = document.createElement("a");
+        const email = document.createElement("p");
+        const github_link = document.createElement("a");
+        const github = document.createElement("p");
 
-            body.appendChild(footer);
-            footer.appendChild(footer_list);
-            contact_link.appendChild(contact);
-            footer_list.appendChild(IP);
-            footer_list.appendChild(contact_link);
-            footer_list.appendChild(github_link);
+        body.appendChild(footer);
+        footer.appendChild(footer_list);
+        footer_list.appendChild(IP);
+        footer_list.appendChild(email_link);
+        footer_list.appendChild(github_link);
+        email_link.appendChild(email);
+        github_link.appendChild(github);
+
+        footer_list.setAttribute("id", "footer_list");
+        github_link.setAttribute("href", "https://www.github.com/samsongs1991/PokeViser");
+        
+        IP.innerHTML = "Pokemon belongs to Nintendo";
+        email.innerHTML = "samsongs1991@gmail.com";
+        github.innerHTML = "My GitHub";
     }
 
     function loadMainSearchPage() {
+        const body = document.querySelector("body");
+
         const selected_pokemon = {};
 
         const main = document.createElement("main");
@@ -413,16 +422,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadBackgroundVid() {
         const body = document.querySelector("body");
         const video = document.createElement("video");
-            video.setAttribute("autoplay", "");
-            video.setAttribute("muted", "");
-            video.setAttribute("loop", "");
-            video.setAttribute("id", "background_video");
         const source = document.createElement("source");
-            source.setAttribute("src", "resources/pokeviser_background.mp4");
-            source.setAttribute("type", "video/mp4");
-
+        
         body.appendChild(video);
         video.appendChild(source);
+        
+        video.setAttribute("autoplay", "");
+        video.setAttribute("muted", "");
+        video.setAttribute("loop", "");
+        video.setAttribute("id", "background_video");
+        source.setAttribute("src", "resources/pokeviser_background.mp4");
+        source.setAttribute("type", "video/mp4");
     }
     
 // -------------------------------------------------------------------------
