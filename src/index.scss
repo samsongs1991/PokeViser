@@ -118,6 +118,8 @@ header {
     background-color: rgb(0, 0, 0);
     opacity: 1.0;
     color: white;
+    background: linear-gradient(45deg, rgb(0, 0, 0), rgb(152, 152, 172));
+
 }
 
 #logo {
@@ -161,6 +163,8 @@ footer {
     align-items: center;
     text-align: center;
     text-shadow: 0px 0px 10px rgb(255, 255, 255);
+    background: linear-gradient(45deg, rgb(0, 0, 0), rgb(152, 152, 172));
+
 }
 
 footer:hover {
@@ -209,10 +213,10 @@ footer:hover {
 #searchpage section {
     width: 300px;
     height: 200px;
-    background: linear-gradient(45deg, rgb(104, 127, 255), rgb(152, 152, 172));
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     opacity: 0.80;
     margin: 10px;
-    border-radius: 3%;
+    border-radius: 5%;
     transition: all 0.2s ease;
 }
 
@@ -249,3 +253,107 @@ footer:hover {
 
 
 // -----------------------------------------------------------
+// Individual Stats Page
+#individual_stats_page {
+    display: flex;
+}
+
+#stats_container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    align-items: center;
+}
+
+#main_stats_container {
+    display: flex;
+}
+
+#main_stats_container section {
+    width: 35%;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.75;
+    border-radius: 10% 10% 10% 10%;
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+#main_stats_container section:hover {
+    opacity: 1;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#main_stats_container img {
+    height: 380px;
+    opacity: 0.75;
+    transition: all 0.5s ease;
+}
+
+#main_stats_container img:hover {
+    height: 400px;
+    opacity: 1;
+}
+
+#main_stats_container section ul {
+    margin-right: 20px;
+}
+
+#stats_1 {
+    font-size: 14px;
+}
+
+#prev {
+    width: 10%;
+    font-weight: bold;
+}
+
+#next {
+    width: 10%;
+    font-weight: bold;
+}
+
+#sprites {
+    margin-top: 4%;
+    width: 90%;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.65;
+    border-radius: 10%;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    transition: all 0.5s ease;
+}
+
+#sprites:hover {
+    opacity: .9;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#stats_3 {
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.75;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 100px;
+    margin: 10px;
+    border-radius: 10%;
+    font-size: 0.75em;
+    display: flex;
+    justify-content: space-evenly;
+    transition: all 0.5s ease;
+}
+
+#stats_3:hover {
+    opacity: 1;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#new_view_container {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}

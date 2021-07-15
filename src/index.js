@@ -331,6 +331,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadIndividualStatsPage(list_of_pokemon_objects) {
+        const main = document.querySelector("main");
+        main.setAttribute("id", "individual_stats_page");
+
         loadIndividualStatsPage_structure();
         
         // create current_pokemon variable to keep track of what's currently being viewed
@@ -434,19 +437,23 @@ document.addEventListener("DOMContentLoaded", () => {
             next_button.innerHTML = "NEXT";
 
         const stats_container = document.createElement("div"); // container for all stats and images
+            stats_container.setAttribute("id", "stats_container");
         const sprites = document.createElement("section"); // for scrolling view of selected Pokemon
             sprites.setAttribute("id", "sprites");
         const image = document.createElement("img"); // for nice image of pokemon
             image.setAttribute("id", "image")
-            image.setAttribute("height", "500px");
+            image.setAttribute("height", "400px");
         const stats_1 = document.createElement("section"); // for stats - strengths/weaknesses
             stats_1.setAttribute("id", "stats_1");
         const stats_2 = document.createElement("section"); // for stats - atk, def, etc
             stats_2.setAttribute("id", "stats_2");
-        const main_stats_container = document.createElement("div") // for containing center row of stats1 - img - stats2        
+        const main_stats_container = document.createElement("div") // for containing center row of stats1 - img - stats2 
+            main_stats_container.setAttribute("id", "main_stats_container");       
         const stats_3 = document.createElement("section"); // for stats - description
             stats_3.setAttribute("id", "stats_3");
 
+        const new_view_container = document.createElement("div");
+            new_view_container.setAttribute("id", "new_view_container");
         const view_all_button = document.createElement("button"); // will invoke loadGroupStatsPage
             view_all_button.innerHTML = "View all selections";
             view_all_button.setAttribute("id", "view_all");
@@ -461,8 +468,9 @@ document.addEventListener("DOMContentLoaded", () => {
         stats_container.appendChild(sprites);
         stats_container.appendChild(main_stats_container);
         stats_container.appendChild(stats_3);
-        stats_container.appendChild(view_all_button);
-        stats_container.appendChild(view_size_button);
+        new_view_container.appendChild(view_all_button);
+        new_view_container.appendChild(view_size_button);
+        stats_container.appendChild(new_view_container);
 
         main_stats_container.appendChild(stats_1);
         main_stats_container.appendChild(image);
@@ -528,9 +536,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 stats_3_info.appendChild(type_1);
                 let type_1_name = data.types[0].type.name;
                 type_1.innerHTML = `Primary Type:  ${type_1_name[0].toUpperCase() + type_1_name.slice(1)}`;
+            const stats_3_info_2 = document.createElement("ul");
             const type_2 = document.createElement("li");
+                stats_3.appendChild(stats_3_info_2);
             if(data.types[1] !== undefined) {
-                stats_3_info.appendChild(type_2);
+                stats_3_info_2.appendChild(type_2);
                 let type_2_name = data.types[1].type.name;
                 type_2.innerHTML = `Secondary Type:  ${type_2_name[0].toUpperCase() + type_2_name.slice(1)}`;
             }
