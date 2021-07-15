@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             body.appendChild(outer_container);
     
         const title_container = document.createElement("div");
+            title_container.setAttribute("id", "title_container");
         const title = document.createElement("img");
             title.setAttribute("class", "hidden");
             title.setAttribute("id", "title");
@@ -263,33 +264,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 100);
                 // -----------------------------------------------------------
 
+            const button_container = document.createElement("div");
+                button_container.setAttribute("id", "button_container");
             const select_button = document.createElement("input");
                 select_button.setAttribute("type", "submit");
                 select_button.setAttribute("value", "Add to list");
-                searchbar.appendChild(select_button);
+                button_container.appendChild(select_button);
                 select_button.addEventListener(
                     "click", function(event) {
                         event.preventDefault();
                         if(size(selected_pokemon) >= 6) {
-                            if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
-                            const error = document.createElement("p");
-                            error.setAttribute("name", "error");
-                            error.innerHTML = "Cannot select more than 6 Pokemon";
-                            searchbar_container.appendChild(error);
-                            setTimeout(() => {
-                                error.remove();
-                            }, 5000);                        
+                            displayErrorListFull();
                         } else {
-                            const value = autosuggestion.innerHTML
+                            const value = autosuggestion.innerHTML;
                             if(selected_pokemon[value]) {
-                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
-                                const error = document.createElement("p");
-                                error.setAttribute("name", "error");
-                                error.innerHTML = "Pokemon already selected";
-                                searchbar_container.appendChild(error);
-                                setTimeout(() => {
-                                    error.remove();
-                                }, 5000);
+                                displayErrorAlreadySelected();
+                                // if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
+                                // const error = document.createElement("p");
+                                // error.setAttribute("name", "error");
+                                // error.innerHTML = "Pokemon already selected";
+                                // searchbar_container.appendChild(error);
+                                // setTimeout(() => {
+                                //     error.remove();
+                                // }, 5000);
                             } else if(value) {
                                 if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
                                 search_input.value = "";
@@ -297,7 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                 .then( res => res.json())
                                 .then( data => selected_pokemon[value] = data);
                                 const item = document.createElement("li");
-                                item.innerHTML = value[0].toUpperCase() + value.slice(1);
+                                    item.setAttribute("id", value);
+                                    item.addEventListener("click", (event) => {
+                                        delete selected_pokemon[value];
+                                        let remove_item = document.getElementById(value);
+                                        selection.removeChild(remove_item);
+                                    });
+                                item.innerHTML = value;
                                 selection.appendChild(item);
                             } else {
                                 if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
@@ -312,19 +315,26 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
                 );
-            const search_button = document.createElement("input");
-                    search_button.setAttribute("type", "submit");
-                    search_button.setAttribute("value", "View Stats");
-                    searchbar.appendChild(search_button);
-                    search_button.addEventListener(
-                        "click", function(event) {
-                            event.preventDefault();
 
-                            // load new page with selected pokemon stats
-                            if(size(selected_pokemon) > 0) {
-                                loadIndividualStatsPage(selected_pokemon);
-                            }
-                    });
+            const random_button = document.createElement("input");
+                random_button.setAttribute("type", "submit");
+                random_button.setAttribute("value", "Random");
+                button_container.appendChild(random_button);
+                random_button.addEventListener("click", (event) => {
+
+                });
+
+            const search_button = document.createElement("input");
+                search_button.setAttribute("type", "submit");
+                search_button.setAttribute("value", "View stats");
+                button_container.appendChild(search_button);
+                search_button.addEventListener(
+                    "click", function(event) {
+                        event.preventDefault();
+                        if(size(selected_pokemon) > 0) {
+                            loadIndividualStatsPage(selected_pokemon);
+                        }
+                }); 
 
         const selection_container = document.createElement("section");
             selection_container.setAttribute("id", "selection_container");
@@ -333,6 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             body.appendChild(main);
             filter_container.appendChild(filter);
+            searchbar.appendChild(button_container)
             searchbar_container.appendChild(searchbar);
             selection_container.appendChild(selection);
             main.appendChild(filter_container);
@@ -677,6 +688,30 @@ document.addEventListener("DOMContentLoaded", () => {
         return array[random_index];
     }
 
+    // displays error message for "can't select more than 6 Pokemon"
+    function displayErrorListFull() {
+        if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
+        const error = document.createElement("p");
+        error.setAttribute("name", "error");
+        error.innerHTML = "Cannot select more than 6 Pokemon";
+        searchbar_container.appendChild(error);
+        setTimeout(() => {
+            error.remove();
+        }, 5000);  
+    }
+
+    // displays error message for "Pokemon already selected"
+    function displayErrorAlreadySelected() {
+        if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
+        const error = document.createElement("p");
+        error.setAttribute("name", "error");
+        error.innerHTML = "Pokemon already selected";
+        searchbar_container.appendChild(error);
+        setTimeout(() => {
+            error.remove();
+        }, 5000);
+    }
+
 // -------------------------------------------------------------------------
 
 })
@@ -695,10 +730,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //
 // refactor all code
 // - especially loadMainSearchPage
-//
-// add button to remove from selected pokemon list
-//
-// check if selected pokemon list has at least 1 pokemon
 //
 // add evolution chain to stats_2
 // data.species.url --> .evolution_chain.url
