@@ -47,10 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const title_container = document.createElement("div");
         const title = document.createElement("img");
+            title.setAttribute("class", "hidden");
             title.setAttribute("id", "title");
             // title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
             title.setAttribute("src", "resources/pokeviser_img.png");
             title.setAttribute("alt", "Poke Viser logo");
+            window.addEventListener("load", (event) => {
+                title.setAttribute("class", "load");
+            });
+            
             title.addEventListener("click", goToSearchPage);
             title_container.appendChild(title);
             outer_container.appendChild(title_container);
@@ -156,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const main = document.createElement("main");
             main.setAttribute("id", "searchpage");
         const filter_container = document.createElement("section");
+            filter_container.setAttribute("id", "filter_container");
         const filter = document.createElement("form");
             const filter_label = document.createElement("label");
                 filter_label.innerHTML = "Filters: ";
@@ -188,7 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 // -----------------------------------------------------------
                 // auto suggestion code for search input
                 const autosuggestion_container = document.createElement("div");
+                    autosuggestion_container.setAttribute("id", "autosuggestion_container");
                 const autosuggestion = document.createElement("p");
+                    autosuggestion.setAttribute("id", "autosuggestion");
                 
                 setInterval(function() {
                     autosuggestion.innerHTML = ""; // since the function runs on interval, empty auto suggestion to be filled if there's a match
@@ -215,9 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         if(current_pokemon_name.startsWith(partial_name)) { // if user input matches the current pokemon
                             if(filters_to_apply.length === 0) { // no filter case
                                 if(partial_name === "mew") {
-                                    current_pokemon_name = "mew";
+                                    current_pokemon_name = "Mew";
                                 }
-                                autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
+                                autosuggestion.innerHTML = current_pokemon_name[0].toUpperCase() + current_pokemon_name.slice(1); // set auto suggestion
                                 break;
                             } else { // filter case
                                 let exit = false;
@@ -225,19 +233,17 @@ document.addEventListener("DOMContentLoaded", () => {
                                 let current_pokemon_types = current_pokemon[1];
 
                                 if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
-                                    autosuggestion.innerHTML = "mew"; // set auto suggestion
+                                    autosuggestion.innerHTML = "Mew"; // set auto suggestion
                                     exit = true;
                                 } else {
                                     current_pokemon_types.forEach(type_obj => {
                                         if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                            autosuggestion.innerHTML = current_pokemon_name; // set auto suggestion
+                                            autosuggestion.innerHTML = current_pokemon_name[0].toUpperCase() + current_pokemon_name.slice(1); // set auto suggestion
                                             exit = true;
                                         }
                                     });
                                 }
 
-
-                                
                                 if(exit) {
                                     break;
                                 }
@@ -245,8 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
                 }, 100);
-                autosuggestion_container.appendChild(autosuggestion);
-                searchbar_container.appendChild(autosuggestion_container);
                 // -----------------------------------------------------------
 
             const select_button = document.createElement("input");
@@ -279,11 +283,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else if(value) {
                                 if(main.children.length === 4)  main.children.item(3).remove();
                                 search_input.value = "";
-                                fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
+                                fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
                                 .then( res => res.json())
                                 .then( data => selected_pokemon[value] = data);
                                 const item = document.createElement("li");
-                                item.innerHTML = value;
+                                item.innerHTML = value[0].toUpperCase() + value.slice(1);
                                 selection.appendChild(item);
                             } else {
                                 if(main.children.length === 4)  main.children.item(3).remove();
@@ -311,8 +315,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
         const selection_container = document.createElement("section");
-        const selection = document.createElement("ul");
+            selection_container.setAttribute("id", "selection_container");
+        const selection = document.createElement("ol");
             
+
             body.appendChild(main);
             filter_container.appendChild(filter);
             searchbar_container.appendChild(searchbar);
@@ -320,7 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
             main.appendChild(filter_container);
             main.appendChild(searchbar_container);
             main.appendChild(selection_container);
-            
+            autosuggestion_container.appendChild(autosuggestion);
+            searchbar_container.appendChild(autosuggestion_container);
     }
 
     function loadIndividualStatsPage(list_of_pokemon_objects) {

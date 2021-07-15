@@ -1,5 +1,9 @@
 body {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Varela Round', sans-serif;
+}
+
+ul {
+    list-style: none;
 }
 
 a {
@@ -56,7 +60,7 @@ a {
     width: 250px;
     border-radius: 50%;
     background-image: linear-gradient(45deg, rgb(102, 102, 102), rgb(255, 255, 255));
-    transition: all 0.2s ease;
+    transition: all 0.70s ease;
 }
 
 #w_circle:hover {
@@ -69,10 +73,16 @@ a {
 }
 
 #title {
-    left: 500px;
+    left: 520px;
     top: 90px;
     position: absolute;
     cursor: pointer;
+    opacity: 0;
+    transition: opacity 2s ease-in;
+}
+
+#title.load {
+    opacity: 1;
 }
 
 #instructions_container {
@@ -103,7 +113,7 @@ header {
     left: 0px;
     right: 0px;
     display: flex;
-    height: 10%;
+    height: 6%;
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
     opacity: 1.0;
@@ -111,7 +121,7 @@ header {
 }
 
 #logo {
-    width: 300px;
+    width: 200px;
 }
 
 #logo:hover {
@@ -125,7 +135,8 @@ nav ul {
 }
 
 nav ul li {
-    margin: 15px;
+    margin-right: 50px;
+    margin-top: 0px;
     font-size: 24px;
 }
 
@@ -141,7 +152,7 @@ footer {
     left: 0px;
     right: 0px;
     display: flex;
-    height: 10%;
+    height: 7%;
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
     opacity: 1.0;
@@ -149,6 +160,7 @@ footer {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    text-shadow: 0px 0px 10px rgb(255, 255, 255);
 }
 
 footer:hover {
@@ -163,7 +175,7 @@ footer:hover {
     font-family:'Courier New', Courier, monospace;
     font-size: 14px;
     font-weight: lighter;
-    margin-top: 13px;
+    margin-top: 5px;
 }
 
 #footer_list p {
@@ -197,11 +209,10 @@ footer:hover {
 #searchpage section {
     width: 300px;
     height: 200px;
-    border: 2px solid rgb(0, 17, 255);
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(45deg, rgb(104, 127, 255), rgb(152, 152, 172));
     opacity: 0.80;
     margin: 10px;
-    border-radius: 5%;
+    border-radius: 3%;
     transition: all 0.2s ease;
 }
 
@@ -209,6 +220,26 @@ footer:hover {
     opacity: 1.0;
 }
 
+#selection_container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+#autosuggestion_container {
+    display: flex;
+    justify-content: center;
+}
+
+#searchbar_container form {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#filter_container {
+}
 
 
 // -----------------------------------------------------------
