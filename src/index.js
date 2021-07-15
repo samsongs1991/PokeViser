@@ -225,6 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 if(partial_name === "mew") {
                                     current_pokemon_name = "Mew";
                                 }
+                                if(partial_name === "pidgeot") {
+                                    current_pokemon_name = "Pidgeot";
+                                }
                                 autosuggestion.innerHTML = current_pokemon_name[0].toUpperCase() + current_pokemon_name.slice(1); // set auto suggestion
                                 break;
                             } else { // filter case
@@ -234,6 +237,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
                                     autosuggestion.innerHTML = "Mew"; // set auto suggestion
+                                    exit = true;
+                                } else if(partial_name === "pidgeot" && filters_to_apply.includes("normal")) {
+                                    autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
+                                    exit = true;
+                                } else if(partial_name === "pidgeot" && filters_to_apply.includes("flying")) {
+                                    autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
                                     exit = true;
                                 } else {
                                     current_pokemon_types.forEach(type_obj => {
@@ -311,7 +320,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             event.preventDefault();
 
                             // load new page with selected pokemon stats
-                            loadIndividualStatsPage(selected_pokemon);
+                            if(size(selected_pokemon) > 0) {
+                                loadIndividualStatsPage(selected_pokemon);
+                            }
                     });
 
         const selection_container = document.createElement("section");
@@ -377,7 +388,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
             });
-
+        document.addEventListener("keydown", (event) => {
+            if(event.key === "ArrowRight") {
+                let idx = name_arr.indexOf(current_pokemon);
+                if(idx === name_arr.length - 1) {
+                    current_pokemon = name_arr[0];
+                } else {
+                    current_pokemon = name_arr[idx + 1];
+                }
+                loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+            } else if(event.key === "ArrowLeft") {
+                let idx = name_arr.indexOf(current_pokemon);
+                if(idx === 0) {
+                    current_pokemon = name_arr[name_arr.length - 1];
+                } else {
+                    current_pokemon = name_arr[idx - 1];
+                }
+                loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+            }
+        });
     }
 
     function loadGroupStatsPage(list_of_pokemon_objects) {
