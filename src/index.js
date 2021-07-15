@@ -261,27 +261,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click", function(event) {
                         event.preventDefault();
                         if(size(selected_pokemon) >= 6) {
-                            if(main.children.length === 4)  main.children.item(3).remove();
+                            if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
                             const error = document.createElement("p");
                             error.setAttribute("name", "error");
                             error.innerHTML = "Cannot select more than 6 Pokemon";
-                            main.appendChild(error);
+                            searchbar_container.appendChild(error);
                             setTimeout(() => {
                                 error.remove();
                             }, 5000);                        
                         } else {
                             const value = autosuggestion.innerHTML
                             if(selected_pokemon[value]) {
-                                if(main.children.length === 4)  main.children.item(3).remove();
+                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
                                 const error = document.createElement("p");
                                 error.setAttribute("name", "error");
                                 error.innerHTML = "Pokemon already selected";
-                                main.appendChild(error);
+                                searchbar_container.appendChild(error);
                                 setTimeout(() => {
                                     error.remove();
                                 }, 5000);
                             } else if(value) {
-                                if(main.children.length === 4)  main.children.item(3).remove();
+                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
                                 search_input.value = "";
                                 fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
                                 .then( res => res.json())
@@ -290,11 +290,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                 item.innerHTML = value[0].toUpperCase() + value.slice(1);
                                 selection.appendChild(item);
                             } else {
-                                if(main.children.length === 4)  main.children.item(3).remove();
+                                if(searchbar_container.children.length === 3)  searchbar_container.children.item(2).remove();
                                 const error = document.createElement("p");
                                 error.setAttribute("name", "error");
                                 error.innerHTML = "Invalid Pokemon name";
-                                main.appendChild(error);
+                                searchbar_container.appendChild(error);
                                 setTimeout(() => {
                                     error.remove();
                                 }, 5000);

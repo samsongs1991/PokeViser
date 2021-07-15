@@ -222,6 +222,7 @@ footer:hover {
 #autosuggestion_container {
   display: flex;
   justify-content: center;
+  height: 20px;
 }
 
 #searchbar_container form {
@@ -229,4 +230,12 @@ footer:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#filter_container form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 15%;
 }
