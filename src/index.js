@@ -52,9 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // title.setAttribute("src", "https://fontmeme.com/permalink/210714/3c01a9f777551e18a4bf186dcdb73c4a.png");
             title.setAttribute("src", "resources/pokeviser_img.png");
             title.setAttribute("alt", "Poke Viser logo");
-            window.addEventListener("load", (event) => {
+            
+            window.setTimeout(() => {
                 title.setAttribute("class", "load");
-            });
+            }, 1000);
             
             title.addEventListener("click", goToSearchPage);
             title_container.appendChild(title);
