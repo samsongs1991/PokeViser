@@ -30,9 +30,6 @@ const TYPES = {
 // [name, array of types --> types.type.name (1 or 2 items)]
 const POKEMON_NAMES = []; // instead of making 900 calls, find an API with list of all current pokemon and make 1 call
 for(let i = 1; i <= 898; i++) {
-
-    if(i === 1) console.log("Loop to get POKEMON_NAMES is running")
-
     fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
     .then(res => res.json())
     .then(data => POKEMON_NAMES.push([data.name, data.types]));
