@@ -2,10 +2,6 @@
 import { loadTitlePage } from './title_page'
 
 document.addEventListener("DOMContentLoaded", () => {
-
-
-// -------------------------------------------------------------------------
-// initial webpage setup for user 
     loadTitlePage();
 // -------------------------------------------------------------------------
 
