@@ -4,7 +4,7 @@ import { createPokeball } from './presentation'
 // For goToSearchPage
 import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
-import { loadMainSearchPage } from './search_page'
+import { cachePokemon, loadMainSearchPage, POKEMON } from './search_page'
 import { loadFooter } from './footer'
 
 export function loadTitlePage() {
@@ -56,6 +56,9 @@ export function loadTitlePage() {
 }
 
 export function goToSearchPage() {
+    cachePokemon(POKEMON);
+    // make a loading page
+    // have it run until POKEMON is fully populated
     const body = document.querySelector("body");
     body.innerHTML = ""; 
     loadBackgroundVid();

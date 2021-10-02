@@ -28,6 +28,18 @@ const TYPES = {
 
 // POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
 // [name, array of types --> types.type.name (1 or 2 items)]
+export let POKEMON = {}
+
+export function cachePokemon(cache) {
+    if(cache[1] === undefined) {
+        for(let i = 1; i <= 898; i++) {
+            fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+            .then(res => res.json())
+            .then(data => cache[i] = data);
+        }
+    }
+}
+
 const POKEMON_NAMES = []; // instead of making 900 calls, find an API with list of all current pokemon and make 1 call
 for(let i = 1; i <= 898; i++) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
@@ -36,12 +48,15 @@ for(let i = 1; i <= 898; i++) {
 }
 
 export function loadMainSearchPage() {
-    const body = document.querySelector("body");
-
     const selected_pokemon = {};
-
+    
+    const body = document.querySelector("body");
+    
+    // Create html elements and set attributes
     const main = document.createElement("main");
         main.setAttribute("id", "searchpage");
+
+    // Create html elements and set attributes - Container for filter options
     const filter_container = document.createElement("section");
         filter_container.setAttribute("id", "filter_container");
     const filter = document.createElement("form");
@@ -50,6 +65,7 @@ export function loadMainSearchPage() {
             filter.appendChild(filter_label);
         createFilterOptions(TYPES, filter);
 
+    // Create html elements and set attributes - Container for search bar
     const searchbar_container = document.createElement("section");
         searchbar_container.setAttribute("id", "searchbar_container");
     const searchbar = document.createElement("form");
@@ -186,21 +202,22 @@ export function loadMainSearchPage() {
                     }
             }); 
 
+    // Create html elements and set attributes - Container for user Pokemon selections
     const selection_container = document.createElement("section");
         selection_container.setAttribute("id", "selection_container");
     const selection = document.createElement("ol");
         
-
-        body.appendChild(main);
-        filter_container.appendChild(filter);
-        searchbar.appendChild(button_container)
-        searchbar_container.appendChild(searchbar);
-        selection_container.appendChild(selection);
-        main.appendChild(filter_container);
-        main.appendChild(searchbar_container);
-        main.appendChild(selection_container);
-        autosuggestion_container.appendChild(autosuggestion);
-        searchbar_container.appendChild(autosuggestion_container);
+    // Setup html relationships to create skeleton
+    body.appendChild(main);
+    filter_container.appendChild(filter);
+    searchbar.appendChild(button_container)
+    searchbar_container.appendChild(searchbar);
+    selection_container.appendChild(selection);
+    main.appendChild(filter_container);
+    main.appendChild(searchbar_container);
+    main.appendChild(selection_container);
+    autosuggestion_container.appendChild(autosuggestion);
+    searchbar_container.appendChild(autosuggestion_container);
 }
 
 
