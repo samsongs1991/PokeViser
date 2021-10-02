@@ -52,6 +52,7 @@ export function loadMainSearchPage() {
     const main = document.createElement("main");
 
     main.setAttribute("id", "searchpage");
+    
     body.appendChild(main);
     
     loadFilterContainer(main);
