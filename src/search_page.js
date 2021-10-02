@@ -62,7 +62,6 @@ export function loadMainSearchPage() {
 // =====================================================================================
 // =====================================================================================
 
-
 // Creates html elements for the filter container and appends them to passed html element
 function loadFilterContainer(main) {
     const filter_container = document.createElement("section");
@@ -235,7 +234,6 @@ function loadSearchContainer(main) {
             }
     }); 
 }
-
 
 // checks if there's already an error message on main search page - removes it if true 
 function errorAlreadyExists(search_container) {
