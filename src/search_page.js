@@ -28,7 +28,7 @@ const TYPES = {
 
 // POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
 // [name, array of types --> types.type.name (1 or 2 items)]
-export const POKEMON = {}
+export const POKEMON = { "size": 0 }
 
 export function cachePokemon(cache) {
     if(cache[1] === undefined) {
@@ -36,6 +36,7 @@ export function cachePokemon(cache) {
             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
             .then(res => res.json())
             .then(data => cache[i] = data);
+            cache.size++;
         }
     }
 }
@@ -122,26 +123,26 @@ function loadSearchContainer(main) {
         let filters_to_apply = getUserFilters();
         let partial_name = search_input.value;
         partial_name = partial_name.toLowerCase();
-        for(let i = 0; i < POKEMON_NAMES.length; i++) { // iterate through every pokemon
+        for(let i = 1; i < POKEMON.size; i++) { // iterate through every pokemon
+            // Exit the loop if user hasn't input anything
             if(partial_name.length === 0) {
                 break;
             }
 
-            let current_pokemon = POKEMON_NAMES[i];
-            let current_pokemon_name = current_pokemon[0];
+            let current_pokemon = POKEMON[i];
 
-            if(current_pokemon_name.startsWith(partial_name)) {
+            if(current_pokemon.name.startsWith(partial_name)) {
                 if(filters_to_apply.length === 0) {
                     if(isException(partial_name)) {
-                        current_pokemon_name = partial_name;
-                    };
-                    autosuggestion.innerHTML = capitalize(current_pokemon_name);
+                        autosuggestion.innerHTML = capitalize(partial_name);
+                    } else {
+                        autosuggestion.innerHTML = capitalize(current_pokemon.name);
+                    }
                     break;
                 } else { // filter case
                     let exit = false;
                 
-                    let current_pokemon_types = current_pokemon[1];
-
+                    // Edge cases of pokemon names that another pokemon has within their own name => "Mew" and "Mewtwo" or "Pidgeot" and "Pidgeoto"
                     if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
                         autosuggestion.innerHTML = "Mew"; // set auto suggestion
                         exit = true;
@@ -152,11 +153,11 @@ function loadSearchContainer(main) {
                         autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
                         exit = true;
                     } 
-                    
+
                     else {
-                        current_pokemon_types.forEach(type_obj => {
+                        current_pokemon.types.forEach(type_obj => {
                             if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                autosuggestion.innerHTML = capitalize(current_pokemon_name);
+                                autosuggestion.innerHTML = capitalize(current_pokemon.name);
                                 exit = true;
                             }
                         });
