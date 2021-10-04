@@ -180,10 +180,9 @@ function handleAutoSuggestion() {
             if(current_pokemon.name.startsWith(partial_name)) {
                 if(filters_to_apply.length === 0) {
                     if(isException(partial_name)) {
-                        autosuggestion.innerHTML = capitalize(partial_name);
+                        autosuggestion.innerHTML = `#${convertNameToId(partial_name)}. ${capitalize(partial_name)}`;
                     } else {
-                        autosuggestion.innerHTML = capitalize(current_pokemon.name);
-                        // autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
+                        autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
                     }
                     break;
                 } else { // filter case
@@ -204,7 +203,7 @@ function handleAutoSuggestion() {
                     else {
                         current_pokemon.types.forEach(type_obj => {
                             if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                autosuggestion.innerHTML = capitalize(current_pokemon.name);
+                                autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
                                 exit = true;
                             }
                         });
@@ -229,10 +228,11 @@ function handleSelectPokemon(selected_pokemon) {
     if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
     } else {
-        const value = autosuggestion.innerHTML;
-        if(selected_pokemon[value]) {
+        const value = autosuggestion.innerHTML.split(" ");
+        value[0] = value[0].slice(1, value[0].length - 1);
+        if(selected_pokemon[value[0]]) {
             displayErrorAlreadySelected(search_container);
-        } else if(value) {
+        } else if(value[1]) {
             addToList(search_container, search_input, value, selected_pokemon, selection);
         } else {
             displayErrorInvalidName(search_container);
@@ -254,7 +254,8 @@ function handleRandomPokemon(selected_pokemon) {
                 valid_random = true;
             }
         }
-        addToList(search_container, search_input, capitalize(random_pokemon.name), selected_pokemon, selection);
+        const value = [random_pokemon.id, capitalize(random_pokemon.name)]
+        addToList(search_container, search_input, value, selected_pokemon, selection);
     }
 }
 
@@ -294,17 +295,18 @@ function addToList(search_container, search_input, value, selected_pokemon, sele
     errorAlreadyExists(search_container);
     search_input.value = "";
     selected_pokemon.size++;
-    let id = convertNameToId(value);
-    selected_pokemon[value] = id;
+    let id = value[0];
+    let name = value[1];
+    selected_pokemon[id] = name;
     const item = document.createElement("li");
-    item.setAttribute("id", value);
+    item.setAttribute("id", name);
     item.addEventListener("click", () => {
-        delete selected_pokemon[value];
+        delete selected_pokemon[id];
         selected_pokemon.size--;
-        let remove_item = document.getElementById(value);
+        let remove_item = document.getElementById(name);
         selection.removeChild(remove_item);
     });
-    item.innerHTML = value;
+    item.innerHTML = name;
     selection.appendChild(item);
 }
 
