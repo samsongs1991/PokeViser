@@ -4,7 +4,7 @@
 
 // Returns capitalized word from passed string: pokemon --> Pokemon
 export function capitalize(word) {
-    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+    return word[0].toUpperCase() + word.slice(1);
 }
 
 // Returns number of keys in the object

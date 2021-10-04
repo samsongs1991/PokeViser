@@ -153,7 +153,7 @@ function loadSearchContainer(main) {
     });
     search_button.addEventListener("click", (event) => {
         event.preventDefault();
-        if(size(selected_pokemon) > 0) {
+        if(selected_pokemon.size > 0) {
             loadIndividualStatsPage(selected_pokemon);
         }
     }); 
@@ -225,7 +225,7 @@ function handleSelectPokemon(selected_pokemon) {
     const search_input = document.getElementById("search_input");
     const selection = document.getElementById("selection");
 
-    if(size(selected_pokemon) >= 6) {
+    if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
     } else {
         const value = autosuggestion.innerHTML;
@@ -241,7 +241,7 @@ function handleSelectPokemon(selected_pokemon) {
 
 // Handle adding random pokemon to selection list
 function handleRandomPokemon(selected_pokemon) {
-    if(size(selected_pokemon) >= 6) {
+    if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
     } else {
         let valid_random = false;
@@ -256,8 +256,6 @@ function handleRandomPokemon(selected_pokemon) {
         addToList(search_container, search_input, capitalize(random_pokemon.name), selected_pokemon, selection);
     }
 }
-
-
 
 // checks if there's already an error message on main search page - removes it if true 
 function errorAlreadyExists(search_container) {
@@ -293,18 +291,27 @@ function displayErrorAlreadySelected(search_container) {
 // add item to selected Pokemon list
 function addToList(search_container, search_input, value, selected_pokemon, selection) {
     errorAlreadyExists(search_container);
+
     search_input.value = "";
-    fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
-    .then( res => res.json())
-    .then( data => selected_pokemon[value] = data);
+
+    // fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
+    // .then( res => res.json())
+    // .then( data => selected_pokemon[value] = data);
+
     const item = document.createElement("li");
-        item.setAttribute("id", value);
-        item.addEventListener("click", (event) => {
-            delete selected_pokemon[value];
-            let remove_item = document.getElementById(value);
-            selection.removeChild(remove_item);
-        });
+
+    item.setAttribute("id", value);
+    
+    selected_pokemon.size++;
+    item.addEventListener("click", (event) => {
+        delete selected_pokemon[value];
+        selected_pokemon.size--;
+        let remove_item = document.getElementById(value);
+        selection.removeChild(remove_item);
+    });
+    
     item.innerHTML = value;
+    
     selection.appendChild(item);
 }
 
