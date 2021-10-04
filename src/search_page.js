@@ -1,5 +1,5 @@
 // Helper methods
-import { capitalize, size, getRandomEl } from './helpers'
+import { capitalize, size, getRandomEl, convertNameToId } from './helpers'
 
 // To load show page
 import { loadIndividualStatsPage } from './show_page'
@@ -183,6 +183,7 @@ function handleAutoSuggestion() {
                         autosuggestion.innerHTML = capitalize(partial_name);
                     } else {
                         autosuggestion.innerHTML = capitalize(current_pokemon.name);
+                        // autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
                     }
                     break;
                 } else { // filter case
@@ -291,27 +292,19 @@ function displayErrorAlreadySelected(search_container) {
 // add item to selected Pokemon list
 function addToList(search_container, search_input, value, selected_pokemon, selection) {
     errorAlreadyExists(search_container);
-
     search_input.value = "";
-
-    // fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}/`)
-    // .then( res => res.json())
-    // .then( data => selected_pokemon[value] = data);
-
-    const item = document.createElement("li");
-
-    item.setAttribute("id", value);
-    
     selected_pokemon.size++;
-    item.addEventListener("click", (event) => {
+    let id = convertNameToId(value);
+    selected_pokemon[value] = id;
+    const item = document.createElement("li");
+    item.setAttribute("id", value);
+    item.addEventListener("click", () => {
         delete selected_pokemon[value];
         selected_pokemon.size--;
         let remove_item = document.getElementById(value);
         selection.removeChild(remove_item);
     });
-    
     item.innerHTML = value;
-    
     selection.appendChild(item);
 }
 
