@@ -1,8 +1,16 @@
+// ====================================================
+// ================= I M P O R T S ====================
+// ====================================================
+
 // Helper methods
-import { capitalize, size, getRandomEl, convertNameToId } from './helpers'
+import { capitalize, getRandomEl, convertNameToId } from './helpers'
 
 // To load show page
 import { loadIndividualStatsPage } from './show_page'
+
+// ====================================================
+// =============== C O N S T A N T S ==================
+// ====================================================
 
 // TYPES contains all Pokemon types and their hex color codes
 const TYPES = {
@@ -26,10 +34,11 @@ const TYPES = {
     "fairy": "E397D1"
 };
 
-// POKEMON_NAMES is an array of all 898 pokemon names in a lowercased string
-// [name, array of types --> types.type.name (1 or 2 items)]
+// POKEMON contains it's own "size" as well as pokemon ids for 
+// keys with all data for that pokemon as an object for the values
 export const POKEMON = { "size": 0 }
 
+// Loads all the pokemon into POKEMON storage
 export function cachePokemon(cache) {
     if(cache[1] === undefined) {
         for(let i = 1; i <= 898; i++) {
@@ -41,12 +50,10 @@ export function cachePokemon(cache) {
     }
 }
 
-const POKEMON_NAMES = []; // instead of making 900 calls, find an API with list of all current pokemon and make 1 call
-for(let i = 1; i <= 898; i++) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-    .then(res => res.json())
-    .then(data => POKEMON_NAMES.push([data.name, data.types]));
-}
+// ====================================================
+// ===================== M A I N ======================
+// =================== E X P O R T ====================
+// ====================================================
 
 export function loadMainSearchPage() {
     const body = document.querySelector("body");
@@ -60,11 +67,12 @@ export function loadMainSearchPage() {
     loadSearchContainer(main);
 }
 
-// =====================================================================================
-// =====================================================================================
-// =====================================================================================
+// ====================================================
+// =================== H E L P E R ====================
+// ================== M E T H O D S ===================
+// ====================================================
 
-// Creates html elements for the filter container and appends them to passed html element
+// Setup html elements for the filter container
 function loadFilterContainer(main) {
     const filter_container = document.createElement("section");
     const filter = document.createElement("form");
@@ -80,6 +88,7 @@ function loadFilterContainer(main) {
     createFilterOptions(TYPES, filter);
 }
 
+// Setup html elements for the search containers
 function loadSearchContainer(main) {
     const search_container = document.createElement("section");
     const search_form = document.createElement("form");
@@ -159,8 +168,7 @@ function loadSearchContainer(main) {
     }); 
 }
 
-
-// Handle population of autosuggestion html element for the setInterval fn
+// Handle population of autosuggestion html element in the setInterval fn
 function handleAutoSuggestion() {
     const autosuggestion = document.getElementById("autosuggestion");
     const search_input = document.getElementById("search_input");
@@ -222,8 +230,6 @@ function handleAutoSuggestion() {
 function handleSelectPokemon(selected_pokemon) {
     const search_container = document.getElementById("search_container");
     const autosuggestion = document.getElementById("autosuggestion");
-    const search_input = document.getElementById("search_input");
-    const selection = document.getElementById("selection");
 
     if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
@@ -233,7 +239,7 @@ function handleSelectPokemon(selected_pokemon) {
         if(selected_pokemon[value[0]]) {
             displayErrorAlreadySelected(search_container);
         } else if(value[1]) {
-            addToList(search_container, search_input, value, selected_pokemon, selection);
+            addToList(value, selected_pokemon);
         } else {
             displayErrorInvalidName(search_container);
         }
@@ -255,49 +261,24 @@ function handleRandomPokemon(selected_pokemon) {
             }
         }
         const value = [random_pokemon.id, capitalize(random_pokemon.name)]
-        addToList(search_container, search_input, value, selected_pokemon, selection);
+        addToList(value, selected_pokemon);
     }
 }
 
-// checks if there's already an error message on main search page - removes it if true 
-function errorAlreadyExists(search_container) {
-    if(search_container.children.length === 3) {
-        search_container.children.item(2).remove();
-    }
-}
+// Add { id: name } to selected_pokemon
+function addToList(value, selected_pokemon) {
+    const search_container = document.getElementById("search_container");
+    const search_input = document.getElementById("search_input");
+    const selection = document.getElementById("selection");
 
-// displays error message for "can't select more than 6 Pokemon"
-function displayErrorListFull(search_container) {
-    errorAlreadyExists(search_container);
-    const error = document.createElement("p");
-    error.setAttribute("name", "error");
-    error.innerHTML = "Cannot select more than 6 Pokemon";
-    search_container.appendChild(error);
-    setTimeout(() => {
-        error.remove();
-    }, 5000);  
-}
-
-// displays error message for "Pokemon already selected"
-function displayErrorAlreadySelected(search_container) {
-    errorAlreadyExists(search_container);
-    const error = document.createElement("p");
-    error.setAttribute("name", "error");
-    error.innerHTML = "Pokemon already selected";
-    search_container.appendChild(error);
-    setTimeout(() => {
-        error.remove();
-    }, 5000);
-}
-
-// add item to selected Pokemon list
-function addToList(search_container, search_input, value, selected_pokemon, selection) {
     errorAlreadyExists(search_container);
     search_input.value = "";
     selected_pokemon.size++;
+
     let id = value[0];
     let name = value[1];
     selected_pokemon[id] = name;
+    
     const item = document.createElement("li");
     item.setAttribute("id", name);
     item.addEventListener("click", () => {
@@ -310,7 +291,38 @@ function addToList(search_container, search_input, value, selected_pokemon, sele
     selection.appendChild(item);
 }
 
-// displays error message for "User input does match any pokemon name"
+// Remove error message for user if one already exists 
+function errorAlreadyExists(search_container) {
+    if(search_container.children.length === 3) {
+        search_container.children.item(2).remove();
+    }
+}
+
+// Displays error "Can't select more than 6 Pokemon"
+function displayErrorListFull(search_container) {
+    errorAlreadyExists(search_container);
+    const error = document.createElement("p");
+    error.setAttribute("name", "error");
+    error.innerHTML = "Cannot select more than 6 Pokemon";
+    search_container.appendChild(error);
+    setTimeout(() => {
+        error.remove();
+    }, 5000);  
+}
+
+// Displays error "Pokemon already selected"
+function displayErrorAlreadySelected(search_container) {
+    errorAlreadyExists(search_container);
+    const error = document.createElement("p");
+    error.setAttribute("name", "error");
+    error.innerHTML = "Pokemon already selected";
+    search_container.appendChild(error);
+    setTimeout(() => {
+        error.remove();
+    }, 5000);
+}
+
+// Displays error "User input does match any pokemon name"
 function displayErrorInvalidName(search_container) {
     errorAlreadyExists(search_container);
     const error = document.createElement("p");
@@ -322,7 +334,7 @@ function displayErrorInvalidName(search_container) {
     }, 5000);
 }
 
-// creates filter options
+// Setup filter options in filter_container
 function createFilterOptions(TYPES, filter) {
     for(let type in TYPES) {
         let filter_option = document.createElement("input");
@@ -337,7 +349,7 @@ function createFilterOptions(TYPES, filter) {
     };
 }
 
-// returns array of user filter choices
+// Returns array of user filter inputs
 function getUserFilters() {
     let filters_to_apply = [];
     let boxes = document.querySelectorAll("input[type='checkbox']");
@@ -350,10 +362,9 @@ function getUserFilters() {
     return filters_to_apply;
 }
 
-// auto suggest has bugs for specific pokemon names like "mew"
-// it will suggest "mewtwo" instead of "mew" so there is no way to select "mew"
-// checks if user input is an exception to the auto suggest feature
-// if so, returns boolean 
+// Auto suggest has bugs for specific pokemon names like "mew".
+// It will suggest "mewtwo" instead of "mew" so there is no way to select "mew".
+// If user input is an exception, returns true.
 function isException(partial_name) {
     const names = ["mew", "pidgeot"];
     let bool = false;
