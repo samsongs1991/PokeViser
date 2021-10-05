@@ -1,10 +1,12 @@
+import { POKEMON } from './search_page.js'
+
 // ===============================
 // ==== Custom helper methods ====
 // ===============================
 
 // Returns capitalized word from passed string: pokemon --> Pokemon
 export function capitalize(word) {
-    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+    return word[0].toUpperCase() + word.slice(1);
 }
 
 // Returns number of keys in the object
@@ -16,8 +18,19 @@ export function size(object) {
     return count;
 }
 
-// Returns random element from passed array
-export function getRandomEl(array) {
-    let random_index = Math.floor(Math.random() * array.length);
-    return array[random_index];
+// Returns random element from passed array / object
+export function getRandomEl(store) {
+    let random_index = 0;
+    let max = Array.isArray(store) ? max = store.length : max = store.size;
+    random_index = Math.floor((Math.random() * max) + 1);
+    return store[random_index];
+}
+
+// Returns the ID corresponding to the pokemon name
+export function convertNameToId(name) {
+    for(let k in POKEMON) {
+        if(POKEMON[k].name === name.toLowerCase()) {
+            return k;
+        }
+    }
 }

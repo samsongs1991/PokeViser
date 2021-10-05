@@ -1,3 +1,7 @@
+// ====================================================
+// ================= I M P O R T S ====================
+// ====================================================
+
 // For loadTitlePage
 import { createPokeball } from './presentation'
 
@@ -6,6 +10,11 @@ import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
 import { cachePokemon, loadMainSearchPage, POKEMON } from './search_page'
 import { loadFooter } from './footer'
+
+// ====================================================
+// ===================== M A I N ======================
+// ================== E X P O R T S ===================
+// ====================================================
 
 export function loadTitlePage() {
     // Create all elements needed for title page
