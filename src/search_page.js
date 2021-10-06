@@ -6,7 +6,7 @@
 import { capitalize, getRandomEl, convertNameToId } from './helpers'
 
 // To load show page
-import { loadIndividualStatsPage } from './show_page'
+import { loadShowPage } from './show_page'
 
 // ====================================================
 // =============== C O N S T A N T S ==================
@@ -163,7 +163,7 @@ function loadSearchContainer(main) {
     search_button.addEventListener("click", (event) => {
         event.preventDefault();
         if(selected_pokemon.size > 0) {
-            loadIndividualStatsPage(selected_pokemon);
+            loadShowPage(selected_pokemon);
         }
     }); 
 }
