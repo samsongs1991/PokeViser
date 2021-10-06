@@ -118,7 +118,7 @@ function loadSearchContainer(main) {
     //================================================================== 
     // =================== AUTO SUGGESTION FEATURE =====================
     //==================================================================
-    const selected_pokemon = { "size": 0 };
+    const selected_pokemon = { "size": 0, "selection": {} };
 
     const autosuggestion_container = document.createElement("div");
     const autosuggestion = document.createElement("p");
@@ -265,7 +265,7 @@ function handleRandomPokemon(selected_pokemon) {
     }
 }
 
-// Add { id: name } to selected_pokemon
+// Add { id: name } to selected_pokemon.selection
 function addToList(value, selected_pokemon) {
     const search_container = document.getElementById("search_container");
     const search_input = document.getElementById("search_input");
@@ -277,12 +277,12 @@ function addToList(value, selected_pokemon) {
 
     let id = value[0];
     let name = value[1];
-    selected_pokemon[id] = name;
+    selected_pokemon.selection[id] = name;
     
     const item = document.createElement("li");
     item.setAttribute("id", name);
     item.addEventListener("click", () => {
-        delete selected_pokemon[id];
+        delete selected_pokemon.selection[id];
         selected_pokemon.size--;
         let remove_item = document.getElementById(name);
         selection.removeChild(remove_item);

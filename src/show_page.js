@@ -1,72 +1,85 @@
-// Helper methods
-import { capitalize, size, getRandomEl } from './helpers'
+// ====================================================
+// ================= I M P O R T S ====================
+// ====================================================
 
-export function loadIndividualStatsPage(list_of_pokemon_objects) {
+// Helper methods
+import { capitalize, getRandomEl } from './helpers'
+
+// Cache of pokemon data
+import { POKEMON } from './search_page'
+
+// ====================================================
+// ===================== M A I N ======================
+// =================== E X P O R T ====================
+// ====================================================
+
+export function loadIndividualStatsPage(selected_pokemon) {
     const main = document.querySelector("main");
     main.setAttribute("id", "individual_stats_page");
 
     loadIndividualStatsPage_structure();
     
-    // create current_pokemon variable to keep track of what's currently being viewed
-    // prev/next button will cycle through list of pokemon and change what is current_pokemon
     const sprites = document.getElementById("sprites");
-    for(let pokemon_name in list_of_pokemon_objects) { // load sprites
-        let pokemon = list_of_pokemon_objects[pokemon_name];
+    for(let id in selected_pokemon.selection) { // load sprites
+        let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
         let sprite_img = document.createElement("img");
         sprite_img.setAttribute("src", img_url);
         sprites.appendChild(sprite_img);
     }
 
-    const name_arr = Object.keys(list_of_pokemon_objects);
-    let current_pokemon = name_arr[0];
+    const ids = Object.keys(selected_pokemon.selection);
+    let current_pokemon = POKEMON[ids[0]];
 
-    loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+    loadIndividualStats(current_pokemon);
     const view_all_button = document.getElementById("view_all");
     view_all_button.addEventListener("click", (event) => {
-        loadGroupStatsPage(list_of_pokemon_objects);
+        loadGroupStatsPage(selected_pokemon);
     });
 
-    
     const prev_button = document.getElementById("prev");
         prev_button.addEventListener("click", (event) => {
-            let idx = name_arr.indexOf(current_pokemon);
-            if(idx === 0) {
-                current_pokemon = name_arr[name_arr.length - 1];
-            } else {
-                current_pokemon = name_arr[idx - 1];
-            }
-            loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+            current_pokemon = handlePrevNext(ids, current_pokemon, event.target.id);
         });
     const next_button = document.getElementById("next");
         next_button.addEventListener("click", (event) => {
-            let idx = name_arr.indexOf(current_pokemon);
-            if(idx === name_arr.length - 1) {
-                current_pokemon = name_arr[0];
-            } else {
-                current_pokemon = name_arr[idx + 1];
-            }
-            loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+            current_pokemon = handlePrevNext(ids, current_pokemon, event.target.id);
         });
     document.addEventListener("keydown", (event) => {
-        if(event.key === "ArrowRight") {
-            let idx = name_arr.indexOf(current_pokemon);
-            if(idx === name_arr.length - 1) {
-                current_pokemon = name_arr[0];
-            } else {
-                current_pokemon = name_arr[idx + 1];
-            }
-            loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
-        } else if(event.key === "ArrowLeft") {
-            let idx = name_arr.indexOf(current_pokemon);
-            if(idx === 0) {
-                current_pokemon = name_arr[name_arr.length - 1];
-            } else {
-                current_pokemon = name_arr[idx - 1];
-            }
-            loadIndividualStats(list_of_pokemon_objects[current_pokemon]);
+        if(event.key === "ArrowLeft") {
+            current_pokemon = handlePrevNext(ids, current_pokemon, "prev");
+        } else if(event.key === "ArrowRight") {
+            current_pokemon = handlePrevNext(ids, current_pokemon, "next");
         }
     });
+}
+
+// ====================================================
+// =================== H E L P E R ====================
+// ================== M E T H O D S ===================
+// ====================================================
+
+// Handle prev/next button clicks => Return new current pokemon
+function handlePrevNext(ids, current_pokemon, type) {
+    let idx = ids.indexOf(current_pokemon.id.toString());
+
+    if(type === "next") {
+        if(idx === ids.length - 1) {
+            current_pokemon = POKEMON[ids[0]];
+        } else {
+            current_pokemon = POKEMON[ids[idx + 1]];
+        }
+    } else if(type === "prev") {
+        if(idx === 0) {
+            current_pokemon = POKEMON[ids[ids.length - 1]];
+        } else {
+            current_pokemon = POKEMON[ids[idx - 1]];
+        }
+    }
+
+    loadIndividualStats(current_pokemon);
+
+    return current_pokemon;
 }
 
 function loadGroupStatsPage(list_of_pokemon_objects) {
@@ -83,9 +96,6 @@ function loadGroupStatsPage(list_of_pokemon_objects) {
 
 
 }
-
-// -------------------------------------------------------------------------
-
 
 // function to load html structure of individual stats page
 function loadIndividualStatsPage_structure() {
