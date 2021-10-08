@@ -9,6 +9,13 @@ import { capitalize, getRandomEl } from './helpers'
 import { POKEMON } from './search_page'
 
 // ====================================================
+// =============== C O N S T A N T S ==================
+// ====================================================
+
+// Cache of description and damage data for every searched pokemon
+export const SELECTION_DATA = {};
+
+// ====================================================
 // ===================== M A I N ======================
 // =================== E X P O R T ====================
 // ====================================================
@@ -21,13 +28,13 @@ export async function loadShowPage(selected_pokemon) {
     loadShowPage_structure();
 
     const ids = Object.keys(selected_pokemon.selection);
-    const selection_data = await fetchStats(ids);
+    await fetchStats(ids, SELECTION_DATA);
 
     let current_pokemon = POKEMON[ids[0]];
-    current_pokemon = setupPrevNext(current_pokemon, ids, selection_data);
+    current_pokemon = setupPrevNext(current_pokemon, ids);
 
     loadSprites(selected_pokemon);
-    loadShowContent(current_pokemon, selection_data);
+    loadShowContent(current_pokemon);
 
     // const view_all_button = document.getElementById("view_all");
     // view_all_button.addEventListener("click", (event) => {
@@ -95,68 +102,52 @@ function loadShowPage_structure() {
 
 // Fetch data for selected pokemon and cache
 async function fetchStats(ids) {
-    const selection_data = {};
     for(let i = 0; i < ids.length; i++) {
-        selection_data[ids[i]] = { details: null, damage: { 0: null, 1: null} };
-        await fetch(POKEMON[ids[i]].species.url)
-        .then(res => res.json())
-        .then(data => selection_data[ids[i]].details = data)
-        
-        for(let j = 0; j < 2; j++) {
-            if(POKEMON[ids[i]].types[j] !== undefined) {
-                await fetch(POKEMON[ids[i]].types[j].type.url)
-                .then(res => res.json())
-                .then(data => {
-                    selection_data[ids[i]].damage[j] = data
-                })
+        if(SELECTION_DATA[ids[i]] === undefined) {
+            SELECTION_DATA[ids[i]] = { details: null, damage: { 0: null, 1: null} };
+            await fetch(POKEMON[ids[i]].species.url)
+            .then(res => res.json())
+            .then(data => SELECTION_DATA[ids[i]].details = data)
+            
+            for(let j = 0; j < 2; j++) {
+                if(POKEMON[ids[i]].types[j] !== undefined) {
+                    await fetch(POKEMON[ids[i]].types[j].type.url)
+                    .then(res => res.json())
+                    .then(data => {
+                        SELECTION_DATA[ids[i]].damage[j] = data
+                    })
+                }
             }
         }
     }
-    return selection_data;
 }
 
 // Add event listeners to the prev and next buttons
-function setupPrevNext(current_pokemon, ids, selection_data) {
+function setupPrevNext(current_pokemon, ids) {
     const prev_button = document.getElementById("prev");
     const next_button = document.getElementById("next");
     prev_button.addEventListener("click", (event) => {
         current_pokemon = handlePrevNext(
             ids, 
             current_pokemon, 
-            event.target.id, 
-            selection_data
+            event.target.id
         );
     });
     next_button.addEventListener("click", (event) => {
-        current_pokemon = handlePrevNext(
-            ids, 
-            current_pokemon, 
-            event.target.id, 
-            selection_data
-        );
+        current_pokemon = handlePrevNext(ids, current_pokemon, event.target.id);
     });
     document.addEventListener("keydown", (event) => {
         if(event.key === "ArrowLeft") {
-            current_pokemon = handlePrevNext(
-                ids, 
-                current_pokemon, 
-                "prev", 
-                selection_data
-            );
+            current_pokemon = handlePrevNext(ids, current_pokemon, "prev");
         } else if(event.key === "ArrowRight") {
-            current_pokemon = handlePrevNext(
-                ids, 
-                current_pokemon, 
-                "next", 
-                selection_data
-            );
+            current_pokemon = handlePrevNext(ids, current_pokemon, "next");
         }
     });
     return current_pokemon;
 }
 
 // Handle prev/next button clicks => Return new current pokemon
-function handlePrevNext(ids, current_pokemon, type, selection_data) {
+function handlePrevNext(ids, current_pokemon, type) {
     let idx = ids.indexOf(current_pokemon.id.toString());
 
     if(type === "next") {
@@ -173,7 +164,7 @@ function handlePrevNext(ids, current_pokemon, type, selection_data) {
         }
     }
 
-    loadShowContent(current_pokemon, selection_data);
+    loadShowContent(current_pokemon);
     return current_pokemon;
 }
 
@@ -190,16 +181,16 @@ function loadSprites(selected_pokemon) {
 }
 
 // Load current pokemon's data
-function loadShowContent(current_pokemon, selection_data) {
-    loadDescription(current_pokemon, selection_data);
+function loadShowContent(current_pokemon) {    
+    loadDescription(current_pokemon);
     loadImage(current_pokemon);
     loadStats(current_pokemon);
-    loadDamageMultipliers(current_pokemon, selection_data);
+    loadDamageMultipliers(current_pokemon);
 }
 
 // Setup html elements for description
-function loadDescription(current_pokemon, selection_data) {
-    const details = selection_data[current_pokemon.id].details;
+function loadDescription(current_pokemon) {
+    const details = SELECTION_DATA[current_pokemon.id].details;
     
     const description = document.getElementById("description");
     description.innerHTML = "";
@@ -291,8 +282,8 @@ function loadStats(current_pokemon) {
 }
 
 // Setup html elements for damage_multiplier
-function loadDamageMultipliers(current_pokemon, selection_data) {
-    const damage = selection_data[current_pokemon.id].damage;
+function loadDamageMultipliers(current_pokemon) {
+    const damage = SELECTION_DATA[current_pokemon.id].damage;
 
     const damage_multiplier = document.getElementById("damage_multiplier");
     damage_multiplier.innerHTML = ""; 
