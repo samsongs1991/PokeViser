@@ -240,13 +240,17 @@ footer:hover {
     align-items: left;
 }
 
+#selection_container li:hover {
+    cursor: pointer;
+}
+
 #autosuggestion_container {
     display: flex;
     justify-content: center;
     height: 20px;
 }
 
-#searchbar_container form {
+#search_container form {
     margin-top: 35px;
     display: flex;
     flex-direction: column;
@@ -262,8 +266,8 @@ footer:hover {
 }
 
 // -----------------------------------------------------------
-// Individual Stats Page
-#individual_stats_page {
+// Show Page
+#show_page {
     display: flex;
 }
 
@@ -275,11 +279,11 @@ footer:hover {
     align-items: center;
 }
 
-#main_stats_container {
+#main_content_container {
     display: flex;
 }
 
-#main_stats_container section {
+#main_content_container section {
     width: 35%;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     opacity: 0.75;
@@ -291,28 +295,28 @@ footer:hover {
     transition: all 0.5s ease;
 }
 
-#main_stats_container section:hover {
+#main_content_container section:hover {
     opacity: 1;
     box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
 }
 
-#main_stats_container img {
+#main_content_container img {
     height: 380px;
     // opacity: 0.75;
     opacity: 0.95;
     transition: all 0.5s ease;
 }
 
-#main_stats_container img:hover {
+#main_content_container img:hover {
     height: 400px;
     opacity: 1;
 }
 
-#main_stats_container section ul {
+#main_content_container section ul {
     margin-right: 20px;
 }
 
-#stats_1 {
+#description {
     font-size: 14px;
 }
 
@@ -345,7 +349,7 @@ footer:hover {
     box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
 }
 
-#stats_3 {
+#damage_multiplier {
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     opacity: 0.75;
     justify-content: space-evenly;
@@ -360,9 +364,17 @@ footer:hover {
     transition: all 0.5s ease;
 }
 
-#stats_3:hover {
+#damage_multiplier:hover {
     opacity: 1;
     box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#damage_multiplier > ul {
+    display: flex;
+}
+
+#damage_multiplier > ul > li {
+    padding: 0px 1%;
 }
 
 #new_view_container {
