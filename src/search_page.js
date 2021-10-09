@@ -177,8 +177,7 @@ function handleAutoSuggestion() {
         let filters_to_apply = getUserFilters();
         let partial_name = search_input.value;
         partial_name = partial_name.toLowerCase();
-        for(let i = 1; i < POKEMON.size; i++) { // iterate through every pokemon
-            // Exit the loop if user hasn't input anything
+        for(let i = 1; i < POKEMON.size; i++) {
             if(partial_name.length === 0) {
                 break;
             }
@@ -226,7 +225,7 @@ function handleAutoSuggestion() {
     }
 }
 
-// Handle adding user input pokemon to selection list
+// Add user input pokemon to selection list
 function handleSelectPokemon(selected_pokemon) {
     const search_container = document.getElementById("search_container");
     const autosuggestion = document.getElementById("autosuggestion");
@@ -246,7 +245,7 @@ function handleSelectPokemon(selected_pokemon) {
     }
 }
 
-// Handle adding random pokemon to selection list
+// Add random pokemon to selection list
 function handleRandomPokemon(selected_pokemon) {
     if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
@@ -298,7 +297,7 @@ function errorAlreadyExists(search_container) {
     }
 }
 
-// Displays error "Can't select more than 6 Pokemon"
+// Display error "Can't select more than 6 Pokemon"
 function displayErrorListFull(search_container) {
     errorAlreadyExists(search_container);
     const error = document.createElement("p");
@@ -310,7 +309,7 @@ function displayErrorListFull(search_container) {
     }, 5000);  
 }
 
-// Displays error "Pokemon already selected"
+// Display error "Pokemon already selected"
 function displayErrorAlreadySelected(search_container) {
     errorAlreadyExists(search_container);
     const error = document.createElement("p");
@@ -322,7 +321,7 @@ function displayErrorAlreadySelected(search_container) {
     }, 5000);
 }
 
-// Displays error "User input does match any pokemon name"
+// Display error "User input does match any pokemon name"
 function displayErrorInvalidName(search_container) {
     errorAlreadyExists(search_container);
     const error = document.createElement("p");
@@ -349,7 +348,7 @@ function createFilterOptions(TYPES, filter) {
     };
 }
 
-// Returns array of user filter inputs
+// Return array of user filter inputs
 function getUserFilters() {
     let filters_to_apply = [];
     let boxes = document.querySelectorAll("input[type='checkbox']");
