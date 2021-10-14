@@ -20,10 +20,6 @@ export const SELECTION_DATA = {};
 // =================== E X P O R T ====================
 // ====================================================
 
-// * Will later refactor the selection_data out of all functions
-// * so that entire app can have easy access to all the data
-// * export const SELECTION_DATA = {};
-
 export async function loadShowPage(selected_pokemon) {
     loadShowPage_structure();
 
