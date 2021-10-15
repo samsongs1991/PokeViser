@@ -254,25 +254,18 @@ function handleRandomPokemon(selected_pokemon) {
         let valid_random = false;
         let random_pokemon = getRandomEl(POKEMON); // this doesn't work properly until the POKEMON obj is fully loaded which takes about 15sec
 
-        if(filters.length > 0) {
-            while(valid_random === false) {
-                if(
-                    selected_pokemon[capitalize(random_pokemon.name)] ||
-                    !filters.includes(random_pokemon.types[0].type.name) || 
-                    (random_pokemon.types[1] && !filters.includes(random_pokemon.types[1].type.name))
-                ) {
-                    random_pokemon = getRandomEl(POKEMON);
-                } else {
+        while(valid_random === false) {
+            if(selected_pokemon[capitalize(random_pokemon.name)]) {
+                random_pokemon = getRandomEl(POKEMON);
+            } else if(filters.length > 0) {
+                if(filters.includes(random_pokemon.types[0].type.name) || 
+                (random_pokemon.types[1] && filters.includes(random_pokemon.types[1].type.name))) {
                     valid_random = true;
-                }
-            }
-        } else {
-            while(valid_random === false) {
-                if(selected_pokemon[capitalize(random_pokemon.name)]) {
-                    random_pokemon = getRandomEl(POKEMON);
                 } else {
-                    valid_random = true;
+                    random_pokemon = getRandomEl(POKEMON);
                 }
+            } else {
+                valid_random = true;
             }
         }
         
