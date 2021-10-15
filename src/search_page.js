@@ -258,8 +258,7 @@ function handleRandomPokemon(selected_pokemon) {
             if(selected_pokemon[capitalize(random_pokemon.name)]) {
                 random_pokemon = getRandomEl(POKEMON);
             } else if(filters.length > 0) {
-                if(filters.includes(random_pokemon.types[0].type.name) || 
-                (random_pokemon.types[1] && filters.includes(random_pokemon.types[1].type.name))) {
+                if(typeMatchCheck(random_pokemon, filters)) {
                     valid_random = true;
                 } else {
                     random_pokemon = getRandomEl(POKEMON);
@@ -271,6 +270,17 @@ function handleRandomPokemon(selected_pokemon) {
         
         const value = [random_pokemon.id, capitalize(random_pokemon.name)]
         addToList(value, selected_pokemon);
+    }
+}
+
+// Return true if the pokemon type exists in the filters
+function typeMatchCheck(pokemon, filters) {
+    if(filters.includes(pokemon.types[0].type.name)) {
+        return true;
+    } else if(pokemon.types[1] && filters.includes(pokemon.types[1].type.name)) {
+        return true;
+    } else {
+        return false;
     }
 }
 
