@@ -250,27 +250,33 @@ function handleRandomPokemon(selected_pokemon) {
     if(selected_pokemon.size >= 6) {
         displayErrorListFull(search_container);
     } else {
-        const filters = getUserFilters();
-        let valid_random = false;
-        let random_pokemon = getRandomEl(POKEMON); // this doesn't work properly until the POKEMON obj is fully loaded which takes about 15sec
-
-        while(valid_random === false) {
-            if(selected_pokemon[capitalize(random_pokemon.name)]) {
-                random_pokemon = getRandomEl(POKEMON);
-            } else if(filters.length > 0) {
-                if(typeMatchCheck(random_pokemon, filters)) {
-                    valid_random = true;
-                } else {
-                    random_pokemon = getRandomEl(POKEMON);
-                }
-            } else {
-                valid_random = true;
-            }
-        }
-        
+        let random_pokemon = getValidRandomPokemon(selected_pokemon);
         const value = [random_pokemon.id, capitalize(random_pokemon.name)]
         addToList(value, selected_pokemon);
     }
+}
+
+// Return a valid random pokemon
+function getValidRandomPokemon(selected_pokemon) {
+    const filters = getUserFilters();
+    let valid_random = false;
+    let random_pokemon = getRandomEl(POKEMON); // this doesn't work properly until the POKEMON obj is fully loaded which takes about 15sec
+
+    while(valid_random === false) {
+        if(selected_pokemon[capitalize(random_pokemon.name)]) {
+            random_pokemon = getRandomEl(POKEMON);
+        } else if(filters.length > 0) {
+            if(typeMatchCheck(random_pokemon, filters)) {
+                valid_random = true;
+            } else {
+                random_pokemon = getRandomEl(POKEMON);
+            }
+        } else {
+            valid_random = true;
+        }
+    }
+
+    return random_pokemon;
 }
 
 // Return true if the pokemon type exists in the filters
