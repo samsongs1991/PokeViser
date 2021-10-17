@@ -38,7 +38,7 @@ const TYPES = {
 // keys with all data for that pokemon as an object for the values
 export const POKEMON = { "size": 0 }
 
-// Loads all the pokemon into POKEMON storage
+// Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {
     if(cache[1] === undefined) {
         for(let i = 1; i <= 898; i++) {
