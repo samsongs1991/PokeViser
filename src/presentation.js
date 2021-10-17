@@ -54,3 +54,25 @@ export function loadBackgroundVid() {
     source.setAttribute("src", "resources/pokeviser_background.mp4");
     source.setAttribute("type", "video/mp4");
 }
+
+export function renderLoadingScreen() {
+    const body = document.querySelector("body")
+    const loadingScreen = document.createElement("div");
+    const marquee = document.createElement("div");
+    const text = document.createElement("div");
+
+    loadingScreen.setAttribute("id", "loadingScreen");
+    marquee.setAttribute("class", "marquee");
+    text.setAttribute("id", "marquee-text");
+
+    text.innerHTML = "LOADING"
+
+    body.appendChild(loadingScreen);
+    loadingScreen.appendChild(marquee);
+    marquee.appendChild(text);
+}
+
+export function removeLoadingScreen() {
+    const loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.remove();
+}

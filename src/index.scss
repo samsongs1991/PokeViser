@@ -385,3 +385,50 @@ footer:hover {
 
 // -----------------------------------------------------------
 // Group Stats Page
+
+
+
+// -----------------------------------------------------------
+// Loading Screen
+
+#loadingScreen {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.95;
+
+    display: flex;
+    align-items: center;
+}
+
+.marquee {
+    height: 100px;
+    width: 100%; 
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee div {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    line-height: 100px;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+      font-size: 50px;
+    }
+    100% {
+      font-size: 70px;
+    }
+  }
+
+#marquee-text {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 50px;
+}

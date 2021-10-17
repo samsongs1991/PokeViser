@@ -8,6 +8,9 @@ import { capitalize, getRandomEl, convertNameToId } from './helpers'
 // To load show page
 import { loadShowPage } from './show_page'
 
+// To show loading screen until POKEMON is loaded with all 898 pokemon
+import { renderLoadingScreen, removeLoadingScreen } from './presentation'
+
 // ====================================================
 // =============== C O N S T A N T S ==================
 // ====================================================
@@ -44,8 +47,15 @@ export function cachePokemon(cache) {
         for(let i = 1; i <= 898; i++) {
             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
             .then(res => res.json())
-            .then(data => cache[i] = data);
-            cache.size++;
+            .then(data => {
+                cache[i] = data;
+                cache.size++;
+                if(cache.size === 1) {
+                    renderLoadingScreen();
+                } else if(cache.size === 898) {
+                    removeLoadingScreen();
+                }
+            })
         }
     }
 }
