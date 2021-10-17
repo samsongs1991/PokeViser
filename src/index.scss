@@ -423,8 +423,11 @@ footer:hover {
     0% {
       font-size: 50px;
     }
+    50% {
+        font-size: 80px;
+    }
     100% {
-      font-size: 70px;
+      font-size: 50px;
     }
   }
 
