@@ -4,6 +4,6 @@
 // take care of the logic of rendering the correct page at
 // the correct time
 
-export function loadingPage() {
+export function renderLoadingScreen() {
     console.log("I am the loading page");
 }
