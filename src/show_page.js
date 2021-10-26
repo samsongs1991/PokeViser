@@ -2,6 +2,9 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
+// To show loading screen until POKEMON is loaded with all 898 pokemon
+import { renderLoadingScreen, removeLoadingScreen } from './presentation'
+
 // Helper methods
 import { capitalize, getRandomEl } from './helpers'
 
@@ -98,12 +101,21 @@ function loadShowPage_structure() {
 
 // Fetch data for selected pokemon and cache
 async function fetchStats(ids) {
+    let count = ids.length;
     for(let i = 0; i < ids.length; i++) {
         if(SELECTION_DATA[ids[i]] === undefined) {
             SELECTION_DATA[ids[i]] = { details: null, damage: { 0: null, 1: null} };
             await fetch(POKEMON[ids[i]].species.url)
             .then(res => res.json())
-            .then(data => SELECTION_DATA[ids[i]].details = data)
+            .then(data => {
+                count--;
+                if(count === ids.length - 1) {
+                    renderLoadingScreen();
+                } else if(count === 0) {
+                    removeLoadingScreen();
+                }
+                SELECTION_DATA[ids[i]].details = data
+            });
             
             for(let j = 0; j < 2; j++) {
                 if(POKEMON[ids[i]].types[j] !== undefined) {
