@@ -11,6 +11,9 @@ import { capitalize, getRandomEl } from './helpers'
 // Cache of pokemon data
 import { POKEMON } from './search_page'
 
+// 
+import { loadSizePage } from './size_page'
+
 // ====================================================
 // =============== C O N S T A N T S ==================
 // ====================================================
@@ -36,9 +39,12 @@ export async function loadShowPage(selected_pokemon) {
     loadShowContent(current_pokemon);
 
     // const view_all_button = document.getElementById("view_all");
-    // view_all_button.addEventListener("click", (event) => {
-    //     loadGroupStatsPage(selected_pokemon);
-    // });
+    const view_size_button = document.getElementById("view_size");
+    // view_all_button.addEventListener();
+    view_size_button.addEventListener("click", event => {
+        event.preventDefault();
+        loadSizePage(selected_pokemon);
+    });
 }
 
 // ====================================================
@@ -84,14 +90,6 @@ function loadShowPage_structure() {
     next_button.innerHTML = "NEXT";
     view_all_button.innerHTML = "View all selections";
     view_size_button.innerHTML = "View size comparisons";
-
-    view_all_button.addEventListener("click", () => {
-        console.log("all button clicked");
-    });
-    view_size_button.addEventListener("click", () => {
-        console.log("size button clicked");
-        
-    });
 
     main.appendChild(prev_button);
     main.appendChild(stats_container);
