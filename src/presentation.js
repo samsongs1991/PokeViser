@@ -58,18 +58,18 @@ export function loadBackgroundVid() {
 export function renderLoadingScreen() {
     const body = document.querySelector("body")
     const loadingScreen = document.createElement("div");
-    const marquee = document.createElement("div");
+    const textContainer = document.createElement("div");
     const text = document.createElement("div");
 
     loadingScreen.setAttribute("id", "loadingScreen");
-    marquee.setAttribute("class", "marquee");
-    text.setAttribute("id", "marquee-text");
+    textContainer.setAttribute("class", "text-container");
+    text.setAttribute("id", "load-text");
 
     text.innerHTML = "LOADING"
 
     body.appendChild(loadingScreen);
-    loadingScreen.appendChild(marquee);
-    marquee.appendChild(text);
+    loadingScreen.appendChild(textContainer);
+    textContainer.appendChild(text);
 }
 
 export function removeLoadingScreen() {
