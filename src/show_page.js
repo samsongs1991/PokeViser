@@ -85,6 +85,14 @@ function loadShowPage_structure() {
     view_all_button.innerHTML = "View all selections";
     view_size_button.innerHTML = "View size comparisons";
 
+    view_all_button.addEventListener("click", () => {
+        console.log("all button clicked");
+    });
+    view_size_button.addEventListener("click", () => {
+        console.log("size button clicked");
+        
+    });
+
     main.appendChild(prev_button);
     main.appendChild(stats_container);
     main.appendChild(next_button);        
@@ -338,23 +346,4 @@ function extractTypes(data) {
         type_list.push(type);
     }
     return type_list;
-}
-
-
-
-
-// Will refactor this into loadGroupShowPage and into a separate file
-function loadGroupStatsPage(list_of_pokemon_objects) {
-    const main = document.querySelector("main");
-        main.innerHTML ="";
-
-    console.log(list_of_pokemon_objects);
-
-    // iterate through pokemon
-    // - create a new article element
-    // - append it to main
-    // - - append an image to article
-    // - - append types and damage relations to article
-
-
 }
