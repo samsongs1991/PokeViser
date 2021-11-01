@@ -6,7 +6,7 @@
 import { renderLoadingScreen, removeLoadingScreen } from './presentation'
 
 // Helper methods
-import { capitalize, getRandomEl } from './helpers'
+import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Cache of pokemon data
 import { POKEMON } from './search_page'
@@ -247,16 +247,6 @@ function randomFlavorText(details) {
         }
     }
     return getRandomEl(flavor_texts);
-}
-
-// Convert decimeters to ft
-function convertHeight(dm) {
-    return Math.floor((dm / 3.048) * 100) / 100;
-}
-
-// Convert hectograms to lbs
-function convertWeight(hg) {
-    return Math.floor((hg / 4.536) * 100) / 100;
 }
 
 // Load central image of current pokemon

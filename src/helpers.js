@@ -34,3 +34,13 @@ export function convertNameToId(name) {
         }
     }
 }
+
+// Convert decimeters to ft
+export function convertHeight(dm) {
+    return Math.floor((dm / 3.048) * 100) / 100;
+}
+
+// Convert hectograms to lbs
+export function convertWeight(hg) {
+    return Math.floor((hg / 4.536) * 100) / 100;
+}
