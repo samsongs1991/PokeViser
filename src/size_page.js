@@ -30,6 +30,7 @@ export function loadSizePage(selected_pokemon) {
     console.log(SELECTION_DATA);
 
     loadSizePage_structure();
+    loadTrainer(selected_pokemon);
     loadSprites(selected_pokemon);
 }
 
@@ -48,31 +49,45 @@ function loadSizePage_structure() {
     main.appendChild(size_container);
 }
 
-// Load sprites
-function loadSprites(selected_pokemon) {
+// Load trainer
+function loadTrainer(selected_pokemon) {
     const size_container = document.getElementById("size_container");
-    
+
     let tile = document.createElement("div");
     let human = document.createElement("img");
     let info = document.createElement("p");
+    let trainer_ht = 100;
 
     tile.setAttribute("class", "size_tile");
+    human.setAttribute("src", "./resources/trainer.png");
+    human.setAttribute("height", trainer_ht);
+    
+    info.innerHTML = `${6}ft ~ ${150}cm`
 
-    info.innerHTML = "?ft ~ ?cm"
-    // Download an image of a human silhouette 
-    // and save to resources folder
-    human.setAttribute("src", "https://www.clipartmax.com/png/small/323-3235349_human-silhouette-business-png.png");
     tile.appendChild(human);
     tile.appendChild(info);
     size_container.appendChild(tile);
+}
+
+// Load sprites
+function loadSprites(selected_pokemon) {
+    const size_container = document.getElementById("size_container");
 
     for(let id in selected_pokemon.selection) {
+        let tile = document.createElement("div");
+        let sprite_img = document.createElement("img");
+        let info = document.createElement("p");
+
         let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
         let img_ht = pokemon.height * 30;
-        let sprite_img = document.createElement("img");
+        info.innerHTML = `${6}ft ~ ${150}cm`
+
         sprite_img.setAttribute("src", img_url);
         sprite_img.setAttribute("height", img_ht);
-        size_container.appendChild(sprite_img);
+
+        tile.appendChild(sprite_img);
+        tile.appendChild(info);
+        size_container.appendChild(tile);
     }
 }
