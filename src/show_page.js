@@ -11,7 +11,7 @@ import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers
 // Cache of pokemon data
 import { POKEMON } from './search_page'
 
-// 
+// To render size comparison page
 import { loadSizePage } from './size_page'
 
 // ====================================================
@@ -72,6 +72,9 @@ function loadShowPage_structure() {
     const view_all_button = document.createElement("button");
     const view_size_button = document.createElement("button");
 
+    // For all these things below, change CSS so that the container dimensions
+    // remain fixed, but when the data goes over the container a scroll is added
+    // - overflow: scroll
     stats_container.setAttribute("id", "stats_container");
     prev_button.setAttribute("id", "prev");
     next_button.setAttribute("id", "next");
@@ -258,6 +261,8 @@ function loadImage(data) {
 
 // Setup html elements for stats
 function loadStats(current_pokemon) {
+    // Change the way this is displayed from numbers
+    // to an interactive graph using 3JS
     const stats = document.getElementById("stats");
     stats.innerHTML = "";
 

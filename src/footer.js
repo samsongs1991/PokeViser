@@ -23,3 +23,5 @@ export function loadFooter() {
     email.innerHTML = "samsongs1991@gmail.com";
     github.innerHTML = "My GitHub";
 }
+
+// Add linkedIn, AngelList, Portfolio site, etc...

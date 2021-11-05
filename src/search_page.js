@@ -357,7 +357,7 @@ function displayErrorAlreadySelected(search_container) {
     }, 5000);
 }
 
-// Display error "User input does match any pokemon name"
+// Display error "User input does not match any pokemon name"
 function displayErrorInvalidName(search_container) {
     errorAlreadyExists(search_container);
     const error = document.createElement("p");

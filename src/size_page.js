@@ -29,13 +29,8 @@ export function loadSizePage(selected_pokemon) {
     console.log(selected_pokemon);
     console.log(SELECTION_DATA);
 
-    // load size page structure
     loadSizePage_structure();
-    // load images
-    //  - set img src
-    //  - set img dimensions for scale
     loadSprites(selected_pokemon);
-    // 
 }
 
 // ====================================================
@@ -56,6 +51,21 @@ function loadSizePage_structure() {
 // Load sprites
 function loadSprites(selected_pokemon) {
     const size_container = document.getElementById("size_container");
+    
+    let tile = document.createElement("div");
+    let human = document.createElement("img");
+    let info = document.createElement("p");
+
+    tile.setAttribute("class", "size_tile");
+
+    info.innerHTML = "?ft ~ ?cm"
+    // Download an image of a human silhouette 
+    // and save to resources folder
+    human.setAttribute("src", "https://www.clipartmax.com/png/small/323-3235349_human-silhouette-business-png.png");
+    tile.appendChild(human);
+    tile.appendChild(info);
+    size_container.appendChild(tile);
+
     for(let id in selected_pokemon.selection) {
         let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
