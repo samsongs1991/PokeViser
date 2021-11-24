@@ -409,3 +409,15 @@ footer:hover {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-size: 50px;
 }
+
+#size_container {
+  display: flex;
+  margin-top: 100px;
+}
+
+#size_container > .size_tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
