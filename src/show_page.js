@@ -110,33 +110,24 @@ function loadShowPage_structure() {
 
 // Fetch data for selected pokemon and cache
 async function fetchStats(ids) {
-    let count = ids.length;
+    renderLoadingScreen();
     for(let i = 0; i < ids.length; i++) {
         if(SELECTION_DATA[ids[i]] === undefined) {
             SELECTION_DATA[ids[i]] = { details: null, damage: { 0: null, 1: null} };
             await fetch(POKEMON[ids[i]].species.url)
             .then(res => res.json())
-            .then(data => {
-                count--;
-                if(count === ids.length - 1) {
-                    renderLoadingScreen();
-                } else if(count === 0) {
-                    removeLoadingScreen();
-                }
-                SELECTION_DATA[ids[i]].details = data
-            });
+            .then(data => SELECTION_DATA[ids[i]].details = data);
             
             for(let j = 0; j < 2; j++) {
                 if(POKEMON[ids[i]].types[j] !== undefined) {
                     await fetch(POKEMON[ids[i]].types[j].type.url)
                     .then(res => res.json())
-                    .then(data => {
-                        SELECTION_DATA[ids[i]].damage[j] = data
-                    })
+                    .then(data => SELECTION_DATA[ids[i]].damage[j] = data);
                 }
             }
         }
     }
+    removeLoadingScreen();
 }
 
 // Add event listeners to the prev and next buttons
