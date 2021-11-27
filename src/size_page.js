@@ -9,6 +9,13 @@ import { convertHeight } from './helpers'
 import { POKEMON } from './search_page'
 
 // ====================================================
+// =============== C O N S T A N T S ==================
+// ====================================================
+
+// Original image heights
+const IMAGE_HTS = { trainer: 600 };
+
+// ====================================================
 // ===================== M A I N ======================
 // ================== E X P O R T S ===================
 // ====================================================
@@ -17,11 +24,6 @@ export function loadSizePage(selected_pokemon) {
     loadSizePage_structure();
     loadTrainer(selected_pokemon);
     loadSprites(selected_pokemon);
-
-    const minus = document.getElementById("minus");
-    const plus = document.getElementById("plus");
-    minus.addEventListener("click", () => magnify("minus"));
-    plus.addEventListener("click", () => magnify("plus"));
 }
 
 // ====================================================
@@ -36,19 +38,19 @@ function loadSizePage_structure() {
     main.innerHTML = "";
 
     const size_container = document.createElement("section");
-    const minus = document.createElement("button");
-    const plus = document.createElement("button");
+    const slider = document.createElement("input");
 
     size_container.setAttribute("id", "size_container");
-    minus.setAttribute("id", "minus");
-    plus.setAttribute("id", "plus");
-
-    minus.innerHTML = " - ";
-    plus.innerHTML = " + ";
+    slider.setAttribute("id", "slider");
+    slider.setAttribute("type", "range");
+    slider.setAttribute("min", 10);
+    slider.setAttribute("max", 200);
+    slider.setAttribute("value", 100);
 
     main.appendChild(size_container);
-    main.appendChild(minus);
-    main.appendChild(plus);
+    main.appendChild(slider);
+
+    slider.addEventListener("input", e => magnify(e.target.value));
 }
 
 // Load trainer
@@ -62,7 +64,7 @@ function loadTrainer(selected_pokemon) {
     tile.setAttribute("class", "size_tile");
     human.setAttribute("class", "trainer");
     human.setAttribute("src", "./resources/trainer.png");
-    human.setAttribute("height", 175);
+    human.setAttribute("height", IMAGE_HTS.trainer);
     
     info.innerHTML = `5.5 ft`
 
@@ -83,11 +85,14 @@ function loadSprites(selected_pokemon) {
         let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
         const ft = convertHeight(pokemon.height);
-        let img_ht = (ft * 200) / 5.5;
+        let img_ht = (ft * 800) / 5.5;
+
+        IMAGE_HTS[id] = img_ht;
 
         info.innerHTML = `${ft} ft`
 
         tile.setAttribute("class", "size_tile");
+        sprite_img.setAttribute("id", id)
         sprite_img.setAttribute("class", "pokemon");
         sprite_img.setAttribute("src", img_url);
         sprite_img.setAttribute("height", img_ht);
@@ -99,25 +104,15 @@ function loadSprites(selected_pokemon) {
 }
 
 // Click handler for plus/minus image size
-function magnify(type) {
+function magnify(percent) {
     const trainer = document.getElementsByClassName("trainer");
     const pokemon = document.getElementsByClassName("pokemon");
 
-    let increment = 10;
-    const ratio = increment / trainer[0].height
-
-    if(type === "minus") {
-        trainer[0].height -= increment;
-    } else if(type === "plus") {
-        trainer[0].height += increment;
-    }
+    let new_trainer_ht = IMAGE_HTS.trainer * (percent / 100);
+    trainer[0].height = new_trainer_ht;
 
     pokemon.forEach(poke => {
-        increment = poke.height * ratio;
-        if(type === "minus") {
-            poke.height -= increment;
-        } else if(type === "plus") {
-            poke.height += increment;
-        }
+        let new_pokemon_ht = IMAGE_HTS[poke.id] * (percent / 100);
+        poke.height = new_pokemon_ht;
     });
 }
