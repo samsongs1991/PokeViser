@@ -43,16 +43,19 @@ export const POKEMON = { "size": 0 }
 
 // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {
+    const first = 1;
+    // for testing only "last" is 25. change back to 898 for production
+    const last = 25;
     if(cache[1] === undefined) {
-        for(let i = 1; i <= 898; i++) {
+        for(let i = first; i <= last; i++) {
             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
             .then(res => res.json())
             .then(data => {
                 cache[i] = data;
                 cache.size++;
-                if(cache.size === 1) {
+                if(cache.size === first) {
                     renderLoadingScreen();
-                } else if(cache.size === 898) {
+                } else if(cache.size === last) {
                     removeLoadingScreen();
                 }
             })
