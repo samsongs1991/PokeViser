@@ -265,6 +265,13 @@ function handleRandomPokemon(selected_pokemon) {
     } else {
         let random_pokemon = getValidRandomPokemon(selected_pokemon);
         const value = [random_pokemon.id, capitalize(random_pokemon.name)]
+
+        while(selected_pokemon.selection[value[0]]) {
+            random_pokemon = getValidRandomPokemon(selected_pokemon);
+            value[0] = random_pokemon.id;
+            value[1] = capitalize(random_pokemon.name);
+        }        
+        
         addToList(value, selected_pokemon);
     }
 }
