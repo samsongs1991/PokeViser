@@ -45,7 +45,7 @@ export const POKEMON = { "size": 0 }
 export function cachePokemon(cache) {
     const first = 1;
     // for testing only "last" is 10. change back to 898 for production
-    const last = 898;
+    const last = 10;
     if(cache[1] === undefined) {
         for(let i = first; i <= last; i++) {
             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
@@ -69,6 +69,8 @@ export function cachePokemon(cache) {
 // ====================================================
 
 export function loadMainSearchPage() {
+    // document.removeEventListener("keydown", );
+
     const body = document.querySelector("body");
     const main = document.createElement("main");
 

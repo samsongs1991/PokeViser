@@ -135,20 +135,19 @@ function setupPrevNext(current_pokemon, ids) {
     const prev_button = document.getElementById("prev");
     const next_button = document.getElementById("next");
     prev_button.addEventListener("click", (event) => {
-        current_pokemon = handlePrevNext(
-            ids, 
-            current_pokemon, 
-            event.target.id
-        );
+        current_pokemon = handlePrevNext(ids, current_pokemon, event.target.id);
     });
     next_button.addEventListener("click", (event) => {
         current_pokemon = handlePrevNext(ids, current_pokemon, event.target.id);
     });
     document.addEventListener("keydown", (event) => {
-        if(event.key === "ArrowLeft") {
-            current_pokemon = handlePrevNext(ids, current_pokemon, "prev");
-        } else if(event.key === "ArrowRight") {
-            current_pokemon = handlePrevNext(ids, current_pokemon, "next");
+        const show_page = document.getElementById("show_page");
+        if(show_page) {
+            if(event.key === "ArrowLeft") {
+                current_pokemon = handlePrevNext(ids, current_pokemon, "prev");
+            } else if(event.key === "ArrowRight") {
+                current_pokemon = handlePrevNext(ids, current_pokemon, "next");
+            }
         }
     });
     return current_pokemon;
