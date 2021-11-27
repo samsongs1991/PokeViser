@@ -247,8 +247,8 @@ function handleSelectPokemon(selected_pokemon) {
         displayErrorListFull(search_container);
     } else {
         const value = autosuggestion.innerHTML.split(" ");
-        value[0] = value[0].slice(1, value[0].length - 1);
-        if(selected_pokemon[value[0]]) {
+        value[0] = parseInt(value[0].slice(1, value[0].length - 1));
+        if(selected_pokemon.selection[value[0]]) {
             displayErrorAlreadySelected(search_container);
         } else if(value[1]) {
             addToList(value, selected_pokemon);
