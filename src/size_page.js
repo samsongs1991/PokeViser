@@ -3,7 +3,7 @@
 // ====================================================
 
 // Helper methods
-import { convertHeight } from './helpers'
+import { capitalize, convertHeight } from './helpers'
 
 // Cache of pokemon data
 import { POKEMON } from './search_page'
@@ -44,7 +44,7 @@ function loadSizePage_structure() {
     slider.setAttribute("id", "slider");
     slider.setAttribute("type", "range");
     slider.setAttribute("min", 10);
-    slider.setAttribute("max", 200);
+    slider.setAttribute("max", 150);
     slider.setAttribute("value", 100);
 
     main.appendChild(size_container);
@@ -58,6 +58,7 @@ function loadTrainer(selected_pokemon) {
     const size_container = document.getElementById("size_container");
 
     let tile = document.createElement("div");
+    let name = document.createElement("p");
     let human = document.createElement("img");
     let info = document.createElement("p");
 
@@ -66,8 +67,10 @@ function loadTrainer(selected_pokemon) {
     human.setAttribute("src", "./resources/trainer.png");
     human.setAttribute("height", IMAGE_HTS.trainer);
     
-    info.innerHTML = `5.5 ft`
+    name.innerHTML = "Trainer";
+    info.innerHTML = `5.5 ft`;
 
+    tile.appendChild(name);
     tile.appendChild(human);
     tile.appendChild(info);
     size_container.appendChild(tile);
@@ -79,6 +82,7 @@ function loadSprites(selected_pokemon) {
 
     for(let id in selected_pokemon.selection) {
         let tile = document.createElement("div");
+        let name = document.createElement("p");
         let sprite_img = document.createElement("img");
         let info = document.createElement("p");
 
@@ -89,6 +93,7 @@ function loadSprites(selected_pokemon) {
 
         IMAGE_HTS[id] = img_ht;
 
+        name.innerHTML = capitalize(pokemon.name);
         info.innerHTML = `${ft} ft`
 
         tile.setAttribute("class", "size_tile");
@@ -97,6 +102,7 @@ function loadSprites(selected_pokemon) {
         sprite_img.setAttribute("src", img_url);
         sprite_img.setAttribute("height", img_ht);
 
+        tile.appendChild(name);
         tile.appendChild(sprite_img);
         tile.appendChild(info);
         size_container.appendChild(tile);
