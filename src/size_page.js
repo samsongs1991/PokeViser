@@ -13,7 +13,7 @@ import { POKEMON } from './search_page'
 // ====================================================
 
 // Original image heights
-const IMAGE_HTS = { trainer: 600 };
+const IMAGE_HTS = { trainer: 450 };
 
 // ====================================================
 // ===================== M A I N ======================
@@ -89,7 +89,7 @@ function loadSprites(selected_pokemon) {
         let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
         const ft = convertHeight(pokemon.height);
-        let img_ht = (ft * 800) / 5.5;
+        let img_ht = (ft * 650) / 5.5;
 
         IMAGE_HTS[id] = img_ht;
 
