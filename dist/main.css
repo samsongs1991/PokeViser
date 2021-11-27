@@ -413,6 +413,9 @@ footer:hover {
 #size_container {
   display: flex;
   margin-top: 100px;
+  width: 100%;
+  overflow-x: scroll;
+  background: linear-gradient(45deg, #198dec, #e0e0ff);
 }
 
 #size_container > .size_tile {
