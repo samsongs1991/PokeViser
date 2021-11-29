@@ -2,17 +2,20 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
-// To show loading screen until POKEMON is loaded with all 898 pokemon
-import { renderLoadingScreen, removeLoadingScreen } from './presentation'
-
 // Helper methods
 import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Cache of pokemon data
 import { POKEMON } from './search_page'
 
+// To show loading screen until POKEMON is loaded with all 898 pokemon
+import { renderLoadingScreen, removeLoadingScreen } from './presentation'
+
 // To render size comparison page
 import { loadSizePage } from './size_page'
+
+// To render index page
+import { loadIndexPage } from './index_page'
 
 // ====================================================
 // =============== C O N S T A N T S ==================
@@ -27,7 +30,7 @@ export const SELECTION_DATA = {};
 // ====================================================
 
 export async function loadShowPage(selected_pokemon) {
-    loadShowPage_structure();
+    loadShowPageStructure(selected_pokemon);
 
     const ids = Object.keys(selected_pokemon.selection);
     await fetchStats(ids, SELECTION_DATA);
@@ -37,14 +40,6 @@ export async function loadShowPage(selected_pokemon) {
 
     loadSprites(selected_pokemon);
     loadShowContent(current_pokemon);
-
-    // const view_all_button = document.getElementById("view_all");
-    const view_size_button = document.getElementById("view_size");
-    // view_all_button.addEventListener();
-    view_size_button.addEventListener("click", event => {
-        event.preventDefault();
-        loadSizePage(selected_pokemon);
-    });
 }
 
 // ====================================================
@@ -53,7 +48,7 @@ export async function loadShowPage(selected_pokemon) {
 // ====================================================
 
 // Setup html elements for show page
-function loadShowPage_structure() {
+function loadShowPageStructure(selected_pokemon) {
     const main = document.querySelector("main");
     main.setAttribute("id", "show_page");
     main.innerHTML = "";
@@ -69,8 +64,8 @@ function loadShowPage_structure() {
     const stats = document.createElement("section");
     const damage_multiplier = document.createElement("section");
     const new_view_container = document.createElement("div");
-    const view_all_button = document.createElement("button");
-    const view_size_button = document.createElement("button");
+    const index_page_button = document.createElement("button");
+    const size_page_button = document.createElement("button");
 
     // For all these things below, change CSS so that the container dimensions
     // remain fixed, but when the data goes over the container a scroll is added
@@ -86,13 +81,11 @@ function loadShowPage_structure() {
     stats.setAttribute("id", "stats");
     damage_multiplier.setAttribute("id", "damage_multiplier");
     new_view_container.setAttribute("id", "new_view_container");
-    view_all_button.setAttribute("id", "view_all");
-    view_size_button.setAttribute("id", "view_size");
     
     prev_button.innerHTML = "PREV";
     next_button.innerHTML = "NEXT";
-    view_all_button.innerHTML = "View all selections";
-    view_size_button.innerHTML = "View size comparisons";
+    index_page_button.innerHTML = "Go to index page";
+    size_page_button.innerHTML = "Go to size page";
 
     main.appendChild(prev_button);
     main.appendChild(stats_container);
@@ -104,8 +97,12 @@ function loadShowPage_structure() {
     main_content_container.appendChild(description);
     main_content_container.appendChild(image);
     main_content_container.appendChild(stats);
-    new_view_container.appendChild(view_all_button);
-    new_view_container.appendChild(view_size_button);
+    new_view_container.appendChild(index_page_button);
+    new_view_container.appendChild(size_page_button);
+    
+    index_page_button.addEventListener("click", () => loadIndexPage(selected_pokemon));
+    size_page_button.addEventListener("click", () => loadSizePage(selected_pokemon));
+
 }
 
 // Fetch data for selected pokemon and cache
