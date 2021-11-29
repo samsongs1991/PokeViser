@@ -30,6 +30,8 @@ import { loadShowPage } from './show_page'
 
 export function loadIndexPage(selected_pokemon) {
     loadIndexPageStructure(selected_pokemon);
+    loadArticles();
+    loadDmgMultipliers();
 }
 
 // ====================================================
@@ -72,8 +74,6 @@ function loadIndexPageStructure(selected_pokemon) {
         }
         count++;
     }
-    loadArticles();
-    loadDmgMultiplier();
 
     show_page_button.addEventListener("click", () => loadShowPage(selected_pokemon));
     size_page_button.addEventListener("click", () => loadSizePage(selected_pokemon));
@@ -98,7 +98,7 @@ function loadArticles() {
 }
 
 // Load damage multiplier data in article
-function loadDmgMultiplier() {
+function loadDmgMultipliers() {
     const articles = document.getElementsByTagName("article");
     articles.forEach(article => {
         const dmg_container = article.getElementsByTagName("div")[0];
