@@ -4,6 +4,7 @@ body {
 
 ul {
     list-style: none;
+    padding-left: 0px;
 }
 
 a {
@@ -384,11 +385,6 @@ footer:hover {
 }
 
 // -----------------------------------------------------------
-// Group Stats Page
-
-
-
-// -----------------------------------------------------------
 // Loading Screen
 
 #loadingScreen {
@@ -438,6 +434,7 @@ footer:hover {
 
 // -----------------------------------------------------------
 // Size Comparison Page
+
 #size_container {
     display: flex;
     margin-top: 100px;
@@ -452,3 +449,51 @@ footer:hover {
     align-items: center;
     justify-content: end;
 }
+
+// -----------------------------------------------------------
+// Index Page
+
+#index_page {
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+}
+
+#index_page #instructions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#index_page #instructions p {
+    width: 50%;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+#index_page section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+}
+
+#index_page article {
+    background-color: white;
+    width: 30%;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+#index_page article div {
+    display: flex;
+    justify-content: space-evenly;
+}
+

@@ -8,7 +8,7 @@ import { capitalize } from './helpers'
 // POKEMON: Cache of pokemon data
 // TYPES: Pokemon types and their hex color codes
 import { POKEMON, TYPES } from './search_page'
-
+ 
 // Cache of description and damage data for every searched pokemon
 import { SELECTION_DATA } from './show_page'
 
@@ -45,14 +45,17 @@ function loadIndexPageStructure(selected_pokemon) {
     main.innerHTML = "";
     main.setAttribute("id", "index_page");
 
-    const instructions = document.createElement("p");
+    const instructions = document.createElement("div");
+    const text = document.createElement("p");
     const index_container = document.createElement("div");
     const row1 = document.createElement("section");
     const row2 = document.createElement("section");
     const show_page_button = document.createElement("button");
     const size_page_button = document.createElement("button");
 
-    instructions.innerHTML = "Each card shows how much damage the Pokemon receives from which attack types. If an attack type is not shown, that Pokemon receives x1 damage from that attack type.";
+    instructions.setAttribute("id", "instructions");
+
+    text.innerHTML = "Each card shows how much damage the Pokemon receives from which attack types. If an attack type is not shown, that Pokemon receives x1 damage from that attack type.";
     show_page_button.innerHTML = "Go to show page";
     size_page_button.innerHTML = "Go to size page";
 
@@ -60,6 +63,7 @@ function loadIndexPageStructure(selected_pokemon) {
     main.appendChild(index_container);
     main.appendChild(show_page_button);
     main.appendChild(size_page_button);
+    instructions.appendChild(text);
     index_container.appendChild(row1);
     index_container.appendChild(row2);
 
