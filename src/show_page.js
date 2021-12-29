@@ -241,10 +241,8 @@ function loadSprites(selected_pokemon) {
 function loadShowContent(current_pokemon) {    
     loadDescription(current_pokemon);
     loadImage(current_pokemon);
-    loadStats(current_pokemon); // will change functionality of loadStats to toggle which poke stats to show in chart
+    loadStats(current_pokemon);
     loadDamageMultipliers(current_pokemon);
-    // testing loading chart
-    // loadChart();
 }
 
 // Setup html elements for description
@@ -305,30 +303,6 @@ function loadImage(data) {
 function loadStats(current_pokemon) {
     const stats = document.getElementById("stats");
     stats.innerHTML = "";
-
-    // const stats_info = document.createElement("ul");
-    // const hp = document.createElement("li");
-    // const attack = document.createElement("li");
-    // const defense = document.createElement("li");
-    // const special_attack = document.createElement("li");
-    // const special_defense = document.createElement("li");
-    // const speed = document.createElement("li");
-
-    // hp.innerHTML = `HP:  ${current_pokemon.stats[0].base_stat}`;
-    // attack.innerHTML = `Attack:  ${current_pokemon.stats[1].base_stat}`;
-    // defense.innerHTML = `Defense:  ${current_pokemon.stats[2].base_stat}`;
-    // special_attack.innerHTML = `Special Attack: ${current_pokemon.stats[3].base_stat}`;
-    // special_defense.innerHTML = `Special Defense:  ${current_pokemon.stats[4].base_stat}`;
-    // speed.innerHTML = `Speed:  ${current_pokemon.stats[5].base_stat}`;
-    
-    // stats.appendChild(stats_info);
-    // stats_info.appendChild(hp);
-    // stats_info.appendChild(attack);
-    // stats_info.appendChild(defense);
-    // stats_info.appendChild(special_attack);
-    // stats_info.appendChild(special_defense);
-    // stats_info.appendChild(speed);
-
     // ==========================================================
     // testing chart js
     const ctx = document.createElement("canvas");
@@ -356,18 +330,16 @@ function loadStats(current_pokemon) {
             ]
         }, 
         options: {
-            legend: {
-                display: false
-            },
-            scales: {
+            scale: {
                 r: {
                     beginAtZero: true, 
-                    max: 150, 
+                    max: 160, 
                     min: 0
                 }, 
             }
         }
     });
+    console.log(myChart);
     // ==========================================================
 }
 
