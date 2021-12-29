@@ -241,8 +241,10 @@ function loadSprites(selected_pokemon) {
 function loadShowContent(current_pokemon) {    
     loadDescription(current_pokemon);
     loadImage(current_pokemon);
-    loadStats(current_pokemon);
+    loadStats(current_pokemon); // will change functionality of loadStats to toggle which poke stats to show in chart
     loadDamageMultipliers(current_pokemon);
+    // testing loading chart
+    // loadChart();
 }
 
 // Setup html elements for description
@@ -301,33 +303,31 @@ function loadImage(data) {
 
 // Setup html elements for stats
 function loadStats(current_pokemon) {
-    // Change the way this is displayed from numbers
-    // to an interactive graph using 3JS
     const stats = document.getElementById("stats");
     stats.innerHTML = "";
 
-    const stats_info = document.createElement("ul");
-    const hp = document.createElement("li");
-    const attack = document.createElement("li");
-    const defense = document.createElement("li");
-    const special_attack = document.createElement("li");
-    const special_defense = document.createElement("li");
-    const speed = document.createElement("li");
+    // const stats_info = document.createElement("ul");
+    // const hp = document.createElement("li");
+    // const attack = document.createElement("li");
+    // const defense = document.createElement("li");
+    // const special_attack = document.createElement("li");
+    // const special_defense = document.createElement("li");
+    // const speed = document.createElement("li");
 
-    hp.innerHTML = `HP:  ${current_pokemon.stats[0].base_stat}`;
-    attack.innerHTML = `Attack:  ${current_pokemon.stats[1].base_stat}`;
-    defense.innerHTML = `Defense:  ${current_pokemon.stats[2].base_stat}`;
-    special_attack.innerHTML = `Special Attack: ${current_pokemon.stats[3].base_stat}`;
-    special_defense.innerHTML = `Special Defense:  ${current_pokemon.stats[4].base_stat}`;
-    speed.innerHTML = `Speed:  ${current_pokemon.stats[5].base_stat}`;
+    // hp.innerHTML = `HP:  ${current_pokemon.stats[0].base_stat}`;
+    // attack.innerHTML = `Attack:  ${current_pokemon.stats[1].base_stat}`;
+    // defense.innerHTML = `Defense:  ${current_pokemon.stats[2].base_stat}`;
+    // special_attack.innerHTML = `Special Attack: ${current_pokemon.stats[3].base_stat}`;
+    // special_defense.innerHTML = `Special Defense:  ${current_pokemon.stats[4].base_stat}`;
+    // speed.innerHTML = `Speed:  ${current_pokemon.stats[5].base_stat}`;
     
-    stats.appendChild(stats_info);
-    stats_info.appendChild(hp);
-    stats_info.appendChild(attack);
-    stats_info.appendChild(defense);
-    stats_info.appendChild(special_attack);
-    stats_info.appendChild(special_defense);
-    stats_info.appendChild(speed);
+    // stats.appendChild(stats_info);
+    // stats_info.appendChild(hp);
+    // stats_info.appendChild(attack);
+    // stats_info.appendChild(defense);
+    // stats_info.appendChild(special_attack);
+    // stats_info.appendChild(special_defense);
+    // stats_info.appendChild(speed);
 
     // ==========================================================
     // testing chart js
@@ -337,40 +337,37 @@ function loadStats(current_pokemon) {
     ctx.setAttribute("height", 100);
     stats.appendChild(ctx);
     const myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'radar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            labels: ["HP", "DEF", "SP DEF", "SPEED", "SP ATK", "ATK"],
+            datasets: [
+                {
+                    label: capitalize(current_pokemon.name),
+                    data: [
+                        current_pokemon.stats[0].base_stat,
+                        current_pokemon.stats[2].base_stat,
+                        current_pokemon.stats[4].base_stat,
+                        current_pokemon.stats[5].base_stat,
+                        current_pokemon.stats[3].base_stat,
+                        current_pokemon.stats[1].base_stat,
+                    ],
+                    fill: true
                 }
+            ]
+        }, 
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                r: {
+                    beginAtZero: true, 
+                    max: 150, 
+                    min: 0
+                }, 
             }
         }
     });
-    console.log(myChart);
     // ==========================================================
 }
 
