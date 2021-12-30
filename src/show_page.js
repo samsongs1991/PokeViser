@@ -6,7 +6,7 @@
 import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Cache of pokemon data
-import { POKEMON } from './search_page'
+import { POKEMON, TYPES } from './search_page'
 
 // To show loading screen until POKEMON is loaded with all 898 pokemon
 import { renderLoadingScreen, removeLoadingScreen } from './presentation'
@@ -305,6 +305,10 @@ function loadStats(current_pokemon) {
     stats.innerHTML = "";
     // ==========================================================
     // testing chart js
+    const types = extractTypes(current_pokemon.types);
+    console.log("types", types);
+    console.log("TYPES", TYPES);
+    console.log(TYPES[types[0]], TYPES[types[1]]);
     const ctx = document.createElement("canvas");
     ctx.setAttribute("id", "chart");
     ctx.setAttribute("width", 100);
@@ -325,7 +329,20 @@ function loadStats(current_pokemon) {
                         current_pokemon.stats[3].base_stat,
                         current_pokemon.stats[1].base_stat,
                     ],
-                    fill: true
+                    fill: true, 
+                    // testing color palettes for chart
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBorderColor: 'white',
+                    pointBorderWidth: 2, 
+                    pointHitRadius: 10, 
+                    pointRadius: 3,
+                    pointHoverBackgroundColor: 'white',
+                    pointHoverBorderColor: 'rgb(255, 99, 132)', 
+                    pointHoverBorderWidth: 4,
+                    pointHoverRadius: 8,
                 }
             ]
         }, 
@@ -379,16 +396,26 @@ function loadDamageMultipliers(current_pokemon) {
 // Return formatted string for damage multiplier info
 function damageMultiplierText(data, multiplier) {
     if(data.length > 0) {
-        return `Receives ${multiplier} damage from ${extractTypes(data).join(", ")}.`
+        return `Receives ${multiplier} damage from ${extractDmgTypes(data).join(", ")}.`
     }
     return "";
 }
 
-// Return array of extracted types
-function extractTypes(data) {
+// Return array of extracted types for dmg multiplier data
+function extractDmgTypes(data) {
     const type_list = [];
     for(let i = 0; i < data.length; i++) {
         let type = data[i].name;
+        type_list.push(type);
+    }
+    return type_list;
+}
+
+// Return array of extracted types for a pokemon
+function extractTypes(data) {
+    const type_list = [];
+    for(let i = 0; i < data.length; i++) {
+        let type = data[i].type.name;
         type_list.push(type);
     }
     return type_list;
