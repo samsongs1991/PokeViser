@@ -335,6 +335,14 @@ footer:hover {
   box-shadow: 0px 0px 30px 0px #1f6c80;
 }
 
+#sprites > img {
+  opacity: 0.7;
+}
+
+#sprites > #selected-sprite {
+  opacity: 1;
+}
+
 #damage_multiplier {
   background: linear-gradient(45deg, #198dec, #e0e0ff);
   opacity: 0.75;

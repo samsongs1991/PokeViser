@@ -299,16 +299,11 @@ function loadImage(data) {
     image.setAttribute("alt", `Image of ${data.name}`);
 }
 
-// Setup html elements for stats
+// Setup chart in stats
 function loadStats(current_pokemon) {
     const stats = document.getElementById("stats");
     stats.innerHTML = "";
-    // ==========================================================
-    // testing chart js
     const types = extractTypes(current_pokemon.types);
-    console.log("types", types);
-    console.log("TYPES", TYPES);
-    console.log(TYPES[types[0]], TYPES[types[1]]);
     const ctx = document.createElement("canvas");
     ctx.setAttribute("id", "chart");
     ctx.setAttribute("width", 100);
@@ -330,17 +325,16 @@ function loadStats(current_pokemon) {
                         current_pokemon.stats[1].base_stat,
                     ],
                     fill: true, 
-                    // testing color palettes for chart
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: TYPES[types[0]],
+                    borderColor: TYPES[types[1]] || TYPES[types[0]],
 
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: TYPES[types[1]] || TYPES[types[0]],
                     pointBorderColor: 'white',
                     pointBorderWidth: 2, 
                     pointHitRadius: 10, 
                     pointRadius: 3,
                     pointHoverBackgroundColor: 'white',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)', 
+                    pointHoverBorderColor: TYPES[types[1]] || TYPES[types[0]], 
                     pointHoverBorderWidth: 4,
                     pointHoverRadius: 8,
                 }
@@ -356,8 +350,6 @@ function loadStats(current_pokemon) {
             }
         }
     });
-    console.log(myChart);
-    // ==========================================================
 }
 
 // Setup html elements for damage_multiplier
