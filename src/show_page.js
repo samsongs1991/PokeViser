@@ -237,8 +237,20 @@ function loadSprites(selected_pokemon) {
         let sprite_img = document.createElement("img");
         sprite_img.setAttribute("src", img_url);
         sprite_img.setAttribute("id", id);
+        sprite_img.addEventListener("click", handleSpriteClick);
         sprites.appendChild(sprite_img);
     }
+}
+
+function handleSpriteClick(e) {
+    const sprites = document.getElementById('sprites').children;
+    for(let i = 0; i < sprites.length; i++) {
+        sprites[i].classList.remove('selected');
+    }
+    const clicked_sprite = document.getElementById(e.target.id);
+    clicked_sprite.classList.add('selected');
+    const current_pokemon = POKEMON[e.target.id]
+    loadShowContent(current_pokemon);
 }
 
 // Load current pokemon's data
