@@ -207,6 +207,9 @@ function setupPrevNext(current_pokemon, ids) {
 function handlePrevNext(ids, current_pokemon, type) {
     let idx = ids.indexOf(current_pokemon.id.toString());
 
+    let sprite = document.getElementById(current_pokemon.id);
+    sprite.classList.remove('selected');
+
     if(type === "next") {
         if(idx === ids.length - 1) {
             current_pokemon = POKEMON[ids[0]];
@@ -233,12 +236,15 @@ function loadSprites(selected_pokemon) {
         let img_url = pokemon.sprites.front_default;
         let sprite_img = document.createElement("img");
         sprite_img.setAttribute("src", img_url);
+        sprite_img.setAttribute("id", id);
         sprites.appendChild(sprite_img);
     }
 }
 
 // Load current pokemon's data
-function loadShowContent(current_pokemon) {    
+function loadShowContent(current_pokemon) {
+    const sprite = document.getElementById(current_pokemon.id);
+    sprite.classList.add('selected');
     loadDescription(current_pokemon);
     loadImage(current_pokemon);
     loadStats(current_pokemon);
