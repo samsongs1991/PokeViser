@@ -339,6 +339,11 @@ footer:hover {
   opacity: 0.7;
 }
 
+#sprites > img:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
 #sprites > .selected {
   opacity: 1;
 }
