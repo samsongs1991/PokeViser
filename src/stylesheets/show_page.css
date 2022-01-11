@@ -1,0 +1,126 @@
+#show_page {
+    display: flex;
+}
+
+#stats_container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    align-items: center;
+}
+
+#main_content_container {
+    display: flex;
+}
+
+#main_content_container section {
+    width: 35%;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.75;
+    border-radius: 10% 10% 10% 10%;
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+#main_content_container section:hover {
+    opacity: 1;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#main_content_container img {
+    height: 380px;
+    opacity: 0.95;
+    transition: all 0.5s ease;
+}
+
+#main_content_container img:hover {
+    height: 400px;
+    opacity: 1;
+}
+
+#main_content_container section ul {
+    margin-right: 20px;
+}
+
+#description {
+    font-size: 14px;
+}
+
+#prev {
+    width: 10%;
+    font-weight: bold;
+    opacity: 0;
+}
+
+#next {
+    width: 10%;
+    font-weight: bold;
+    opacity: 0;
+}
+
+#sprites {
+    margin-top: 4%;
+    width: 90%;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.65;
+    border-radius: 10%;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    transition: all 0.5s ease;
+}
+
+#sprites:hover {
+    opacity: .9;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#sprites > img {
+    opacity: 0.7;
+}
+
+#sprites > img:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+#sprites > .selected {
+    opacity: 1
+}
+
+#damage_multiplier {
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    opacity: 0.75;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 100px;
+    margin: 10px;
+    border-radius: 10%;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-evenly;
+    transition: all 0.5s ease;
+}
+
+#damage_multiplier:hover {
+    opacity: 1;
+    box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+}
+
+#damage_multiplier > ul {
+    display: flex;
+}
+
+#damage_multiplier > ul > li {
+    padding: 0px 1%;
+}
+
+#new_view_container {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}

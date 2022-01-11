@@ -1,5 +1,5 @@
 // To load title page after DOMContentLoaded
-import { loadTitlePage } from './title_page'
+import { loadTitlePage } from './scripts/title_page'
 
 document.addEventListener("DOMContentLoaded", () => {
     loadTitlePage();

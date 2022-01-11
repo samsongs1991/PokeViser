@@ -1,0 +1,13 @@
+body {
+    font-family: 'Varela Round', sans-serif;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}

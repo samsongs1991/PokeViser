@@ -1,0 +1,14 @@
+#size_container {
+    display: flex;
+    margin-top: 100px;
+    width: 100%;
+    overflow-x: scroll;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+}
+
+#size_container > .size_tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}
