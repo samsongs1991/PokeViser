@@ -11,6 +11,7 @@ import { goToSearchPage } from './title_page'
 
 export function createPokeball() {
     // Create elements used solely for web page presentation / styling
+    const pokeball = document.createElement("div");
     const red_background = document.createElement("div");
     const black_background = document.createElement("div");
     const white_background = document.createElement("div");
@@ -19,13 +20,15 @@ export function createPokeball() {
 
     // Nest above css elements inside the body element
     const body = document.querySelector("body");
-    body.appendChild(red_background);
-    body.appendChild(black_background);
-    body.appendChild(white_background);
-    body.appendChild(black_circle);
-    body.appendChild(white_circle);  
+    body.appendChild(pokeball);
+    pokeball.appendChild(red_background);
+    pokeball.appendChild(black_background);
+    pokeball.appendChild(white_background);
+    pokeball.appendChild(black_circle);
+    pokeball.appendChild(white_circle);
 
     // Set ids for css elements
+    pokeball.setAttribute("id", "pokeball");
     red_background.setAttribute("id", "red");
     black_background.setAttribute("id", "black");
     white_background.setAttribute("id", "white");
