@@ -21,6 +21,11 @@ export function loadTitlePage() {
     const body = document.querySelector("body");
     const title_container = document.createElement("div");
     const logo = document.createElement("img");
+
+    const ball = document.createElement("div");
+    const ball_white_center = document.createElement("div");
+    const ball_black_center = document.createElement("div");
+    
     const instructions = document.createElement("p");
     const instructions_text = document.createElement("p");
 
@@ -33,8 +38,14 @@ export function loadTitlePage() {
     logo.setAttribute("id", "logo");
     logo.setAttribute("src", "resources/pokeviser_img.png");
     logo.setAttribute("alt", "Poke Viser logo");
+
+    ball.setAttribute("id", "ball");
+    ball_white_center.setAttribute("id", "w_circle");
+    ball_black_center.setAttribute("id", "b_circle");
+    
     instructions.setAttribute("id", "instructions_title");
     instructions_text.setAttribute("id", "instructions_text");
+    instructions_text.setAttribute("class", "hide");
 
     // Set title's class to load so it fades in
     window.setTimeout(() => {
@@ -45,12 +56,25 @@ export function loadTitlePage() {
     instructions.innerHTML = "INSTRUCTIONS";
     instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar to input the name of a Pokemon. Use the filters to tell the auto suggestor to only display Pokemon of a type you have selected. You can select up to 6 Pokemon to view and when you are ready click the VIEW STATS button to learn all about the Pokemon you selected.";
     
-    // Set ability to click on title --> leads to search page
+    // Set ability to click on title & center circle --> leads to search page
     logo.addEventListener("click", goToSearchPage);
+    ball_white_center.addEventListener("click", goToSearchPage);
+
+    // Set ability to hover or click on INSTRUCTIONS --> reveal/hide instructions text
+    instructions.addEventListener("click", () => {
+        instructions_text.classList.contains("hide") ? 
+        instructions_text.classList.remove("hide") :
+        instructions_text.setAttribute("class", "hide")
+    });
     
     // Set up the html structure
     body.appendChild(title_container);
     title_container.appendChild(logo);
+
+    title_container.appendChild(ball);
+    ball.appendChild(ball_white_center);
+    ball.appendChild(ball_black_center);
+
     title_container.appendChild(instructions);
     title_container.appendChild(instructions_text);
     

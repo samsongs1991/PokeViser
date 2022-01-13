@@ -2,7 +2,7 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
-import { goToSearchPage } from './title_page'
+
 
 // ====================================================
 // ===================== M A I N ======================
@@ -15,8 +15,6 @@ export function createPokeball() {
     const red_background = document.createElement("div");
     const black_background = document.createElement("div");
     const white_background = document.createElement("div");
-    const black_circle = document.createElement("div");
-    const white_circle = document.createElement("div");
 
     // Nest above css elements inside the body element
     const body = document.querySelector("body");
@@ -24,19 +22,12 @@ export function createPokeball() {
     pokeball.appendChild(red_background);
     pokeball.appendChild(black_background);
     pokeball.appendChild(white_background);
-    pokeball.appendChild(black_circle);
-    pokeball.appendChild(white_circle);
 
     // Set ids for css elements
     pokeball.setAttribute("id", "pokeball");
     red_background.setAttribute("id", "red");
     black_background.setAttribute("id", "black");
     white_background.setAttribute("id", "white");
-    black_circle.setAttribute("id", "b_circle");
-    white_circle.setAttribute("id", "w_circle");
-
-    // Set ability to click on white_circle --> leads to search page
-    white_circle.addEventListener("click", goToSearchPage);
 }
 
 export function loadBackgroundVid() {
