@@ -29,8 +29,6 @@ a {
     justify-content: space-between;
 }
 
-
-
 #red, #black, #white {
     position: absolute;
     opacity: 1;
@@ -64,8 +62,139 @@ a {
     box-shadow: 0px 0px 20px 10px black;
 }
 
-@media only screen and (max-height: 750px) {
+@media only screen {
+    #title_container > #logo {
+        cursor: pointer;
+        opacity: 0;
+        transition: 
+            opacity 1s ease-in, 
+            width 0.2s ease-out;
+        width: auto;
+        height: 50vh;
+    }
+    
+    #title_container > #logo.load {
+        opacity: 1;
+    }
+    
+    #title_container > #logo.load:hover {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+    }
+}
 
+@media only screen and (min-height: 300px) {
+    #title_container > #logo {
+        cursor: pointer;
+        opacity: 0;
+        transition: 
+            opacity 1s ease-in, 
+            width 0.2s ease-out;
+        width: auto;
+        height: 75px;
+        margin-top: 5vh;
+    }
+    
+    #title_container > #logo.load {
+        opacity: 1;
+    }
+    
+    #title_container > #logo.load:hover {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+    }
+    
+    #title_container > #instructions_title {
+        margin-top: 10px;
+        font-size: 32px;
+        cursor: pointer;
+    }
+    
+    #title_container > #instructions_title:hover {
+        font-weight: bold;
+    }
+    
+    #title_container > #instructions_text {
+        width: 500px;
+        margin-top: -30px;
+        text-align: center; 
+        transition: 
+            opacity 0.5s ease-in, 
+            text-shadow 0.2s ease-in;
+    }
+    
+    #instructions_title, #instructions_text {
+        z-index: 3;
+        transition: text-shadow 0.2s ease-in;
+        text-shadow:1px 1px 10px rgb(22, 145, 245), 1px 1px 10px #ccc;
+    }
+
+    #instructions_title:hover, #instructions_text:hover {
+        transition: text-shadow 0.2s ease-in;
+        text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
+    }
+    
+    .hide {
+        transition: opacity 0.5s ease-in;
+        opacity: 0;
+    }
+}
+
+@media only screen and (min-height: 400px) {
+    #title_container > #logo {
+        cursor: pointer;
+        opacity: 0;
+        transition: 
+            opacity 1s ease-in, 
+            width 0.2s ease-out;
+        width: auto;
+        height: 20vh;
+        margin-top: 10vh;
+    }
+    
+    #title_container > #logo.load {
+        opacity: 1;
+    }
+    
+    #title_container > #logo.load:hover {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+    }
+    
+    #title_container > #instructions_title {
+        margin-top: 15vh;
+        font-size: 32px;
+        cursor: pointer;
+    }
+    
+    #title_container > #instructions_title:hover {
+        font-weight: bold;
+    }
+    
+    #title_container > #instructions_text {
+        width: 500px;
+        margin-top: 0;
+        text-align: center; 
+        transition: 
+            opacity 0.5s ease-in, 
+            text-shadow 0.2s ease-in;
+    }
+    
+    #instructions_title, #instructions_text {
+        z-index: 3;
+        transition: text-shadow 0.2s ease-in;
+        text-shadow:1px 1px 10px rgb(22, 145, 245), 1px 1px 10px #ccc;
+    }
+
+    #instructions_title:hover, #instructions_text:hover {
+        transition: text-shadow 0.2s ease-in;
+        text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
+    }
+    
+    .hide {
+        transition: opacity 0.5s ease-in;
+        opacity: 0;
+    }
 }
 
 @media only screen and (min-height: 750px) {
@@ -150,7 +279,7 @@ a {
         transition: text-shadow 0.2s ease-in;
         text-shadow:1px 1px 10px rgb(22, 145, 245), 1px 1px 10px #ccc;
     }
-    
+
     #instructions_title:hover, #instructions_text:hover {
         transition: text-shadow 0.2s ease-in;
         text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;

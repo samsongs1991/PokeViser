@@ -80,6 +80,19 @@ export function loadTitlePage() {
     
     // Load pokeball background
     createPokeball();
+
+    // On window resize, below certain window.innerHeight remove instructions
+    window.onresize = () => {
+        if(window.innerHeight < 300) {
+            if(isChild(title_container, instructions)) {
+                title_container.removeChild(instructions);
+                title_container.removeChild(instructions_text);
+            }
+        } else {
+            title_container.appendChild(instructions);
+            title_container.appendChild(instructions_text);
+        }
+    }
 }
 
 export function goToSearchPage() {
@@ -90,4 +103,19 @@ export function goToSearchPage() {
     loadHeader();
     loadMainSearchPage();
     loadFooter();
+}
+
+// ====================================================
+// =================== H E L P E R ====================
+// ================== M E T H O D S ===================
+// ====================================================
+
+// Checks if node is a child of parent
+function isChild(parent, node) {
+    for(let i = 0; i < parent.children.length; i++) {
+        if(parent.children[i] === node) {
+            return true;
+        }
+    }
+    return false;
 }
