@@ -252,7 +252,9 @@ a {
     #title_container > #logo.load:hover {
         width: 515px;
         height: 124px;
-        transition: width 0.2s ease-out;
+        transition: 
+            width 0.2s ease-out, 
+            opacity 0.3s ease-in-out;
     }
     
     #title_container > #instructions_title {
