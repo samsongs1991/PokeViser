@@ -106,15 +106,16 @@ export function loadMainSearchPage() {
 // Setup html elements for the filter container
 function loadFilterContainer(main) {
     const filter_container = document.createElement("section");
+    const title = document.createElement("h3");
     const filter = document.createElement("form");
-    const filter_label = document.createElement("label");
 
     filter_container.setAttribute("id", "filter_container");
-    filter_label.innerHTML = "Filters: ";
+    filter_container.setAttribute("title", "Choose a type of Pokemon to search for");
+    title.innerHTML = "Filters";
 
     main.appendChild(filter_container);
+    filter_container.appendChild(title);
     filter_container.appendChild(filter);
-    filter.appendChild(filter_label);
 
     createFilterOptions(TYPES, filter);
 }
@@ -122,8 +123,8 @@ function loadFilterContainer(main) {
 // Setup html elements for the search containers
 function loadSearchContainer(main) {
     const search_container = document.createElement("section");
+    const search_title = document.createElement("h3");
     const search_form = document.createElement("form");
-    const search_label = document.createElement("label");
     const search_input = document.createElement("input");
     const selection_container = document.createElement("section");
     const selection = document.createElement("ol");
@@ -136,14 +137,15 @@ function loadSearchContainer(main) {
     search_input.setAttribute("value", "");
     search_input.setAttribute("placeholder", "Name of Pokemon");
     selection_container.setAttribute("id", "selection_container");
+    selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
     
-    search_label.innerHTML = "Search by name: ";
+    search_title.innerHTML = "Search";
     
     main.appendChild(search_container);
     main.appendChild(selection_container);
+    search_container.appendChild(search_title);
     search_container.appendChild(search_form);
     search_form.appendChild(search_input);
-    search_form.appendChild(search_label);
     selection_container.appendChild(selection);
 
     //================================================================== 
@@ -172,11 +174,11 @@ function loadSearchContainer(main) {
 
     button_container.setAttribute("id", "button_container");
     select_button.setAttribute("type", "submit");
-    select_button.setAttribute("value", "Add to list");
+    select_button.setAttribute("value", "Add");
     random_button.setAttribute("type", "submit");
     random_button.setAttribute("value", "Random");
     search_button.setAttribute("type", "submit");
-    search_button.setAttribute("value", "View stats");
+    search_button.setAttribute("value", "View");
     
     button_container.appendChild(select_button);
     button_container.appendChild(random_button);
@@ -398,17 +400,31 @@ function displayErrorInvalidName(search_container) {
 }
 
 // Setup filter options in filter_container
-function createFilterOptions(TYPES, filter) {
+function createFilterOptions(TYPES, form) {
+    let list = document.createElement("ul");
     for(let type in TYPES) {
+        let li = document.createElement("li");
         let filter_option = document.createElement("input");
-            filter_option.setAttribute("type", "checkbox");
-            filter_option.setAttribute("value", type);
-
         let filter_option_label = document.createElement("label");
-            filter_option_label.innerHTML = capitalize(type);
 
-        filter.appendChild(filter_option);
-        filter.appendChild(filter_option_label);
+        filter_option.setAttribute("type", "checkbox");
+        filter_option.setAttribute("value", type);
+        filter_option_label.innerHTML = capitalize(type);
+
+        filter_option_label.addEventListener("click", () => {
+            filter_option.checked ? 
+            filter_option.checked = false :
+            filter_option.checked = true;
+        })
+
+        li.appendChild(filter_option);
+        li.appendChild(filter_option_label);
+        list.appendChild(li);
+        
+        if(list.children.length >= 6) {
+            form.appendChild(list);
+            list = document.createElement("ul")
+        }
     };
 }
 
