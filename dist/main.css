@@ -429,6 +429,7 @@ footer:hover {
 
 #filter_container li:hover {
     color: green;
+    transition: all 0.2s ease;
 }
 
 #filter_container label:hover, #filter_container input:hover {
@@ -445,16 +446,18 @@ footer:hover {
     width: 100%;
     height: 20px;
     border-radius: 5px;
-    border-color: white;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 10px 5px rgb(255, 255, 255);
+    transition: all 0.2s ease;
 }
 
 #search_container form > input:hover {
-    border-color: rgb(18, 180, 255);
+    box-shadow: 0px 0px 10px 5px rgb(18, 180, 255);
 }
 
 #search_container form > input:focus {
-    border-color: rgb(18, 180, 255);
-    outline: none;
+    box-shadow: 0px 0px 10px 5px rgb(18, 180, 255);
 }
 
 #search_container #button_container {
@@ -470,6 +473,7 @@ footer:hover {
     margin: 0px 5px;
     padding: 5px;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    transition: all 0.2s ease;
 }
 
 #search_container #button_container input:hover {
