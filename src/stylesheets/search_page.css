@@ -49,6 +49,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
+}
+
+#search_container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
 }
 
 #search_container form > input {
@@ -92,6 +100,23 @@
     color: white;
 }
 
+#autosuggestion_container {
+    margin-top: 20px;
+}
+
+#search_container:hover #autosuggestion_container {
+    text-shadow: 0px 0px 10px black;
+}
+
+#error_container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#search_container:hover #error_container {
+    text-shadow: 0px 0px 10px black;
+}
+
 #selection_container {
     display: flex;
     flex-direction: column;
@@ -102,19 +127,6 @@
 #selection_container li:hover {
     cursor: pointer;
     color: rgb(255, 0, 0);
-}
-
-#autosuggestion_container {
-    display: flex;
-    justify-content: center;
-    height: 20px;
-}
-
-#search_container form {
-    margin-top: 35px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 @media only screen and (max-width: 770px) {
