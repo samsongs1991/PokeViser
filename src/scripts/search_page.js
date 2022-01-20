@@ -90,6 +90,9 @@ export function cachePokemon(cache) {
 // ====================================================
 
 export function loadMainSearchPage() {
+    SELECTED_POKEMON.size = 0;
+    SELECTED_POKEMON.selection = {};
+    
     const body = document.querySelector("body");
     const main = document.createElement("main");
 
@@ -176,12 +179,7 @@ function loadSearchButtons() {
     
     add_button.addEventListener("click", e => handleBtn(e));
     random_button.addEventListener("click", e => handleBtn(e));
-    view_button.addEventListener("click", (e) => {
-        e.preventDefault();
-        if(SELECTED_POKEMON.size > 0) {
-            loadShowPage(SELECTED_POKEMON);
-        }
-    }); 
+    view_button.addEventListener("click", e => handleBtn(e)); 
 }
 
 // Handle Add/Random/View button clicks
@@ -262,6 +260,7 @@ function handleAutoSuggestion() {
     }
 }
 
+// Setup html for selection_container
 function loadSelectionContainer() {
     const searchpage = document.getElementById("searchpage");
     const selection_container = document.createElement("section");
@@ -297,7 +296,6 @@ function handleAdd() {
 
 // Add random pokemon to selection list
 function handleRandom() {
-    console.log("handleRandom");
     if(SELECTED_POKEMON.size >= 6) {
         displayError("Cannot select more than 6 Pokemon");
     } else {
@@ -311,6 +309,15 @@ function handleRandom() {
         }        
         
         addToList(value);
+    }
+}
+
+// Go to show_page if user has selected pokemon
+function handleView() {
+    if(SELECTED_POKEMON.size > 0) {
+        loadShowPage(SELECTED_POKEMON);
+    } else {
+        displayError("Choose at least 1 Pokemon");
     }
 }
 
