@@ -59,6 +59,9 @@ export const TYPES = {
 // keys with all data for that pokemon as an object for the values
 export const POKEMON = { "size": 0 }
 
+// SELECTED_POKEMON contains user selected pokemon - up to 6
+const SELECTED_POKEMON = { "size": 0, "selection": {} };
+
 // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {
     const first = 1;
@@ -94,8 +97,9 @@ export function loadMainSearchPage() {
     
     body.appendChild(main);
     
-    loadFilterContainer(main);
-    loadSearchContainer(main);
+    loadFilterContainer();
+    loadSearchContainer();
+    loadSelectionContainer();
 }
 
 // ====================================================
@@ -104,7 +108,8 @@ export function loadMainSearchPage() {
 // ====================================================
 
 // Setup html elements for the filter container
-function loadFilterContainer(main) {
+function loadFilterContainer() {
+    const searchpage = document.getElementById("searchpage");
     const filter_container = document.createElement("section");
     const title = document.createElement("h3");
     const filter = document.createElement("form");
@@ -113,7 +118,7 @@ function loadFilterContainer(main) {
     filter_container.setAttribute("title", "Choose a type of Pokemon to search for");
     title.innerHTML = "Filters";
 
-    main.appendChild(filter_container);
+    searchpage.appendChild(filter_container);
     filter_container.appendChild(title);
     filter_container.appendChild(filter);
 
@@ -121,92 +126,91 @@ function loadFilterContainer(main) {
 }
 
 // Setup html elements for the search containers
-function loadSearchContainer(main) {
+function loadSearchContainer() {
+    const searchpage = document.getElementById("searchpage");
     const search_container = document.createElement("section");
     const search_title = document.createElement("h3");
     const search_form = document.createElement("form");
     const search_input = document.createElement("input");
-    const selection_container = document.createElement("section");
-    const selection = document.createElement("ol");
     
     search_container.setAttribute("id", "search_container");
-    selection.setAttribute("id", "selection");
+    search_form.setAttribute("id", "search_form");
     search_input.setAttribute("id", "search_input");
     search_input.setAttribute("type", "text");
     search_input.setAttribute("name", "search_input");
     search_input.setAttribute("value", "");
     search_input.setAttribute("placeholder", "Name of Pokemon");
-    selection_container.setAttribute("id", "selection_container");
-    selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
     
     search_title.innerHTML = "Search";
     
-    main.appendChild(search_container);
-    main.appendChild(selection_container);
+    searchpage.appendChild(search_container);
     search_container.appendChild(search_title);
     search_container.appendChild(search_form);
     search_form.appendChild(search_input);
-    selection_container.appendChild(selection);
 
-    //================================================================== 
-    // =================== AUTO SUGGESTION FEATURE =====================
-    //==================================================================
-    const selected_pokemon = { "size": 0, "selection": {} };
+    loadSearchButtons();
+    loadAutosuggestion();
+    loadErrors();
+}
 
-    const autosuggestion_container = document.createElement("div");
-    const autosuggestion = document.createElement("p");
-
-    autosuggestion_container.setAttribute("id", "autosuggestion_container");
-    autosuggestion.setAttribute("id", "autosuggestion");
-
-    search_container.appendChild(autosuggestion_container);
-    autosuggestion_container.appendChild(autosuggestion);
-
-    setInterval(handleAutoSuggestion, 100);
-
-    //================================================================== 
-    // ======================= SEARCH BUTTONS ==========================
-    //==================================================================
+// Setup html buttons in the search container
+function loadSearchButtons() {
+    const search_form = document.getElementById("search_form");
     const button_container = document.createElement("div");
-    const select_button = document.createElement("input");
+    const add_button = document.createElement("input");
     const random_button = document.createElement("input");
-    const search_button = document.createElement("input");
+    const view_button = document.createElement("input");
 
     button_container.setAttribute("id", "button_container");
-    select_button.setAttribute("type", "submit");
-    select_button.setAttribute("value", "Add");
+    add_button.setAttribute("type", "submit");
+    add_button.setAttribute("value", "Add");
     random_button.setAttribute("type", "submit");
     random_button.setAttribute("value", "Random");
-    search_button.setAttribute("type", "submit");
-    search_button.setAttribute("value", "View");
+    view_button.setAttribute("type", "submit");
+    view_button.setAttribute("value", "View");
     
-    button_container.appendChild(select_button);
+    button_container.appendChild(add_button);
     button_container.appendChild(random_button);
-    button_container.appendChild(search_button);
+    button_container.appendChild(view_button);
     search_form.appendChild(button_container)
     
-    select_button.addEventListener("click", (event) => {
-        event.preventDefault();
-        handleSelectPokemon(selected_pokemon);
-    });
-    random_button.addEventListener("click", (event) => {
-        event.preventDefault();
-        handleRandomPokemon(selected_pokemon);
-    });
-    search_button.addEventListener("click", (event) => {
-        event.preventDefault();
-        if(selected_pokemon.size > 0) {
-            loadShowPage(selected_pokemon);
+    add_button.addEventListener("click", e => handleBtn(e));
+    random_button.addEventListener("click", e => handleBtn(e));
+    view_button.addEventListener("click", (e) => {
+        e.preventDefault();
+        if(SELECTED_POKEMON.size > 0) {
+            loadShowPage(SELECTED_POKEMON);
         }
     }); 
 }
 
+// Handle Add/Random/View button clicks
+function handleBtn(e) {
+    e.preventDefault();
+    if(e.target.value === "Add") {
+        handleAdd();
+    } else if(e.target.value === "Random") {
+        handleRandom();
+    } else if(e.target.value === "View") {
+        handleView();
+    }
+}
+
+// Setup html for autosuggestion
+function loadAutosuggestion() {
+    const search_container = document.getElementById("search_container");
+    const autosuggestion_container = document.createElement("div");
+    autosuggestion_container.setAttribute("id", "autosuggestion_container");
+    search_container.appendChild(autosuggestion_container);
+    setInterval(handleAutoSuggestion, 100);
+}
+
 // Handle population of autosuggestion html element in the setInterval fn
 function handleAutoSuggestion() {
-    const autosuggestion = document.getElementById("autosuggestion");
+    const autosuggestion_container = document.getElementById("autosuggestion_container");
     const search_input = document.getElementById("search_input");
-    if(autosuggestion) {
-        autosuggestion.innerHTML = "";
+    if(autosuggestion_container) {
+        autosuggestion_container.innerHTML = "";
         let filters_to_apply = getUserFilters();
         let partial_name = search_input.value;
         partial_name = partial_name.toLowerCase();
@@ -220,9 +224,9 @@ function handleAutoSuggestion() {
             if(current_pokemon.name.startsWith(partial_name)) {
                 if(filters_to_apply.length === 0) {
                     if(isException(partial_name)) {
-                        autosuggestion.innerHTML = `#${convertNameToId(partial_name)}. ${capitalize(partial_name)}`;
+                        autosuggestion_container.innerHTML = `#${convertNameToId(partial_name)}. ${capitalize(partial_name)}`;
                     } else {
-                        autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
+                        autosuggestion_container.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
                     }
                     break;
                 } else { // filter case
@@ -230,20 +234,20 @@ function handleAutoSuggestion() {
                 
                     // Edge cases of pokemon names that another pokemon has within their own name => "Mew" and "Mewtwo" or "Pidgeot" and "Pidgeoto"
                     if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
-                        autosuggestion.innerHTML = "Mew"; // set auto suggestion
+                        autosuggestion_container.innerHTML = "Mew"; // set auto suggestion
                         exit = true;
                     } else if(partial_name === "pidgeot" && filters_to_apply.includes("normal")) {
-                        autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
+                        autosuggestion_container.innerHTML = "Pidgeot"; // set auto suggestion
                         exit = true;
                     } else if(partial_name === "pidgeot" && filters_to_apply.includes("flying")) {
-                        autosuggestion.innerHTML = "Pidgeot"; // set auto suggestion
+                        autosuggestion_container.innerHTML = "Pidgeot"; // set auto suggestion
                         exit = true;
                     } 
     
                     else {
                         current_pokemon.types.forEach(type_obj => {
                             if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                autosuggestion.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
+                                autosuggestion_container.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
                                 exit = true;
                             }
                         });
@@ -258,52 +262,66 @@ function handleAutoSuggestion() {
     }
 }
 
-// Add user input pokemon to selection list
-function handleSelectPokemon(selected_pokemon) {
-    const search_container = document.getElementById("search_container");
-    const autosuggestion = document.getElementById("autosuggestion");
+function loadSelectionContainer() {
+    const searchpage = document.getElementById("searchpage");
+    const selection_container = document.createElement("section");
+    const selection = document.createElement("ol");
 
-    if(selected_pokemon.size >= 6) {
-        displayErrorListFull(search_container);
+    selection_container.setAttribute("id", "selection_container");
+    selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
+    selection.setAttribute("id", "selection");
+
+    searchpage.appendChild(selection_container);
+    selection_container.appendChild(selection);
+}
+
+// Add user input pokemon to selection list
+function handleAdd() {
+    const autosuggestion_container = document.getElementById("autosuggestion_container");
+
+    if(SELECTED_POKEMON.size >= 6) {
+        displayError("Cannot select more than 6 Pokemon");
     } else {
-        const value = autosuggestion.innerHTML.split(" ");
+        const value = autosuggestion_container.innerHTML.split(" ");
         value[0] = parseInt(value[0].slice(1, value[0].length - 1));
-        if(selected_pokemon.selection[value[0]]) {
-            displayErrorAlreadySelected(search_container);
+        
+        if(SELECTED_POKEMON.selection[value[0]]) {
+            displayError("Pokemon already selected");
         } else if(value[1]) {
-            addToList(value, selected_pokemon);
+            addToList(value);
         } else {
-            displayErrorInvalidName(search_container);
+            displayError("Invalid Pokemon name");
         }
     }
 }
 
 // Add random pokemon to selection list
-function handleRandomPokemon(selected_pokemon) {
-    if(selected_pokemon.size >= 6) {
-        displayErrorListFull(search_container);
+function handleRandom() {
+    console.log("handleRandom");
+    if(SELECTED_POKEMON.size >= 6) {
+        displayError("Cannot select more than 6 Pokemon");
     } else {
-        let random_pokemon = getValidRandomPokemon(selected_pokemon);
+        let random_pokemon = getValidRandomPokemon();
         const value = [random_pokemon.id, capitalize(random_pokemon.name)]
 
-        while(selected_pokemon.selection[value[0]]) {
-            random_pokemon = getValidRandomPokemon(selected_pokemon);
+        while(SELECTED_POKEMON.selection[value[0]]) {
+            random_pokemon = getValidRandomPokemon(SELECTED_POKEMON);
             value[0] = random_pokemon.id;
             value[1] = capitalize(random_pokemon.name);
         }        
         
-        addToList(value, selected_pokemon);
+        addToList(value);
     }
 }
 
 // Return a valid random pokemon
-function getValidRandomPokemon(selected_pokemon) {
+function getValidRandomPokemon() {
     const filters = getUserFilters();
     let valid_random = false;
-    let random_pokemon = getRandomEl(POKEMON); // this doesn't work properly until the POKEMON obj is fully loaded which takes about 15sec
+    let random_pokemon = getRandomEl(POKEMON);
 
     while(valid_random === false) {
-        if(selected_pokemon[capitalize(random_pokemon.name)]) {
+        if(SELECTED_POKEMON[capitalize(random_pokemon.name)]) {
             random_pokemon = getRandomEl(POKEMON);
         } else if(filters.length > 0) {
             if(typeMatchCheck(random_pokemon, filters)) {
@@ -330,25 +348,25 @@ function typeMatchCheck(pokemon, filters) {
     }
 }
 
-// Add { id: name } to selected_pokemon.selection
-function addToList(value, selected_pokemon) {
-    const search_container = document.getElementById("search_container");
+// Add { id: name } to SELECTED_POKEMON.selection
+function addToList(value) {
+    errorAlreadyExists();
+
     const search_input = document.getElementById("search_input");
     const selection = document.getElementById("selection");
 
-    errorAlreadyExists(search_container);
     search_input.value = "";
-    selected_pokemon.size++;
+    SELECTED_POKEMON.size++;
 
     let id = value[0];
     let name = value[1];
-    selected_pokemon.selection[id] = name;
+    SELECTED_POKEMON.selection[id] = name;
     
     const item = document.createElement("li");
     item.setAttribute("id", name);
     item.addEventListener("click", () => {
-        delete selected_pokemon.selection[id];
-        selected_pokemon.size--;
+        delete SELECTED_POKEMON.selection[id];
+        SELECTED_POKEMON.size--;
         let remove_item = document.getElementById(name);
         selection.removeChild(remove_item);
     });
@@ -356,47 +374,30 @@ function addToList(value, selected_pokemon) {
     selection.appendChild(item);
 }
 
+// Setup html for errors
+function loadErrors() {
+    const search_container = document.getElementById("search_container");
+    const error_container = document.createElement("div");
+    error_container.setAttribute("id", "error_container");
+    search_container.appendChild(error_container);
+}
+
 // Remove error message for user if one already exists 
-function errorAlreadyExists(search_container) {
-    if(search_container.children.length === 3) {
-        search_container.children.item(2).remove();
+function errorAlreadyExists() {
+    const error_container = document.getElementById("error_container");
+    if(error_container.innerHTML !== "") {
+        error_container.innerHTML = "";
     }
 }
 
-// Display error "Can't select more than 6 Pokemon"
-function displayErrorListFull(search_container) {
-    errorAlreadyExists(search_container);
-    const error = document.createElement("p");
-    error.setAttribute("name", "error");
-    error.innerHTML = "Cannot select more than 6 Pokemon";
-    search_container.appendChild(error);
+// Display errors
+function displayError(msg) {
+    errorAlreadyExists();
+    const error_container = document.getElementById("error_container");
+    error_container.innerHTML = msg;
     setTimeout(() => {
-        error.remove();
+        error_container.innerHTML = "";
     }, 5000);  
-}
-
-// Display error "Pokemon already selected"
-function displayErrorAlreadySelected(search_container) {
-    errorAlreadyExists(search_container);
-    const error = document.createElement("p");
-    error.setAttribute("name", "error");
-    error.innerHTML = "Pokemon already selected";
-    search_container.appendChild(error);
-    setTimeout(() => {
-        error.remove();
-    }, 5000);
-}
-
-// Display error "User input does not match any pokemon name"
-function displayErrorInvalidName(search_container) {
-    errorAlreadyExists(search_container);
-    const error = document.createElement("p");
-    error.setAttribute("name", "error");
-    error.innerHTML = "Invalid Pokemon name";
-    search_container.appendChild(error);
-    setTimeout(() => {
-        error.remove();
-    }, 5000);
 }
 
 // Setup filter options in filter_container
