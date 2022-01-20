@@ -138,6 +138,7 @@ function loadSearchContainer() {
     
     search_container.setAttribute("id", "search_container");
     search_form.setAttribute("id", "search_form");
+    search_form.setAttribute("autocomplete", "off");
     search_input.setAttribute("id", "search_input");
     search_input.setAttribute("type", "text");
     search_input.setAttribute("name", "search_input");
