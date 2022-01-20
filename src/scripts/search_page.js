@@ -265,13 +265,17 @@ function handleAutoSuggestion() {
 function loadSelectionContainer() {
     const searchpage = document.getElementById("searchpage");
     const selection_container = document.createElement("section");
+    const selection_title = document.createElement("h3");
     const selection = document.createElement("ol");
+
+    selection_title.innerHTML = "Selection"
 
     selection_container.setAttribute("id", "selection_container");
     selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
     selection.setAttribute("id", "selection");
 
     searchpage.appendChild(selection_container);
+    selection_container.appendChild(selection_title);
     selection_container.appendChild(selection);
 }
 
