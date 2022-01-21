@@ -160,14 +160,17 @@ function handleApplyFilters() {
 }
 
 function updateOptions(filters) {
+    // =============
+    // === B U G ===
+    // =============
+    // doesn't include the second typing
     const datalist = document.getElementById("dropdown");
     datalist.innerHTML = "";
     for(let i = 1; i <= POKEMON_NAMES.size; i++) {
         let types = POKEMON_NAMES[i].types;
         if(filters.length === 0 ||
-            filters.includes(types[0] || 
-            (types[1] && filters.includes(types[1])))) {
-                
+            filters.includes(types[0]) || 
+            (types[1] && filters.includes(types[1]))) {
             let option = document.createElement("option");
             option.setAttribute("value", `#${i} ${capitalize(POKEMON_NAMES[i].name)}`);
             datalist.appendChild(option);
