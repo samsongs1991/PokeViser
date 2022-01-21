@@ -510,7 +510,7 @@ footer:hover {
     color: white;
 }
 
-#autosuggestion_container {
+#search_container #autosuggestion_container {
     margin-top: 20px;
 }
 
@@ -518,7 +518,7 @@ footer:hover {
     text-shadow: 0px 0px 10px black;
 }
 
-#error_container {
+#search_container #error_container {
     margin-top: 15px;
     text-align: center;
 }
@@ -550,6 +550,119 @@ footer:hover {
         padding: 0;
     }
 }
+
+/* =========================================== */
+/* =============== T Y P E S ================= */
+/* =========================================== */
+
+#search_container form > input.normal {
+    box-shadow: 0px 0px 10px 10px #AAB09F;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.fire {
+    box-shadow: 0px 0px 10px 10px #EA7A3C;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.water {
+    box-shadow: 0px 0px 10px 10px #539AE2;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.electric {
+    box-shadow: 0px 0px 10px 10px #E5C531;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.grass {
+    box-shadow: 0px 0px 10px 10px #71C558;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.ice {
+    box-shadow: 0px 0px 10px 10px #70CBD4;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.fighting {
+    box-shadow: 0px 0px 10px 10px #CB5F48;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.poison {
+    box-shadow: 0px 0px 10px 10px #B468B7;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.ground {
+    box-shadow: 0px 0px 10px 10px #CC9F4F;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.flying {
+    box-shadow: 0px 0px 10px 10px #7DA6DE;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.psychic {
+    box-shadow: 0px 0px 10px 10px #E5709B;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.bug {
+    box-shadow: 0px 0px 10px 10px #94BC4A;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.rock {
+    box-shadow: 0px 0px 10px 10px #B2A061;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.ghost {
+    box-shadow: 0px 0px 10px 10px #846AB6;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.dragon {
+    box-shadow: 0px 0px 10px 10px #6A7BAF;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.dark {
+    box-shadow: 0px 0px 10px 10px #736C75;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.steel {
+    box-shadow: 0px 0px 10px 10px #89A1B0;
+    transition: all 0.2s ease;
+}
+
+#search_container form > input.fairy {
+    box-shadow: 0px 0px 10px 10px #E397D1;
+    transition: all 0.2s ease;
+}
+
+/* // "normal": "#AAB09F",
+// "fire": "#EA7A3C",
+// "water": "#539AE2",
+// "electric": "#E5C531",
+// "grass": "#71C558",
+// "ice": "#70CBD4",
+// "fighting": "#CB5F48",
+// "poison": "#B468B7",
+// "ground": "#CC9F4F",
+// "flying": "#7DA6DE",
+// "psychic": "#E5709B",
+// "bug": "#94BC4A",
+// "rock": "#B2A061",
+// "ghost": "#846AB6",
+// "dragon": "#6A7BAF",
+// "dark": "#736C75",
+// "steel": "#89A1B0",
+// "fairy": "#E397D1", */
 /*!*************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/show_page.css ***!
   \*************************************************************************************************************/

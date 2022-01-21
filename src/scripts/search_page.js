@@ -17,41 +17,23 @@ import { renderLoadingScreen, removeLoadingScreen } from './presentation'
 
 // TYPES contains all Pokemon types and their hex color codes
 export const TYPES = {
-    // "normal": "#AAB09F",
     "normal": "rgba(170, 176, 159, 0.6)",
-    // "fire": "#EA7A3C",
     "fire": "rgba(234, 122, 60, 0.6)",
-    // "water": "#539AE2",
     "water": "rgba(83, 154, 226, 0.6)",
-    // "electric": "#E5C531",
     "electric": "rgba(229, 197, 49, 0.6)",
-    // "grass": "#71C558",
     "grass": "rgba(113, 197, 88, 0.6)",
-    // "ice": "#70CBD4",
     "ice": "rgba(112, 203, 212, 0.6)",
-    // "fighting": "#CB5F48",
     "fighting": "rgba(203, 95, 72, 0.6)",
-    // "poison": "#B468B7",
     "poison": "rgba(180, 104, 183, 0.6)",
-    // "ground": "#CC9F4F",
     "ground": "rgba(204, 159, 79, 0.6)",
-    // "flying": "#7DA6DE",
     "flying": "rgba(125, 166, 222, 0.6)",
-    // "psychic": "#E5709B",
     "psychic": "rgba(229, 112, 155, 0.6)",
-    // "bug": "#94BC4A",
     "bug": "rgba(148, 188, 74, 0.6)",
-    // "rock": "#B2A061",
     "rock": "rgba(178, 160, 97, 0.6)",
-    // "ghost": "#846AB6",
     "ghost": "rgba(132, 106, 182, 0.6)",
-    // "dragon": "#6A7BAF ",
     "dragon": "rgba(106, 123, 175, 0.6)",
-    // "dark": "#736C75 ",
     "dark": "rgba(115, 108, 117, 0.6)",
-    // "steel": "#89A1B0",
     "steel": "rgba(137, 161, 176, 0.6)",
-    // "fairy": "#E397D1",
     "fairy": "rgba(227, 151, 209, 0.6)",
 };
 
@@ -157,6 +139,7 @@ function loadFilterContainer() {
 function handleApplyFilters() {
     const filters_to_apply = getUserFilters();
     updateOptions(filters_to_apply);
+    signalUpdate();
 }
 
 function updateOptions(filters) {
@@ -172,6 +155,36 @@ function updateOptions(filters) {
             datalist.appendChild(option);
         }
     }
+}
+
+function signalUpdate() {
+    
+    // "normal": "#AAB09F",
+    // "fire": "#EA7A3C",
+    // "water": "#539AE2",
+    // "electric": "#E5C531",
+    // "grass": "#71C558",
+    // "ice": "#70CBD4",
+    // "fighting": "#CB5F48",
+    // "poison": "#B468B7",
+    // "ground": "#CC9F4F",
+    // "flying": "#7DA6DE",
+    // "psychic": "#E5709B",
+    // "bug": "#94BC4A",
+    // "rock": "#B2A061",
+    // "ghost": "#846AB6",
+    // "dragon": "#6A7BAF ",
+    // "dark": "#736C75 ",
+    // "steel": "#89A1B0",
+    // "fairy": "#E397D1",
+
+    const input = document.getElementById("search_input");
+    const types = getUserFilters();
+    const i = Math.floor(Math.random() * types.length);
+    input.classList.add(types[i]);
+    window.setTimeout(() => {        
+        input.classList.remove(types[i]);
+    }, 750);
 }
 
 // Setup html elements for the search containers
@@ -223,12 +236,13 @@ function loadSearchButtons() {
 // Setup html dropdown in the search container
 function loadDropdown() {
     const search_form = document.getElementById("search_form");
-    const dropdown = document.createElement("input");
+    const input = document.createElement("input");
     const datalist = document.createElement("datalist");
-    dropdown.setAttribute("list", "dropdown");
-    dropdown.setAttribute("placeholder", "Name of Pokemon");
+    input.setAttribute("id", "search_input");
+    input.setAttribute("list", "dropdown");
+    input.setAttribute("placeholder", "Name of Pokemon");
     datalist.setAttribute("id", "dropdown");
-    search_form.appendChild(dropdown);
+    search_form.appendChild(input);
     search_form.appendChild(datalist);
     for(let i = 1; i <= POKEMON_NAMES.size; i++) {
         let option = document.createElement("option");
