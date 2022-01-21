@@ -126,7 +126,7 @@ function loadFilterContainer() {
     title.innerHTML = "Filters";
     button.innerHTML = "Apply";
 
-    button.addEventListener("click", handleApplyFilters);
+    button.addEventListener("click", e => handleBtn(e));
 
     searchpage.appendChild(filter_container);
     filter_container.appendChild(title);
@@ -240,6 +240,10 @@ function handleBtn(e) {
         handleRandom();
     } else if(e.target.innerHTML === "View") {
         handleView();
+    } else if(e.target.innerHTML === "Apply") {
+        handleApplyFilters();
+    } else if(e.target.innerHTML === "Clear") {
+        handleClearSelection();
     }
 }
 
@@ -258,7 +262,7 @@ function loadSelectionContainer() {
     selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
     selection.setAttribute("id", "selection");
 
-    button.addEventListener("click", () => selection.innerHTML = "");
+    button.addEventListener("click", e => handleBtn(e));
 
     searchpage.appendChild(selection_container);
     selection_container.appendChild(selection_title);
@@ -266,20 +270,26 @@ function loadSelectionContainer() {
     selection_container.appendChild(button);
 }
 
+function handleClearSelection() {
+    const selection = document.getElementById("selection");
+    selection.innerHTML = "";
+    SELECTED_POKEMON.size = 0;
+    SELECTED_POKEMON.selection = {};
+}
+
 // Add user input pokemon to selection list
 function handleAdd() {
-    const autosuggestion_container = document.getElementById("autosuggestion_container");
-
+    const search_input = document.getElementById("search_input");
     if(SELECTED_POKEMON.size >= 6) {
         displayError("Cannot select more than 6 Pokemon");
     } else {
-        const value = autosuggestion_container.innerHTML.split(" ");
-        value[0] = parseInt(value[0].slice(1, value[0].length - 1));
-        
-        if(SELECTED_POKEMON.selection[value[0]]) {
+        const value = search_input.value.split(" ");
+        const id = parseInt(value[0].slice(1, value[0].length));
+        const name = value[1] ? value[1].toLowerCase() : null;  
+        if(SELECTED_POKEMON.selection[id]) {
             displayError("Pokemon already selected");
-        } else if(value[1]) {
-            addToList(value);
+        } else if(name && POKEMON_NAMES[id].name === name) {
+            addToList([id, name]);
         } else {
             displayError("Invalid Pokemon name");
         }
@@ -366,10 +376,10 @@ function addToList(value) {
     item.addEventListener("click", () => {
         delete SELECTED_POKEMON.selection[id];
         SELECTED_POKEMON.size--;
-        let remove_item = document.getElementById(name);
-        selection.removeChild(remove_item);
+        let li = document.getElementById(name);
+        selection.removeChild(li);
     });
-    item.innerHTML = name;
+    item.innerHTML = capitalize(name);
     selection.appendChild(item);
 }
 
