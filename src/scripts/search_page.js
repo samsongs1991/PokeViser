@@ -249,16 +249,21 @@ function loadSelectionContainer() {
     const selection_container = document.createElement("section");
     const selection_title = document.createElement("h3");
     const selection = document.createElement("ol");
+    const button = document.createElement("button");
 
-    selection_title.innerHTML = "Selection"
+    selection_title.innerHTML = "Selection";
+    button.innerHTML = "Clear";
 
     selection_container.setAttribute("id", "selection_container");
     selection_container.setAttribute("title", "Click on Pokemon name to remove it from the list");
     selection.setAttribute("id", "selection");
 
+    button.addEventListener("click", () => selection.innerHTML = "");
+
     searchpage.appendChild(selection_container);
     selection_container.appendChild(selection_title);
     selection_container.appendChild(selection);
+    selection_container.appendChild(button);
 }
 
 // Add user input pokemon to selection list
