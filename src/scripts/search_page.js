@@ -64,6 +64,13 @@ export function cachePokemonNames(cache) {
         })
 }
 
+// ==============================
+// *** REFACTOR THIS CONSTANT ***
+// ==============================
+// Go to show_page and refactor code so that POKEMON is
+// conditionally cached with data using selected pokemon.
+// Eventually go through entire code base to refactor use
+// of POKEMON constant.
 // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {    
     const first = 1;
