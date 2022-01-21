@@ -517,6 +517,7 @@ footer:hover {
 #selection_container li:hover {
     cursor: pointer;
     color: rgb(255, 0, 0);
+    transition: color 0.2s ease;
 }
 
 @media only screen and (max-width: 770px) {

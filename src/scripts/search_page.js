@@ -55,15 +55,36 @@ export const TYPES = {
     "fairy": "rgba(227, 151, 209, 0.6)",
 };
 
+// POKEMON_NAMES is an array of all pokemon names lowercased
+export const POKEMON_NAMES = { "size": 0 };
+
 // POKEMON contains it's own "size" as well as pokemon ids for 
 // keys with all data for that pokemon as an object for the values
-export const POKEMON = { "size": 0 }
+export const POKEMON = { "size": 0 };
 
 // SELECTED_POKEMON contains user selected pokemon - up to 6
-const SELECTED_POKEMON = { "size": 0, "selection": {} };
+export const SELECTED_POKEMON = { "size": 0, "selection": {} };
+
+// Loads all pokemon names into POKEMON _NAMES storage
+export function cachePokemonNames(cache) {
+    fetch("./src/pokemon.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                cache.size++;
+                let temp1 = pokemons[i].split(".");
+                let temp2 = temp1[1].split("-");
+                let id = temp1[0];
+                let name = temp2[0];
+                let types = temp2[1].split(' ');
+                cache[id] = { "name": name, "types": types };
+            }
+        })
+}
 
 // Loads all pokemon into POKEMON storage
-export function cachePokemon(cache) {
+export function cachePokemon(cache) {    
     const first = 1;
     // for testing only "last" is 10. change back to 898 for production
     const last = 10;
@@ -116,16 +137,42 @@ function loadFilterContainer() {
     const filter_container = document.createElement("section");
     const title = document.createElement("h3");
     const filter = document.createElement("form");
+    const button = document.createElement("button");
 
     filter_container.setAttribute("id", "filter_container");
     filter_container.setAttribute("title", "Choose a type of Pokemon to search for");
     title.innerHTML = "Filters";
+    button.innerHTML = "Apply";
+
+    button.addEventListener("click", handleApplyFilters);
 
     searchpage.appendChild(filter_container);
     filter_container.appendChild(title);
     filter_container.appendChild(filter);
+    filter_container.appendChild(button);
 
     createFilterOptions(TYPES, filter);
+}
+
+function handleApplyFilters() {
+    const filters_to_apply = getUserFilters();
+    updateOptions(filters_to_apply);
+}
+
+function updateOptions(filters) {
+    const datalist = document.getElementById("dropdown");
+    datalist.innerHTML = "";
+    for(let i = 1; i <= POKEMON_NAMES.size; i++) {
+        let types = POKEMON_NAMES[i].types;
+        if(filters.length === 0 ||
+            filters.includes(types[0] || 
+            (types[1] && filters.includes(types[1])))) {
+                
+            let option = document.createElement("option");
+            option.setAttribute("value", `#${i} ${capitalize(POKEMON_NAMES[i].name)}`);
+            datalist.appendChild(option);
+        }
+    }
 }
 
 // Setup html elements for the search containers
@@ -134,27 +181,29 @@ function loadSearchContainer() {
     const search_container = document.createElement("section");
     const search_title = document.createElement("h3");
     const search_form = document.createElement("form");
-    const search_input = document.createElement("input");
+    // const search_input = document.createElement("input");
     
     search_container.setAttribute("id", "search_container");
     search_form.setAttribute("id", "search_form");
     search_form.setAttribute("autocomplete", "off");
-    search_input.setAttribute("id", "search_input");
-    search_input.setAttribute("type", "text");
-    search_input.setAttribute("name", "search_input");
-    search_input.setAttribute("value", "");
-    search_input.setAttribute("placeholder", "Name of Pokemon");
+    // search_input.setAttribute("id", "search_input");
+    // search_input.setAttribute("type", "text");
+    // search_input.setAttribute("name", "search_input");
+    // search_input.setAttribute("value", "");
+    // search_input.setAttribute("placeholder", "Name of Pokemon");
     
     search_title.innerHTML = "Search";
     
     searchpage.appendChild(search_container);
     search_container.appendChild(search_title);
     search_container.appendChild(search_form);
-    search_form.appendChild(search_input);
+    // search_form.appendChild(search_input);
 
+    loadDropdown();
     loadSearchButtons();
-    loadAutosuggestion();
+    // loadAutosuggestion();
     loadErrors();
+
 }
 
 // Setup html buttons in the search container
@@ -181,6 +230,23 @@ function loadSearchButtons() {
     add_button.addEventListener("click", e => handleBtn(e));
     random_button.addEventListener("click", e => handleBtn(e));
     view_button.addEventListener("click", e => handleBtn(e)); 
+}
+
+// Setup html dropdown in the search container
+function loadDropdown() {
+    const search_form = document.getElementById("search_form");
+    const dropdown = document.createElement("input");
+    const datalist = document.createElement("datalist");
+    dropdown.setAttribute("list", "dropdown");
+    dropdown.setAttribute("placeholder", "Name of Pokemon");
+    datalist.setAttribute("id", "dropdown");
+    search_form.appendChild(dropdown);
+    search_form.appendChild(datalist);
+    for(let i = 1; i <= POKEMON_NAMES.size; i++) {
+        let option = document.createElement("option");
+        option.setAttribute("value", `#${i} ${capitalize(POKEMON_NAMES[i].name)}`);
+        datalist.appendChild(option);
+    }
 }
 
 // Handle Add/Random/View button clicks

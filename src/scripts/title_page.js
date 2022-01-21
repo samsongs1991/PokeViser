@@ -8,8 +8,10 @@ import { createPokeball } from './presentation'
 // For goToSearchPage
 import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
-import { cachePokemon, loadMainSearchPage, POKEMON } from './search_page'
+import { loadMainSearchPage, cachePokemonNames, POKEMON_NAMES, cachePokemon, POKEMON } from './search_page'
 import { loadFooter } from './footer'
+
+window.pokemon = POKEMON_NAMES;
 
 // ====================================================
 // ===================== M A I N ======================
@@ -93,6 +95,9 @@ export function loadTitlePage() {
             title_container.appendChild(instructions_text);
         }
     }
+
+    // Cache pokemon names so they're ready for the search page dropdown
+    cachePokemonNames(POKEMON_NAMES);
 }
 
 export function goToSearchPage() {
