@@ -11,8 +11,6 @@ import { loadHeader } from './header'
 import { loadMainSearchPage, cachePokemonNames, POKEMON_NAMES, cachePokemon, POKEMON } from './search_page'
 import { loadFooter } from './footer'
 
-window.pokemon = POKEMON_NAMES;
-
 // ====================================================
 // ===================== M A I N ======================
 // ================== E X P O R T S ===================

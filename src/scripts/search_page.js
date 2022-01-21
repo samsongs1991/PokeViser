@@ -3,7 +3,7 @@
 // ====================================================
 
 // Helper methods
-import { capitalize, getRandomEl, convertNameToId } from './helpers'
+import { capitalize, getRandomEl } from './helpers'
 
 // To load show page
 import { loadShowPage } from './show_page'
@@ -160,10 +160,6 @@ function handleApplyFilters() {
 }
 
 function updateOptions(filters) {
-    // =============
-    // === B U G ===
-    // =============
-    // doesn't include the second typing
     const datalist = document.getElementById("dropdown");
     datalist.innerHTML = "";
     for(let i = 1; i <= POKEMON_NAMES.size; i++) {
@@ -184,46 +180,35 @@ function loadSearchContainer() {
     const search_container = document.createElement("section");
     const search_title = document.createElement("h3");
     const search_form = document.createElement("form");
-    // const search_input = document.createElement("input");
     
     search_container.setAttribute("id", "search_container");
     search_form.setAttribute("id", "search_form");
     search_form.setAttribute("autocomplete", "off");
-    // search_input.setAttribute("id", "search_input");
-    // search_input.setAttribute("type", "text");
-    // search_input.setAttribute("name", "search_input");
-    // search_input.setAttribute("value", "");
-    // search_input.setAttribute("placeholder", "Name of Pokemon");
     
     search_title.innerHTML = "Search";
     
     searchpage.appendChild(search_container);
     search_container.appendChild(search_title);
     search_container.appendChild(search_form);
-    // search_form.appendChild(search_input);
 
     loadDropdown();
     loadSearchButtons();
-    // loadAutosuggestion();
     loadErrors();
-
 }
 
 // Setup html buttons in the search container
 function loadSearchButtons() {
     const search_form = document.getElementById("search_form");
     const button_container = document.createElement("div");
-    const add_button = document.createElement("input");
-    const random_button = document.createElement("input");
-    const view_button = document.createElement("input");
+    const add_button = document.createElement("button");
+    const random_button = document.createElement("button");
+    const view_button = document.createElement("button");
 
     button_container.setAttribute("id", "button_container");
-    add_button.setAttribute("type", "submit");
-    add_button.setAttribute("value", "Add");
-    random_button.setAttribute("type", "submit");
-    random_button.setAttribute("value", "Random");
-    view_button.setAttribute("type", "submit");
-    view_button.setAttribute("value", "View");
+
+    add_button.innerHTML = "Add";
+    random_button.innerHTML = "Random";
+    view_button.innerHTML = "View";
     
     button_container.appendChild(add_button);
     button_container.appendChild(random_button);
@@ -255,78 +240,12 @@ function loadDropdown() {
 // Handle Add/Random/View button clicks
 function handleBtn(e) {
     e.preventDefault();
-    if(e.target.value === "Add") {
+    if(e.target.innerHTML === "Add") {
         handleAdd();
-    } else if(e.target.value === "Random") {
+    } else if(e.target.innerHTML === "Random") {
         handleRandom();
-    } else if(e.target.value === "View") {
+    } else if(e.target.innerHTML === "View") {
         handleView();
-    }
-}
-
-// Setup html for autosuggestion
-function loadAutosuggestion() {
-    const search_container = document.getElementById("search_container");
-    const autosuggestion_container = document.createElement("div");
-    autosuggestion_container.setAttribute("id", "autosuggestion_container");
-    search_container.appendChild(autosuggestion_container);
-    setInterval(handleAutoSuggestion, 100);
-}
-
-// Handle population of autosuggestion html element in the setInterval fn
-function handleAutoSuggestion() {
-    const autosuggestion_container = document.getElementById("autosuggestion_container");
-    const search_input = document.getElementById("search_input");
-    if(autosuggestion_container) {
-        autosuggestion_container.innerHTML = "";
-        let filters_to_apply = getUserFilters();
-        let partial_name = search_input.value;
-        partial_name = partial_name.toLowerCase();
-        for(let i = 1; i < POKEMON.size; i++) {
-            if(partial_name.length === 0) {
-                break;
-            }
-    
-            let current_pokemon = POKEMON[i];
-    
-            if(current_pokemon.name.startsWith(partial_name)) {
-                if(filters_to_apply.length === 0) {
-                    if(isException(partial_name)) {
-                        autosuggestion_container.innerHTML = `#${convertNameToId(partial_name)}. ${capitalize(partial_name)}`;
-                    } else {
-                        autosuggestion_container.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
-                    }
-                    break;
-                } else { // filter case
-                    let exit = false;
-                
-                    // Edge cases of pokemon names that another pokemon has within their own name => "Mew" and "Mewtwo" or "Pidgeot" and "Pidgeoto"
-                    if(partial_name === "mew" && filters_to_apply.includes("psychic")) {
-                        autosuggestion_container.innerHTML = "Mew"; // set auto suggestion
-                        exit = true;
-                    } else if(partial_name === "pidgeot" && filters_to_apply.includes("normal")) {
-                        autosuggestion_container.innerHTML = "Pidgeot"; // set auto suggestion
-                        exit = true;
-                    } else if(partial_name === "pidgeot" && filters_to_apply.includes("flying")) {
-                        autosuggestion_container.innerHTML = "Pidgeot"; // set auto suggestion
-                        exit = true;
-                    } 
-    
-                    else {
-                        current_pokemon.types.forEach(type_obj => {
-                            if(filters_to_apply.includes(type_obj.type.name)) { // if the pokemon type exists among the user filters
-                                autosuggestion_container.innerHTML = `#${current_pokemon.id}. ${capitalize(current_pokemon.name)}`;
-                                exit = true;
-                            }
-                        });
-                    }
-    
-                    if(exit) {
-                        break;
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -521,16 +440,4 @@ function getUserFilters() {
     });
     
     return filters_to_apply;
-}
-
-// Auto suggest has bugs for specific pokemon names like "mew".
-// It will suggest "mewtwo" instead of "mew" so there is no way to select "mew".
-// If user input is an exception, returns true.
-function isException(partial_name) {
-    const names = ["mew", "pidgeot"];
-    let bool = false;
-    if(names.includes(partial_name)) {
-        bool = true;
-    }
-    return bool;
 }

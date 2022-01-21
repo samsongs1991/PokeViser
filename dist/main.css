@@ -472,7 +472,7 @@ footer:hover {
     margin-top: 15px;
 }
 
-#search_container #button_container input {
+#search_container #button_container button {
     border-radius: 5px;
     border: none;
     box-shadow: 0px 0px 10px 5px rgb(255, 255, 255);
@@ -484,7 +484,7 @@ footer:hover {
     transition: all 0.2s ease;
 }
 
-#search_container #button_container input:hover {
+#search_container #button_container button:hover {
     cursor: pointer;
     box-shadow: 0px 0px 10px 5px rgb(0, 174, 255);
     background: rgb(0, 174, 255);
