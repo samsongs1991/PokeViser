@@ -8,7 +8,7 @@ import { createPokeball } from './presentation'
 // For goToSearchPage
 import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
-import { loadMainSearchPage, cachePokemonNames, POKEMON_NAMES, cachePokemon, POKEMON } from './search_page'
+import { loadMainSearchPage, cachePokemonNames, POKEMON_NAMES } from './search_page'
 import { loadFooter } from './footer'
 
 // ====================================================
@@ -99,7 +99,6 @@ export function loadTitlePage() {
 }
 
 export function goToSearchPage() {
-    cachePokemon(POKEMON);
     const body = document.querySelector("body");
     body.innerHTML = ""; 
     loadBackgroundVid();
