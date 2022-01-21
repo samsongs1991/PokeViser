@@ -55,12 +55,11 @@ export function cachePokemonNames(cache) {
             let pokemons = text.split('\n');
             for(let i = 0; i < pokemons.length; i++) {
                 cache.size++;
-                let temp1 = pokemons[i].split(".");
-                let temp2 = temp1[1].split("-");
-                let id = temp1[0];
-                let name = temp2[0];
-                let types = temp2[1].split(' ');
-                cache[id] = { "name": name, "types": types, "id": id };
+                let temp = pokemons[i].split(".");
+                let id = temp[0];
+                let name = temp[1];
+                let types = temp[2].split(' ');
+                cache[id] = { "id": id, "name": name, "types": types };
             }
         })
 }
