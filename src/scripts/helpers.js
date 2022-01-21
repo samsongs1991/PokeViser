@@ -31,7 +31,7 @@ export function convertNameToId(name) {
     for(let k in POKEMON) {
         if(POKEMON[k].name === name.toLowerCase()) {
             return k;
-        }
+        }``
     }
 }
 

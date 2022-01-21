@@ -60,7 +60,7 @@ export function cachePokemonNames(cache) {
                 let id = temp1[0];
                 let name = temp2[0];
                 let types = temp2[1].split(' ');
-                cache[id] = { "name": name, "types": types };
+                cache[id] = { "name": name, "types": types, "id": id };
             }
         })
 }
@@ -327,16 +327,16 @@ function handleView() {
 function getValidRandomPokemon() {
     const filters = getUserFilters();
     let valid_random = false;
-    let random_pokemon = getRandomEl(POKEMON);
+    let random_pokemon = getRandomEl(POKEMON_NAMES);
 
     while(valid_random === false) {
-        if(SELECTED_POKEMON[capitalize(random_pokemon.name)]) {
-            random_pokemon = getRandomEl(POKEMON);
+        if(SELECTED_POKEMON.selection[random_pokemon.id]) {
+            random_pokemon = getRandomEl(POKEMON_NAMES);
         } else if(filters.length > 0) {
             if(typeMatchCheck(random_pokemon, filters)) {
                 valid_random = true;
             } else {
-                random_pokemon = getRandomEl(POKEMON);
+                random_pokemon = getRandomEl(POKEMON_NAMES);
             }
         } else {
             valid_random = true;
@@ -348,9 +348,9 @@ function getValidRandomPokemon() {
 
 // Return true if the pokemon type exists in the filters
 function typeMatchCheck(pokemon, filters) {
-    if(filters.includes(pokemon.types[0].type.name)) {
+    if(filters.includes(pokemon.types[0])) {
         return true;
-    } else if(pokemon.types[1] && filters.includes(pokemon.types[1].type.name)) {
+    } else if(pokemon.types[1] && filters.includes(pokemon.types[1])) {
         return true;
     } else {
         return false;
