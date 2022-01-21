@@ -6,9 +6,9 @@
 import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Cache of pokemon data
-import { POKEMON, TYPES } from './search_page'
+import { SELECTED_POKEMON, TYPES } from './search_page'
 
-// To show loading screen until POKEMON is loaded with all 898 pokemon
+// To show loading screen until sprites and data fully loaded
 import { renderLoadingScreen, removeLoadingScreen } from './presentation'
 
 // To render size comparison page
@@ -83,16 +83,16 @@ export const SELECTION_DATA = {};
 // =================== E X P O R T ====================
 // ====================================================
 
-export async function loadShowPage(selected_pokemon) {
-    loadShowPageStructure(selected_pokemon);
+export async function loadShowPage() {
+    loadShowPageStructure();
 
-    const ids = Object.keys(selected_pokemon.selection);
+    const ids = Object.keys(SELECTED_POKEMON.selection);
     await fetchStats(ids, SELECTION_DATA);
 
     let current_pokemon = POKEMON[ids[0]];
     current_pokemon = setupPrevNext(current_pokemon, ids);
 
-    loadSprites(selected_pokemon);
+    loadSprites(SELECTED_POKEMON);
     loadShowContent(current_pokemon);
 }
 
@@ -102,7 +102,7 @@ export async function loadShowPage(selected_pokemon) {
 // ====================================================
 
 // Setup html elements for show page
-function loadShowPageStructure(selected_pokemon) {
+function loadShowPageStructure() {
     const main = document.querySelector("main");
     main.setAttribute("id", "show_page");
     main.innerHTML = "";
@@ -154,8 +154,8 @@ function loadShowPageStructure(selected_pokemon) {
     new_view_container.appendChild(index_page_button);
     new_view_container.appendChild(size_page_button);
     
-    index_page_button.addEventListener("click", () => loadIndexPage(selected_pokemon));
-    size_page_button.addEventListener("click", () => loadSizePage(selected_pokemon));
+    index_page_button.addEventListener("click", loadIndexPage);
+    size_page_button.addEventListener("click", loadSizePage);
 }
 
 // Fetch data for selected pokemon and cache
@@ -163,7 +163,14 @@ async function fetchStats(ids) {
     renderLoadingScreen();
     for(let i = 0; i < ids.length; i++) {
         if(SELECTION_DATA[ids[i]] === undefined) {
-            SELECTION_DATA[ids[i]] = { details: null, damage: { 0: null, 1: null} };
+
+            SELECTION_DATA[ids[i]] = { 
+                id: ids[i], 
+                name: SELECTION_DATA.selection[ids[i]], 
+                details: null, 
+                damage: { 0: null, 1: null} 
+            };
+
             await fetch(POKEMON[ids[i]].species.url)
             .then(res => res.json())
             .then(data => SELECTION_DATA[ids[i]].details = data);
@@ -231,9 +238,9 @@ function handlePrevNext(ids, current_pokemon, type) {
 }
 
 // Load sprites
-function loadSprites(selected_pokemon) {
+function loadSprites() {
     const sprites = document.getElementById("sprites");
-    for(let id in selected_pokemon.selection) {
+    for(let id in SELECTED_POKEMON.selection) {
         let pokemon = POKEMON[id];
         let img_url = pokemon.sprites.front_default;
         let sprite_img = document.createElement("img");

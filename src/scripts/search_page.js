@@ -38,14 +38,11 @@ export const TYPES = {
 };
 
 // POKEMON_NAMES is an array of all pokemon names lowercased
-export const POKEMON_NAMES = { "size": 0 };
-
-// POKEMON contains it's own "size" as well as pokemon ids for 
-// keys with all data for that pokemon as an object for the values
-export const POKEMON = { "size": 0 };
+export const POKEMON_NAMES = { size: 0 };
 
 // SELECTED_POKEMON contains user selected pokemon - up to 6
-export const SELECTED_POKEMON = { "size": 0, "selection": {} };
+export const SELECTED_POKEMON = { size: 0, selection: {} };
+window.pokemon = SELECTED_POKEMON;
 
 // Loads all pokemon names into POKEMON _NAMES storage
 export function cachePokemonNames(cache) {
@@ -71,27 +68,36 @@ export function cachePokemonNames(cache) {
 // conditionally cached with data using selected pokemon.
 // Eventually go through entire code base to refactor use
 // of POKEMON constant.
-// Loads all pokemon into POKEMON storage
-export function cachePokemon(cache) {    
-    const first = 1;
-    // for testing only "last" is 10. change back to 898 for production
-    const last = 10;
-    if(cache[1] === undefined) {
-        for(let i = first; i <= last; i++) {
-            fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-            .then(res => res.json())
-            .then(data => {
-                cache[i] = data;
-                cache.size++;
-                if(cache.size === first) {
-                    renderLoadingScreen();
-                } else if(cache.size === last) {
-                    removeLoadingScreen();
-                }
-            })
-        }
-    }
-}
+
+// POKEMON contains it's own "size" as well as pokemon ids for 
+// keys with all data for that pokemon as an object for the values
+// export const POKEMON = { "size": 0 };
+
+// // Loads all pokemon into POKEMON storage
+// export function cachePokemon(cache) {    
+//     const first = 1;
+//     // for testing only "last" is 10. change back to 898 for production
+//     const last = 10;
+//     if(cache[1] === undefined) {
+//         for(let i = first; i <= last; i++) {
+//             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+//             .then(res => res.json())
+//             .then(data => {
+//                 cache[i] = data;
+//                 cache.size++;
+//                 if(cache.size === first) {
+//                     renderLoadingScreen();
+//                 } else if(cache.size === last) {
+//                     removeLoadingScreen();
+//                 }
+//             })
+//         }
+//     }
+// }
+// ==============================
+// ==============================
+// ==============================
+
 
 // ====================================================
 // ===================== M A I N ======================
@@ -323,7 +329,7 @@ function handleRandom() {
 // Go to show_page if user has selected pokemon
 function handleView() {
     if(SELECTED_POKEMON.size > 0) {
-        loadShowPage(SELECTED_POKEMON);
+        loadShowPage();
     } else {
         displayError("Choose at least 1 Pokemon");
     }
