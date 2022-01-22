@@ -78,3 +78,57 @@ export function cachePokemonHtAndWt(cache) {
             }
         })
 }
+
+// Loads all pokemon sprite_url into storage
+export function cachePokemonSprites(cache) {
+    fetch("./src/pokemon_sprites.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                let temp = pokemons[i].split(" ");
+                let id = temp[0];
+                let url = temp[1];
+                cache[id]["sprite_url"] = url;
+            }
+        })
+}
+
+// Loads all pokemon species_url into storage
+export function cachePokemonSpecies(cache) {
+    fetch("./src/pokemon_species.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                let temp = pokemons[i].split(" ");
+                let id = temp[0];
+                let url = temp[1];
+                cache[id]["species_url"] = url;
+            }
+        })
+}
+
+// Loads all pokemon stats into storage
+export function cachePokemonStats(cache) {
+    fetch("./src/pokemon_stats.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                let temp = pokemons[i].split(" ");
+                let id = temp[0];
+                let hp = temp[1];
+                let atk = temp[2];
+                let def = temp[3];
+                let sp_atk = temp[4];
+                let sp_def = temp[5];
+                let speed = temp[6];
+                cache[id]["stats"] = {
+                    hp: hp, speed: speed,
+                    atk: atk, sp_atk: sp_atk, 
+                    def: def, sp_def: sp_def, 
+                };
+            }
+        })
+}
