@@ -6,7 +6,11 @@
 import { createPokeball } from './presentation'
 
 // For goToSearchPage
-import { cachePokemonNamesAndTypesAndTypes } from './helpers'
+import {
+    cachePokemonNamesAndTypes, cachePokemonHtAndWt,
+    cachePokemonSpecies, cachePokemonSprites,
+    cachePokemonStats,
+} from './helpers'
 import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
 import { loadMainSearchPage, POKEMON_NAMES } from './search_page'
@@ -95,8 +99,12 @@ export function loadTitlePage() {
         }
     }
 
-    // Cache pokemon names so they're ready for the search page dropdown
+    // Cache pokemon data
     cachePokemonNamesAndTypes(POKEMON_NAMES);
+    cachePokemonHtAndWt(POKEMON_NAMES);
+    cachePokemonSpecies(POKEMON_NAMES);
+    cachePokemonSprites(POKEMON_NAMES);
+    cachePokemonStats(POKEMON_NAMES);
 }
 
 export function goToSearchPage() {

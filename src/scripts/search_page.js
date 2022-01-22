@@ -42,7 +42,7 @@ export const POKEMON_NAMES = { size: 0 };
 
 // SELECTED_POKEMON contains user selected pokemon - up to 6
 export const SELECTED_POKEMON = { size: 0, selection: {} };
-window.pokemon = SELECTED_POKEMON;
+window.pokemon = POKEMON_NAMES;
 
 // ==============================
 // *** REFACTOR THIS CONSTANT ***

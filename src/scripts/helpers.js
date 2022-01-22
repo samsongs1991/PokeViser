@@ -73,8 +73,8 @@ export function cachePokemonHtAndWt(cache) {
                 let id = temp[0];
                 let ht = temp[1];
                 let wt = temp[2];
-                cache[id]["height"] = ht;
-                cache[id]["weight"] = wt;
+                cache[id].height = ht;
+                cache[id].weight = wt;
             }
         })
 }
@@ -89,7 +89,7 @@ export function cachePokemonSprites(cache) {
                 let temp = pokemons[i].split(" ");
                 let id = temp[0];
                 let url = temp[1];
-                cache[id]["sprite_url"] = url;
+                cache[id].sprite_url = url;
             }
         })
 }
@@ -104,7 +104,7 @@ export function cachePokemonSpecies(cache) {
                 let temp = pokemons[i].split(" ");
                 let id = temp[0];
                 let url = temp[1];
-                cache[id]["species_url"] = url;
+                cache[id].species_url = url;
             }
         })
 }
@@ -124,7 +124,7 @@ export function cachePokemonStats(cache) {
                 let sp_atk = temp[4];
                 let sp_def = temp[5];
                 let speed = temp[6];
-                cache[id]["stats"] = {
+                cache[id].stats = {
                     hp: hp, speed: speed,
                     atk: atk, sp_atk: sp_atk, 
                     def: def, sp_def: sp_def, 
