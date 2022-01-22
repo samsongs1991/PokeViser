@@ -6,7 +6,7 @@
 import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Cache of pokemon data
-import { SELECTED_POKEMON, TYPES } from './search_page'
+import { SELECTED_POKEMON, POKEMON_NAMES, TYPES } from './search_page'
 
 // To show loading screen until sprites and data fully loaded
 import { renderLoadingScreen, removeLoadingScreen } from './presentation'

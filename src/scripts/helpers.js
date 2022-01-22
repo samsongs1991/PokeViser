@@ -44,3 +44,37 @@ export function convertHeight(dm) {
 export function convertWeight(hg) {
     return Math.floor((hg / 4.536) * 100) / 100;
 }
+
+// Loads all pokemon names and types into storage
+export function cachePokemonNamesAndTypes(cache) {
+    fetch("./src/pokemon_types.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                cache.size++;
+                let temp = pokemons[i].split(".");
+                let id = temp[0];
+                let name = temp[1];
+                let types = temp[2].split(' ');
+                cache[id] = { "id": id, "name": name, "types": types };
+            }
+        })
+}
+
+// Loads all pokemon heights and weights into storage
+export function cachePokemonHtAndWt(cache) {
+    fetch("./src/pokemon_ht_wt.txt")
+        .then(response => response.text())
+        .then(text => {
+            let pokemons = text.split('\n');
+            for(let i = 0; i < pokemons.length; i++) {
+                let temp = pokemons[i].split(" ");
+                let id = temp[0];
+                let ht = temp[1];
+                let wt = temp[2];
+                cache[id]["height"] = ht;
+                cache[id]["weight"] = wt;
+            }
+        })
+}

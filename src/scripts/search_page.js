@@ -44,23 +44,6 @@ export const POKEMON_NAMES = { size: 0 };
 export const SELECTED_POKEMON = { size: 0, selection: {} };
 window.pokemon = SELECTED_POKEMON;
 
-// Loads all pokemon names into POKEMON _NAMES storage
-export function cachePokemonNames(cache) {
-    fetch("./src/pokemon_types.txt")
-        .then(response => response.text())
-        .then(text => {
-            let pokemons = text.split('\n');
-            for(let i = 0; i < pokemons.length; i++) {
-                cache.size++;
-                let temp = pokemons[i].split(".");
-                let id = temp[0];
-                let name = temp[1];
-                let types = temp[2].split(' ');
-                cache[id] = { "id": id, "name": name, "types": types };
-            }
-        })
-}
-
 // ==============================
 // *** REFACTOR THIS CONSTANT ***
 // ==============================
