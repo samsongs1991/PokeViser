@@ -7,8 +7,8 @@ import { createPokeball } from './presentation'
 
 // For goToSearchPage
 import {
-    cachePokemonNamesAndTypes, cachePokemonHtAndWt,
-    cachePokemonSpecies, cachePokemonSprites,
+    cachePokemonInitialState, 
+    cachePokemonHtWt,
     cachePokemonStats,
 } from './helpers'
 import { loadBackgroundVid } from './presentation'
@@ -100,10 +100,8 @@ export function loadTitlePage() {
     }
 
     // Cache pokemon data
-    cachePokemonNamesAndTypes(POKEMON_NAMES);
-    cachePokemonHtAndWt(POKEMON_NAMES);
-    cachePokemonSpecies(POKEMON_NAMES);
-    cachePokemonSprites(POKEMON_NAMES);
+    cachePokemonInitialState(POKEMON_NAMES);
+    cachePokemonHtWt(POKEMON_NAMES);
     cachePokemonStats(POKEMON_NAMES);
 }
 

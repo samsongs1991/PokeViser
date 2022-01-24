@@ -39,25 +39,38 @@ export const TYPES = {
 
 // POKEMON_NAMES is an array of all pokemon names lowercased
 export const POKEMON_NAMES = { size: 0 };
+function loadInitialState(cache) {
+    for(let i = 1; i <= 898; i++) {
+        cache[i] = {
+            id: null,
+            name: null, 
+            types: null, 
+            height: null, 
+            weight: null, 
+            stats: null, 
+            species_url: null, 
+            sprite_url: null,
+        }
+    }
+}
+loadInitialState(POKEMON_NAMES);
+window.names = POKEMON_NAMES;
 
 // SELECTED_POKEMON contains user selected pokemon - up to 6
 export const SELECTED_POKEMON = { size: 0, selection: {} };
-window.pokemon = POKEMON_NAMES;
+window.selection = SELECTED_POKEMON;
 
-// ==============================
+// ******************************
 // *** REFACTOR THIS CONSTANT ***
-// ==============================
+// ******************************
 // Go to show_page and refactor code so that POKEMON is
 // conditionally cached with data using selected pokemon.
 // Eventually go through entire code base to refactor use
 // of POKEMON constant.
-
 // POKEMON contains it's own "size" as well as pokemon ids for 
 // keys with all data for that pokemon as an object for the values
 export const POKEMON = { "size": 0 };
-
 let file_string = "";
-
 // // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {    
     const first = 1;
@@ -102,12 +115,9 @@ export function cachePokemon(cache) {
         }
     }
 }
-
 // cachePokemon(POKEMON);
-
-// ==============================
-// ==============================
-// ==============================
+// ******************************
+// ******************************
 
 
 // ====================================================
@@ -166,8 +176,6 @@ function handleApplyFilters() {
 }
 
 function updateOptions(filters) {
-    console.log(file_string);
-
     const datalist = document.getElementById("dropdown");
     datalist.innerHTML = "";
     for(let i = 1; i <= POKEMON_NAMES.size; i++) {
