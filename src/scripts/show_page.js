@@ -87,13 +87,13 @@ export async function loadShowPage() {
     loadShowPageStructure();
 
     const ids = Object.keys(SELECTED_POKEMON.selection);
-    await fetchStats(ids, SELECTION_DATA);
+    await fetchStats(ids);
 
-    let current_pokemon = POKEMON[ids[0]];
-    current_pokemon = setupPrevNext(current_pokemon, ids);
+    // let current_pokemon = POKEMON[ids[0]];
+    // current_pokemon = setupPrevNext(current_pokemon, ids);
 
-    loadSprites(SELECTED_POKEMON);
-    loadShowContent(current_pokemon);
+    // loadSprites();
+    // loadShowContent(current_pokemon);
 }
 
 // ====================================================
@@ -160,26 +160,48 @@ function loadShowPageStructure() {
 
 // Fetch data for selected pokemon and cache
 async function fetchStats(ids) {
+    const type_id = {
+        normal: 1, fighting: 2, flying: 3, 
+        poison: 4, ground: 5, rock: 6, 
+        bug: 7, ghost: 8, steel: 9, 
+        fire: 10, water: 11, grass: 12, 
+        electric: 13, psychic: 14, ice: 15, 
+        dragon: 16, dark: 17, fairy: 18,
+    }
+
     renderLoadingScreen();
     for(let i = 0; i < ids.length; i++) {
-        if(SELECTION_DATA[ids[i]] === undefined) {
-
-            SELECTION_DATA[ids[i]] = { 
-                id: ids[i], 
-                name: SELECTION_DATA.selection[ids[i]], 
-                details: null, 
-                damage: { 0: null, 1: null} 
-            };
-
-            await fetch(POKEMON[ids[i]].species.url)
+        if(POKEMON_NAMES[ids[i]].details === undefined) {
+            await fetch(POKEMON_NAMES[ids[i]].species_url)
             .then(res => res.json())
-            .then(data => SELECTION_DATA[ids[i]].details = data);
+            .then(data => POKEMON_NAMES[ids[i]].details = data);
             
             for(let j = 0; j < 2; j++) {
-                if(POKEMON[ids[i]].types[j] !== undefined) {
-                    await fetch(POKEMON[ids[i]].types[j].type.url)
+                let type = POKEMON_NAMES[ids[i]].types[j];
+                if(type !== undefined) {
+                    await fetch(`https://pokeapi.co/api/v2/type/${type_id[type]}/`)
                     .then(res => res.json())
-                    .then(data => SELECTION_DATA[ids[i]].damage[j] = data);
+                    .then(data => {
+                        console.log(type, data);
+                        let dmg_data = data.damage_relations;
+                        let double = dmg_data.double_damage_from;
+                        let half = dmg_data.half_damage_from;
+                        let no = dmg_data.no_damage_from;
+                        let string = `${type}:double `;
+                        double.forEach(el => {
+                            string += `${el.name} `;
+                        });
+                        string += ":half ";
+                        half.forEach(el => {
+                            string += `${el.name} `;
+                        });
+                        string += ":no ";
+                        no.forEach(el => {
+                            string += `${el.name} `;
+                        });
+                        console.log(string);
+                        // POKEMON_NAMES[ids[i]].damage[j] = data
+                    });
                 }
             }
         }

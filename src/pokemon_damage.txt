@@ -1,0 +1,18 @@
+normal:double fighting :half :no ghost 
+fighting:double flying psychic fairy :half rock bug dark :no 
+flying:double rock electric ice :half fighting bug grass :no ground 
+poison:double ground psychic :half fighting poison bug grass fairy :no 
+ground:double water grass ice :half poison rock :no electric 
+rock:double fighting ground steel water grass :half normal flying poison fire :no 
+bug:double flying rock fire :half fighting ground grass :no 
+ghost:double ghost dark :half poison bug :no normal fighting 
+steel:double fighting ground fire :half normal flying rock bug steel grass psychic ice dragon fairy :no poison 
+fire:double ground rock water :half bug steel fire grass ice fairy :no 
+water:double grass electric :half steel fire water ice :no 
+grass:double flying poison bug fire ice :half ground water grass electric :no 
+electric:double ground :half flying steel electric :no 
+psychic:double bug ghost dark :half fighting psychic :no 
+ice:double fighting rock steel fire :half ice :no 
+dragon:double ice dragon fairy :half fire water grass electric :no 
+dark:double fighting bug fairy :half ghost dark :no psychic 
+fairy:double poison steel :half fighting bug dark :no dragon 

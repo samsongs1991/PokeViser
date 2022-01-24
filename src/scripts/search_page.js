@@ -73,36 +73,25 @@ export const POKEMON = { "size": 0 };
 let file_string = "";
 // // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {    
-    const first = 1;
+    const first = 101;
     // for testing only "last" is 10. change back to 898 for production
-    const last = 898;
+    const last = 200;
     if(cache[1] === undefined) {
         for(let i = first; i <= last; i++) {
             fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
             .then(res => res.json())
             .then(data => {
+                console.log(data);
 
-                // if(i === 1) console.log(data);
-                // let id = data.id;
-                // let name = data.name; 
-                // let type1 = data.types[0].type.name;
-                // let type2 = null;
-                // if(data.types[1]) {
-                //     type2 = data.types[1].type.name;
-                // }
-                // let height = data.height;
-                // let weight = data.weight;
-                // let species_url = data.species.url;
-                // let sprite_url = data.sprites.front_default;
-                // let stats = data.stats;
-                // let hp = data.stats[0].base_stat;
-                // let atk = data.stats[1].base_stat;
-                // let def = data.stats[2].base_stat;
-                // let sp_atk = data.stats[3].base_stat;
-                // let sp_def = data.stats[4].base_stat;
-                // let speed = data.stats[5].base_stat;
+                // [normal, fighting, flying, poison, ground, 
+                // rock, bug, ghost, steel, fire, 
+                // water, grass, electric, psychic, ice, 
+                // dragon, dark, fairy]
+                // 
+                // https://pokeapi.co/api/v2/type/12/
                 
-                // file_string += `${id} ${hp} ${atk} ${def} ${sp_atk} ${sp_def} ${speed}\n`;
+                
+                // file_string += `${id} ${}\n`;
                 
                 cache[i] = data;
                 cache.size++;
