@@ -95,3 +95,36 @@ export function cachePokemonStats(cache) {
             }
         })
 }
+
+// Loads all pokemon damage relations into storage
+export function cachePokemonDmgRelations(cache) {
+    const dmg_relations = {};
+    fetch("./src/pokemon_damage.txt")
+        .then(response => response.text())
+        .then(text => {
+            let lines = text.split("\n");
+            for(let i = 0; i < lines.length; i++) {
+                let data = lines[i].split("|");                
+                let double = data[1].split(":")[1];
+                let half = data[2].split(":")[1];
+                let no = data[3].split(":")[1];
+                
+                double = double === undefined ? [] : double.split(" ");
+                half = half === undefined ? [] : half.split(" ");
+                no = no === undefined ? [] : no.split(" ");
+                
+                const type = data[0];
+                dmg_relations[type] = {
+                    "double": double,
+                    "half": half, 
+                    "no": no,
+                };
+            }            
+            for(let i = 1; i < cache.size; i++) {
+                cache[i]["dmg_relations"] = {}; 
+                cache[i].types.forEach(type => {
+                    cache[i].dmg_relations[type] = dmg_relations[type];
+                });
+            }
+        })
+}

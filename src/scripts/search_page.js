@@ -73,15 +73,39 @@ export const POKEMON = { "size": 0 };
 let file_string = "";
 // // Loads all pokemon into POKEMON storage
 export function cachePokemon(cache) {    
-    const first = 101;
+    const first = 1;
     // for testing only "last" is 10. change back to 898 for production
-    const last = 200;
+    const last = 1;
     if(cache[1] === undefined) {
+        let string = "";
         for(let i = first; i <= last; i++) {
-            fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+            // fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+            fetch(`https://pokeapi.co/api/v2/pokemon-species/${i}/`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
+                let flavs = data.flavor_text_entries;
+                let eng_flavs = [];
+                for(let j = 0; j < flavs.length; j++) {
+                    let flav = flavs[i];
+                    console.log(j, flav);
+                    // *** NOTE ***
+                    // Currently trying to fetch these flavor texts as strings to put into a separate txt doc for faster retrieval time
+                    // Need to put into a string to format it for the txt
+                    if(flav.language.name === "en") {
+                        let flav_txt = flav.flavor_text;
+                        flav_txt = flav_txt.split("\n").join(" ");
+                        flav_txt = flav_txt.split("\f").join(" ");
+                        flav_txt = flav_txt.split("POKéMON").join("pokemon");
+                        if(!eng_flavs.includes(flav_txt)) {
+                            eng_flavs.push(flav_txt);
+                        }
+                    }
+                }
+                if(i === 1) {
+                    console.log(eng_flavs);
+                }
+                
 
                 // [normal, fighting, flying, poison, ground, 
                 // rock, bug, ghost, steel, fire, 
@@ -92,19 +116,19 @@ export function cachePokemon(cache) {
                 
                 
                 // file_string += `${id} ${}\n`;
-                
-                cache[i] = data;
+
+                // cache[i] = data;
                 cache.size++;
-                if(cache.size === first) {
-                    renderLoadingScreen();
-                } else if(cache.size === last) {
-                    removeLoadingScreen();
-                }
+                // if(cache.size === first) {
+                //     renderLoadingScreen();
+                // } else if(cache.size === last) {
+                //     removeLoadingScreen();
+                // }
             })
         }
     }
 }
-// cachePokemon(POKEMON);
+cachePokemon(POKEMON);
 // ******************************
 // ******************************
 

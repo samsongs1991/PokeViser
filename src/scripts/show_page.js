@@ -121,9 +121,6 @@ function loadShowPageStructure() {
     const index_page_button = document.createElement("button");
     const size_page_button = document.createElement("button");
 
-    // For all these things below, change CSS so that the container dimensions
-    // remain fixed, but when the data goes over the container a scroll is added
-    // - overflow: scroll
     stats_container.setAttribute("id", "stats_container");
     prev_button.setAttribute("id", "prev");
     next_button.setAttribute("id", "next");
@@ -168,42 +165,12 @@ async function fetchStats(ids) {
         electric: 13, psychic: 14, ice: 15, 
         dragon: 16, dark: 17, fairy: 18,
     }
-
     renderLoadingScreen();
     for(let i = 0; i < ids.length; i++) {
         if(POKEMON_NAMES[ids[i]].details === undefined) {
             await fetch(POKEMON_NAMES[ids[i]].species_url)
             .then(res => res.json())
             .then(data => POKEMON_NAMES[ids[i]].details = data);
-            
-            for(let j = 0; j < 2; j++) {
-                let type = POKEMON_NAMES[ids[i]].types[j];
-                if(type !== undefined) {
-                    await fetch(`https://pokeapi.co/api/v2/type/${type_id[type]}/`)
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(type, data);
-                        let dmg_data = data.damage_relations;
-                        let double = dmg_data.double_damage_from;
-                        let half = dmg_data.half_damage_from;
-                        let no = dmg_data.no_damage_from;
-                        let string = `${type}:double `;
-                        double.forEach(el => {
-                            string += `${el.name} `;
-                        });
-                        string += ":half ";
-                        half.forEach(el => {
-                            string += `${el.name} `;
-                        });
-                        string += ":no ";
-                        no.forEach(el => {
-                            string += `${el.name} `;
-                        });
-                        console.log(string);
-                        // POKEMON_NAMES[ids[i]].damage[j] = data
-                    });
-                }
-            }
         }
     }
     removeLoadingScreen();
