@@ -76,6 +76,10 @@ export function cachePokemon(cache) {
     const first = 1;
     // for testing only "last" is 10. change back to 898 for production
     const last = 1;
+
+    // *** Completed pokemon_flavor.txt
+    // *** Use that to create helper cachePokemonFlavors
+
     // if(cache[1] === undefined) {
         // let big_string = "";
         // for(let i = first; i <= last; i++) {
