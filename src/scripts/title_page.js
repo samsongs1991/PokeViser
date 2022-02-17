@@ -107,7 +107,6 @@ export function loadTitlePage() {
     cachePokemonStats(POKEMON_NAMES);
     cachePokemonDmgRelations(POKEMON_NAMES);
     cachePokemonFlavors(POKEMON_NAMES);
-    console.log(POKEMON_NAMES);
 }
 
 export function goToSearchPage() {

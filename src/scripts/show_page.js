@@ -78,6 +78,16 @@ import {
 // Cache of description and damage data for every searched pokemon
 export const SELECTION_DATA = {};
 
+// REFERENCE for type id in pokeapi -> pokeapi.com/type/:type_id
+// const type_id = {
+//     normal: 1, fighting: 2, flying: 3, 
+//     poison: 4, ground: 5, rock: 6, 
+//     bug: 7, ghost: 8, steel: 9, 
+//     fire: 10, water: 11, grass: 12, 
+//     electric: 13, psychic: 14, ice: 15, 
+//     dragon: 16, dark: 17, fairy: 18,
+// }
+
 // ====================================================
 // ===================== M A I N ======================
 // =================== E X P O R T ====================
@@ -87,13 +97,16 @@ export async function loadShowPage() {
     loadShowPageStructure();
 
     const ids = Object.keys(SELECTED_POKEMON.selection);
-    await fetchStats(ids);
 
-    // let current_pokemon = POKEMON[ids[0]];
-    // current_pokemon = setupPrevNext(current_pokemon, ids);
+    let current_pokemon = POKEMON_NAMES[ids[0]];
+    current_pokemon = setupPrevNext(current_pokemon, ids);
 
-    // loadSprites();
+    loadSprites();
     // loadShowContent(current_pokemon);
+
+    console.log("pokemon names", POKEMON_NAMES[1]);
+    console.log("selected pokemon", SELECTED_POKEMON);
+    console.log("current pokemon", current_pokemon);
 }
 
 // ====================================================
@@ -155,27 +168,6 @@ function loadShowPageStructure() {
     size_page_button.addEventListener("click", loadSizePage);
 }
 
-// Fetch data for selected pokemon and cache
-async function fetchStats(ids) {
-    const type_id = {
-        normal: 1, fighting: 2, flying: 3, 
-        poison: 4, ground: 5, rock: 6, 
-        bug: 7, ghost: 8, steel: 9, 
-        fire: 10, water: 11, grass: 12, 
-        electric: 13, psychic: 14, ice: 15, 
-        dragon: 16, dark: 17, fairy: 18,
-    }
-    renderLoadingScreen();
-    for(let i = 0; i < ids.length; i++) {
-        if(POKEMON_NAMES[ids[i]].details === undefined) {
-            await fetch(POKEMON_NAMES[ids[i]].species_url)
-            .then(res => res.json())
-            .then(data => POKEMON_NAMES[ids[i]].details = data);
-        }
-    }
-    removeLoadingScreen();
-}
-
 // Add event listeners to the prev and next buttons
 function setupPrevNext(current_pokemon, ids) {
     const prev_button = document.getElementById("prev");
@@ -230,8 +222,8 @@ function handlePrevNext(ids, current_pokemon, type) {
 function loadSprites() {
     const sprites = document.getElementById("sprites");
     for(let id in SELECTED_POKEMON.selection) {
-        let pokemon = POKEMON[id];
-        let img_url = pokemon.sprites.front_default;
+        let pokemon = POKEMON_NAMES[id];
+        let img_url = pokemon.sprite_url;
         let sprite_img = document.createElement("img");
         sprite_img.setAttribute("src", img_url);
         sprite_img.setAttribute("id", id);
