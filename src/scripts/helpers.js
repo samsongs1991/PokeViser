@@ -128,3 +128,18 @@ export function cachePokemonDmgRelations(cache) {
             }
         })
 }
+
+// Load all pokemon flavor texts into storage
+export function cachePokemonFlavors(cache) {
+    fetch("./src/pokemon_flavors.txt")
+        .then(res => res.text())
+        .then(text => {
+            const pokemons = text.split("\n");
+            for(let i = 0; i < pokemons.length; i++) {
+                let data = pokemons[i].split(":");
+                let id = data[0];
+                let flavs = data[1].split("||");
+                cache[id].flavor_texts = flavs;
+            }
+        })
+}

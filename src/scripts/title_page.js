@@ -11,6 +11,7 @@ import {
     cachePokemonHtWt,
     cachePokemonStats,
     cachePokemonDmgRelations,
+    cachePokemonFlavors,
 } from './helpers'
 import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
@@ -105,6 +106,8 @@ export function loadTitlePage() {
     cachePokemonHtWt(POKEMON_NAMES);
     cachePokemonStats(POKEMON_NAMES);
     cachePokemonDmgRelations(POKEMON_NAMES);
+    cachePokemonFlavors(POKEMON_NAMES);
+    console.log(POKEMON_NAMES);
 }
 
 export function goToSearchPage() {
