@@ -76,36 +76,43 @@ export function cachePokemon(cache) {
     const first = 1;
     // for testing only "last" is 10. change back to 898 for production
     const last = 1;
-    if(cache[1] === undefined) {
-        let string = "";
-        for(let i = first; i <= last; i++) {
+    // if(cache[1] === undefined) {
+        // let big_string = "";
+        // for(let i = first; i <= last; i++) {
             // fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-            fetch(`https://pokeapi.co/api/v2/pokemon-species/${i}/`)
-            .then(res => res.json())
-            .then(data => {
-
-                let flavs = data.flavor_text_entries;
-                let eng_flavs = [];
-                for(let j = 0; j < flavs.length; j++) {
-                    let flav = flavs[i];
-                    console.log(j, flav);
-                    // *** NOTE ***
-                    // Currently trying to fetch these flavor texts as strings to put into a separate txt doc for faster retrieval time
-                    // Need to put into a string to format it for the txt
-                    if(flav.language.name === "en") {
-                        let flav_txt = flav.flavor_text;
-                        flav_txt = flav_txt.split("\n").join(" ");
-                        flav_txt = flav_txt.split("\f").join(" ");
-                        flav_txt = flav_txt.split("POKéMON").join("pokemon");
-                        if(!eng_flavs.includes(flav_txt)) {
-                            eng_flavs.push(flav_txt);
-                        }
-                    }
-                }
-                if(i === 1) {
-                    console.log(eng_flavs);
-                }
-                
+            // fetch(`https://pokeapi.co/api/v2/pokemon-species/${i}/`)
+            // .then(res => res.json())
+            // .then(data => {
+                // let flavs = data.flavor_text_entries;
+                // let eng_flavs = [];
+                // for(let j = 0; j < flavs.length; j++) {
+                //     let flav = flavs[j];
+                //     // *** NOTE ***
+                //     // Currently trying to fetch these flavor texts as strings to put into a separate txt doc for faster retrieval time
+                //     // Need to put into a string to format it for the txt
+                //     if(flav.language.name == "en") {
+                //         let flav_txt = flav.flavor_text;
+                //         flav_txt = flav_txt.split("\n").join(" ");
+                //         flav_txt = flav_txt.split("\f").join(" ");
+                //         flav_txt = flav_txt.split("POKéMON").join("pokemon");
+                //         if(!eng_flavs.includes(flav_txt)) {
+                //             eng_flavs.push(flav_txt);
+                //         }
+                //     }
+                // }
+                // let lil_string = `${i}:`;
+                // for(let j = 0; j < eng_flavs.length; j++) {
+                //     let text = eng_flavs[j];
+                //     if(j === eng_flavs.length - 1) {
+                //         lil_string += `${text}\n`
+                //     } else {
+                //         lil_string += `${text}||`
+                //     }
+                // }
+                // big_string += lil_string;
+                // if(i === last) {
+                //     console.log(big_string);
+                // }
 
                 // [normal, fighting, flying, poison, ground, 
                 // rock, bug, ghost, steel, fire, 
@@ -118,17 +125,17 @@ export function cachePokemon(cache) {
                 // file_string += `${id} ${}\n`;
 
                 // cache[i] = data;
-                cache.size++;
+                // cache.size++;
                 // if(cache.size === first) {
                 //     renderLoadingScreen();
                 // } else if(cache.size === last) {
                 //     removeLoadingScreen();
                 // }
-            })
-        }
-    }
+            // })
+        // }
+    // }
 }
-cachePokemon(POKEMON);
+// cachePokemon(POKEMON);
 // ******************************
 // ******************************
 
