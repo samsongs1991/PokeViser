@@ -82,6 +82,13 @@ export async function loadShowPage() {
     current_pokemon = setupPrevNext(current_pokemon, ids);
 
     loadSprites();
+    // * NOTE *
+    // Working on adjusting html structure of show page.
+    // Move flavor text to bottom section.
+    // Put center image into the left section.
+    // Remove damage multiplier info.
+    // Style the font / color palette.
+    // Add an event listener for click somewhere that will generate poke img that moves across screen?
     loadShowContent(current_pokemon);
 }
 
