@@ -8,9 +8,6 @@ import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers
 // Cache of pokemon data
 import { SELECTED_POKEMON, POKEMON_NAMES, TYPES } from './search_page'
 
-// To show loading screen until sprites and data fully loaded
-import { renderLoadingScreen, removeLoadingScreen } from './presentation'
-
 // To render size comparison page
 import { loadSizePage } from './size_page'
 
@@ -70,23 +67,6 @@ import {
     Title,
     Tooltip
   );
-
-// ====================================================
-// =============== C O N S T A N T S ==================
-// ====================================================
-
-// Cache of description and damage data for every searched pokemon
-// export const SELECTION_DATA = {};
-
-// REFERENCE for type id in pokeapi -> pokeapi.com/type/:type_id
-// const type_id = {
-//     normal: 1, fighting: 2, flying: 3, 
-//     poison: 4, ground: 5, rock: 6, 
-//     bug: 7, ghost: 8, steel: 9, 
-//     fire: 10, water: 11, grass: 12, 
-//     electric: 13, psychic: 14, ice: 15, 
-//     dragon: 16, dark: 17, fairy: 18,
-// }
 
 // ====================================================
 // ===================== M A I N ======================
@@ -370,24 +350,4 @@ function damageMultiplierText(data, multiplier) {
         return `Receives ${multiplier} damage from ${data.join(", ")}.`
     }
     return "";
-}
-
-// Return array of extracted types for dmg multiplier data
-function extractDmgTypes(data) {
-    const type_list = [];
-    for(let i = 0; i < data.length; i++) {
-        let type = data[i].name;
-        type_list.push(type);
-    }
-    return type_list;
-}
-
-// Return array of extracted types for a pokemon
-function extractTypes(data) {
-    const type_list = [];
-    for(let i = 0; i < data.length; i++) {
-        let type = data[i].type.name;
-        type_list.push(type);
-    }
-    return type_list;
 }
