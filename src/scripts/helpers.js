@@ -19,8 +19,8 @@ export function size(object) {
 // Returns random element from passed array / object
 export function getRandomEl(store) {
     let random_index = 0;
-    let max = Array.isArray(store) ? store.length : store.size;
-    random_index = Math.floor((Math.random() * max) + 1);
+    let max = Array.isArray(store) ? store.length : store.size + 1;
+    random_index = Math.floor((Math.random() * max));
     return store[random_index];
 }
 

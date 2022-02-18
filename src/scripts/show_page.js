@@ -76,7 +76,7 @@ import {
 // ====================================================
 
 // Cache of description and damage data for every searched pokemon
-export const SELECTION_DATA = {};
+// export const SELECTION_DATA = {};
 
 // REFERENCE for type id in pokeapi -> pokeapi.com/type/:type_id
 // const type_id = {
@@ -102,11 +102,7 @@ export async function loadShowPage() {
     current_pokemon = setupPrevNext(current_pokemon, ids);
 
     loadSprites();
-    // loadShowContent(current_pokemon);
-
-    console.log("pokemon names", POKEMON_NAMES[1]);
-    console.log("selected pokemon", SELECTED_POKEMON);
-    console.log("current pokemon", current_pokemon);
+    loadShowContent(current_pokemon);
 }
 
 // ====================================================
@@ -202,15 +198,15 @@ function handlePrevNext(ids, current_pokemon, type) {
 
     if(type === "next") {
         if(idx === ids.length - 1) {
-            current_pokemon = POKEMON[ids[0]];
+            current_pokemon = POKEMON_NAMES[ids[0]];
         } else {
-            current_pokemon = POKEMON[ids[idx + 1]];
+            current_pokemon = POKEMON_NAMES[ids[idx + 1]];
         }
     } else if(type === "prev") {
         if(idx === 0) {
-            current_pokemon = POKEMON[ids[ids.length - 1]];
+            current_pokemon = POKEMON_NAMES[ids[ids.length - 1]];
         } else {
-            current_pokemon = POKEMON[ids[idx - 1]];
+            current_pokemon = POKEMON_NAMES[ids[idx - 1]];
         }
     }
 
@@ -240,7 +236,7 @@ function handleSpriteClick(e) {
     }
     const clicked_sprite = document.getElementById(e.target.id);
     clicked_sprite.classList.add('selected');
-    const current_pokemon = POKEMON[e.target.id];
+    const current_pokemon = POKEMON_NAMES[e.target.id];
     loadShowContent(current_pokemon);
 }
 
@@ -256,63 +252,40 @@ function loadShowContent(current_pokemon) {
 
 // Setup html elements for description
 function loadDescription(current_pokemon) {
-    const details = SELECTION_DATA[current_pokemon.id].details;
-    
     const description = document.getElementById("description");
     description.innerHTML = "";
 
     const description_info = document.createElement("ul");
     const name = document.createElement("li");
     const flavor_text = document.createElement("li");
-    const is_baby = document.createElement("li");
-    const is_legendary = document.createElement("li");
-    const is_mythical = document.createElement("li");
     const height = document.createElement("li");
     const weight = document.createElement("li");
 
-    name.innerHTML = `Name: ${capitalize(details.name)}`;
-    flavor_text.innerHTML = `Description: ${randomFlavorText(details)}`;
-    is_baby.innerHTML = `Baby: ${details.is_baby ? "Yes" : "No"}`
-    is_legendary.innerHTML = `Legendary: ${details.is_legendary ? "Yes" : "No"}`
-    is_mythical.innerHTML = `Mythical: ${details.is_mythical ? "Yes" : "No"}`
+    let rand = getRandomEl(current_pokemon.flavor_texts);
+    name.innerHTML = `${capitalize(current_pokemon.name)}`;
+    flavor_text.innerHTML = `${rand}`;
     height.innerHTML = `Height:  ${convertHeight(current_pokemon.height)} feet`;
     weight.innerHTML = `Weight:  ${convertWeight(current_pokemon.weight)} lbs`;
 
     description.appendChild(description_info);
     description_info.appendChild(name);
     description_info.appendChild(flavor_text);
-    description_info.appendChild(is_baby);
-    description_info.appendChild(is_legendary);
-    description_info.appendChild(is_mythical);
     description_info.appendChild(height);
     description_info.appendChild(weight);
 }
 
-// Get random flavor text
-function randomFlavorText(details) {
-    let flavor_data = details.flavor_text_entries;
-    let flavor_texts = [];
-    for(let i = 0; i < flavor_data.length; i++) {
-        let flavor = flavor_data[i];
-        if(flavor.language.name === "en") {
-            flavor_texts.push(flavor.flavor_text);
-        }
-    }
-    return getRandomEl(flavor_texts);
-}
-
 // Load central image of current pokemon
-function loadImage(data) {
+function loadImage(pokemon) {
     const image = document.getElementById("image");
-    image.setAttribute("src", data.sprites.front_default);
-    image.setAttribute("alt", `Image of ${data.name}`);
+    image.setAttribute("src", pokemon.sprite_url);
+    image.setAttribute("alt", `Image of ${pokemon.name}`);
 }
 
 // Setup chart in stats
 function loadStats(current_pokemon) {
     const stats = document.getElementById("stats");
     stats.innerHTML = "";
-    const types = extractTypes(current_pokemon.types);
+    const types = current_pokemon.types;
     const ctx = document.createElement("canvas");
     ctx.setAttribute("id", "chart");
     ctx.setAttribute("width", 100);
@@ -326,12 +299,12 @@ function loadStats(current_pokemon) {
                 {
                     label: capitalize(current_pokemon.name),
                     data: [
-                        current_pokemon.stats[0].base_stat,
-                        current_pokemon.stats[2].base_stat,
-                        current_pokemon.stats[4].base_stat,
-                        current_pokemon.stats[5].base_stat,
-                        current_pokemon.stats[3].base_stat,
-                        current_pokemon.stats[1].base_stat,
+                        current_pokemon.stats.hp,
+                        current_pokemon.stats.def,
+                        current_pokemon.stats.sp_def,
+                        current_pokemon.stats.speed,
+                        current_pokemon.stats.sp_atk,
+                        current_pokemon.stats.atk,
                     ],
                     fill: true, 
                     backgroundColor: TYPES[types[0]],
@@ -363,7 +336,7 @@ function loadStats(current_pokemon) {
 
 // Setup html elements for damage_multiplier
 function loadDamageMultipliers(current_pokemon) {
-    const damage = SELECTION_DATA[current_pokemon.id].damage;
+    const dmg_relations = current_pokemon.dmg_relations;
 
     const damage_multiplier = document.getElementById("damage_multiplier");
     damage_multiplier.innerHTML = ""; 
@@ -371,33 +344,30 @@ function loadDamageMultipliers(current_pokemon) {
     const damage_multiplier_info = document.createElement("ul");
     damage_multiplier.appendChild(damage_multiplier_info);
 
-    for(let i = 0; i <= 1; i++) {
-        if(current_pokemon.types[i]) {
-            const { double_damage_from, half_damage_from, no_damage_from } = damage[i].damage_relations;
-            const type = document.createElement("li");
-            const double_damage = document.createElement("li");
-            const half_damage = document.createElement("li");
-            const no_damage = document.createElement("li");
+    for(let key in dmg_relations) {
+        const { double, half, no } = dmg_relations[key];
+        const type = document.createElement("li");
+        const double_dmg = document.createElement("li");
+        const half_dmg = document.createElement("li");
+        const no_dmg = document.createElement("li");
 
-            type.innerHTML = 
-                `${i === 0 ? "Primary" : "Secondary"} Type:  
-                ${capitalize(current_pokemon.types[i].type.name)}`;
-            double_damage.innerHTML = damageMultiplierText(double_damage_from, "double");
-            half_damage.innerHTML = damageMultiplierText(half_damage_from, "half");
-            no_damage.innerHTML = damageMultiplierText(no_damage_from, "no");
+        type.innerHTML = `${current_pokemon.types.indexOf(key) === 0 ? 
+            "Primary" : "Secondary"} Type: ${capitalize(key)}`;
+        double_dmg.innerHTML = damageMultiplierText(double, "double");
+        half_dmg.innerHTML = damageMultiplierText(half, "half");
+        no_dmg.innerHTML = damageMultiplierText(no, "no");
 
-            damage_multiplier_info.appendChild(type);
-            type.appendChild(double_damage);
-            type.appendChild(half_damage);
-            type.appendChild(no_damage);
-        }
+        damage_multiplier_info.appendChild(type);
+        type.appendChild(double_dmg);
+        type.appendChild(half_dmg);
+        type.appendChild(no_dmg);
     }
 }
 
 // Return formatted string for damage multiplier info
 function damageMultiplierText(data, multiplier) {
     if(data.length > 0) {
-        return `Receives ${multiplier} damage from ${extractDmgTypes(data).join(", ")}.`
+        return `Receives ${multiplier} damage from ${data.join(", ")}.`
     }
     return "";
 }
