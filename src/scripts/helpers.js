@@ -1,6 +1,82 @@
 // ===============================
-// ==== Custom helper methods ====
+// ==== CUSTOM HELPER METHODS ====
 // ===============================
+
+// Creates the title_page's pokeball background
+export function createPokeball() {
+    // Create elements used solely for web page presentation / styling
+    const pokeball = document.createElement("div");
+    const red_background = document.createElement("div");
+    const black_background = document.createElement("div");
+    const white_background = document.createElement("div");
+
+    // Nest above css elements inside the body element
+    const body = document.querySelector("body");
+    body.appendChild(pokeball);
+    pokeball.appendChild(red_background);
+    pokeball.appendChild(black_background);
+    pokeball.appendChild(white_background);
+
+    // Set ids for css elements
+    pokeball.setAttribute("id", "pokeball");
+    red_background.setAttribute("id", "red");
+    black_background.setAttribute("id", "black");
+    white_background.setAttribute("id", "white");
+}
+
+// Loads blue digital background video
+export function loadBackgroundVid() {
+    // Create html elements
+    const body = document.querySelector("body");
+    const video = document.createElement("video");
+    const source = document.createElement("source");
+    
+    // Set up html structure
+    body.appendChild(video);
+    video.appendChild(source);
+    
+    // Set attributes to play the mp4 file
+    video.setAttribute("autoplay", "");
+    video.setAttribute("muted", "");
+    video.setAttribute("loop", "");
+    video.setAttribute("id", "background_video");
+    source.setAttribute("src", "resources/pokeviser_background.mp4");
+    source.setAttribute("type", "video/mp4");
+}
+
+// Creates loading screen
+export function renderLoadingScreen() {
+    const body = document.querySelector("body")
+    const loadingScreen = document.createElement("div");
+    const textContainer = document.createElement("div");
+    const text = document.createElement("div");
+
+    loadingScreen.setAttribute("id", "loadingScreen");
+    textContainer.setAttribute("class", "text-container");
+    text.setAttribute("id", "load-text");
+
+    text.innerHTML = "LOADING"
+
+    body.appendChild(loadingScreen);
+    loadingScreen.appendChild(textContainer);
+    textContainer.appendChild(text);
+}
+
+// Removes loading screen
+export function removeLoadingScreen() {
+    const loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.remove();
+}
+
+// Checks if node is a child of parent
+export function isChild(parent, node) {
+    for(let i = 0; i < parent.children.length; i++) {
+        if(parent.children[i] === node) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // Returns capitalized word from passed string: pokemon --> Pokemon
 export function capitalize(word) {
@@ -32,6 +108,24 @@ export function convertHeight(dm) {
 // Convert hectograms to lbs
 export function convertWeight(hg) {
     return Math.floor((hg / 4.536) * 100) / 100;
+}
+
+// Loads cache with desired object structure
+export function loadInitialState(cache) {
+    for(let i = 1; i <= 898; i++) {
+        cache[i] = {
+            id: null,
+            name: null, 
+            height: null, 
+            weight: null, 
+            types: null, 
+            stats: null, 
+            species_url: null, 
+            sprite_url: null,
+            dmg_relations: null,
+            flavor_texts: null,
+        }
+    }
 }
 
 // Loads all pokemon names and types into storage

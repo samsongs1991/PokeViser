@@ -6,7 +6,7 @@
 import { capitalize, convertHeight } from './helpers'
 
 // Cache of pokemon data
-import { POKEMON } from './search_page'
+import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
 // To render show page
 import { loadShowPage } from './show_page'

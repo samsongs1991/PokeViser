@@ -5,23 +5,14 @@
 // Helper methods
 import { capitalize } from './helpers'
 
-// POKEMON: Cache of pokemon data
-// TYPES: Pokemon types and their hex color codes
-import { POKEMON, TYPES } from './search_page'
- 
-// Cache of description and damage data for every searched pokemon
-import { SELECTION_DATA } from './show_page'
+// Cache of pokemon data
+import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
 // To render size comparison page
 import { loadSizePage } from './size_page'
 
 // To render show page
 import { loadShowPage } from './show_page'
-
-// ====================================================
-// =============== C O N S T A N T S ==================
-// ====================================================
-
 
 // ====================================================
 // ===================== M A I N ======================

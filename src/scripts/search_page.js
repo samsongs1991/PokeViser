@@ -2,147 +2,33 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
+import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
+
 // Helper methods
 import { capitalize, getRandomEl } from './helpers'
 
 // To load show page
 import { loadShowPage } from './show_page'
 
-// To show loading screen until POKEMON is loaded with all 898 pokemon
-import { renderLoadingScreen, removeLoadingScreen } from './presentation'
-
-// ====================================================
-// =============== C O N S T A N T S ==================
-// ====================================================
-
-// TYPES contains all Pokemon types and their hex color codes
-export const TYPES = {
-    "normal": "rgba(170, 176, 159, 0.6)",
-    "fire": "rgba(234, 122, 60, 0.6)",
-    "water": "rgba(83, 154, 226, 0.6)",
-    "electric": "rgba(229, 197, 49, 0.6)",
-    "grass": "rgba(113, 197, 88, 0.6)",
-    "ice": "rgba(112, 203, 212, 0.6)",
-    "fighting": "rgba(203, 95, 72, 0.6)",
-    "poison": "rgba(180, 104, 183, 0.6)",
-    "ground": "rgba(204, 159, 79, 0.6)",
-    "flying": "rgba(125, 166, 222, 0.6)",
-    "psychic": "rgba(229, 112, 155, 0.6)",
-    "bug": "rgba(148, 188, 74, 0.6)",
-    "rock": "rgba(178, 160, 97, 0.6)",
-    "ghost": "rgba(132, 106, 182, 0.6)",
-    "dragon": "rgba(106, 123, 175, 0.6)",
-    "dark": "rgba(115, 108, 117, 0.6)",
-    "steel": "rgba(137, 161, 176, 0.6)",
-    "fairy": "rgba(227, 151, 209, 0.6)",
-};
-
-// POKEMON_NAMES is an array of all pokemon names lowercased
-export const POKEMON_NAMES = { size: 0 };
-function loadInitialState(cache) {
-    for(let i = 1; i <= 898; i++) {
-        cache[i] = {
-            id: null,
-            name: null, 
-            types: null, 
-            height: null, 
-            weight: null, 
-            stats: null, 
-            species_url: null, 
-            sprite_url: null,
-        }
+// #############################################################################
+// #############################################################################
+// Loads fetched data from pokeapi
+const POKEMON = { "size": 0 };
+function cachePokemon(cache) {    
+    const first = 1;
+    const last = 1;
+    for(let i = first; i <= last; i++) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            cache[i] = data;
+            cache.size++;
+        })
     }
 }
-loadInitialState(POKEMON_NAMES);
-window.names = POKEMON_NAMES;
-
-// SELECTED_POKEMON contains user selected pokemon - up to 6
-export const SELECTED_POKEMON = { size: 0, selection: {} };
-window.selection = SELECTED_POKEMON;
-
-// ******************************
-// *** REFACTOR THIS CONSTANT ***
-// ******************************
-// Go to show_page and refactor code so that POKEMON is
-// conditionally cached with data using selected pokemon.
-// Eventually go through entire code base to refactor use
-// of POKEMON constant.
-// POKEMON contains it's own "size" as well as pokemon ids for 
-// keys with all data for that pokemon as an object for the values
-export const POKEMON = { "size": 0 };
-let file_string = "";
-// // Loads all pokemon into POKEMON storage
-export function cachePokemon(cache) {    
-    const first = 1;
-    // for testing only "last" is 10. change back to 898 for production
-    const last = 1;
-
-    // *** Completed pokemon_flavor.txt
-    // *** Use that to create helper cachePokemonFlavors
-
-    // if(cache[1] === undefined) {
-        // let big_string = "";
-        // for(let i = first; i <= last; i++) {
-            // fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-            // fetch(`https://pokeapi.co/api/v2/pokemon-species/${i}/`)
-            // .then(res => res.json())
-            // .then(data => {
-                // let flavs = data.flavor_text_entries;
-                // let eng_flavs = [];
-                // for(let j = 0; j < flavs.length; j++) {
-                //     let flav = flavs[j];
-                //     // *** NOTE ***
-                //     // Currently trying to fetch these flavor texts as strings to put into a separate txt doc for faster retrieval time
-                //     // Need to put into a string to format it for the txt
-                //     if(flav.language.name == "en") {
-                //         let flav_txt = flav.flavor_text;
-                //         flav_txt = flav_txt.split("\n").join(" ");
-                //         flav_txt = flav_txt.split("\f").join(" ");
-                //         flav_txt = flav_txt.split("POKéMON").join("pokemon");
-                //         if(!eng_flavs.includes(flav_txt)) {
-                //             eng_flavs.push(flav_txt);
-                //         }
-                //     }
-                // }
-                // let lil_string = `${i}:`;
-                // for(let j = 0; j < eng_flavs.length; j++) {
-                //     let text = eng_flavs[j];
-                //     if(j === eng_flavs.length - 1) {
-                //         lil_string += `${text}\n`
-                //     } else {
-                //         lil_string += `${text}||`
-                //     }
-                // }
-                // big_string += lil_string;
-                // if(i === last) {
-                //     console.log(big_string);
-                // }
-
-                // [normal, fighting, flying, poison, ground, 
-                // rock, bug, ghost, steel, fire, 
-                // water, grass, electric, psychic, ice, 
-                // dragon, dark, fairy]
-                // 
-                // https://pokeapi.co/api/v2/type/12/
-                
-                
-                // file_string += `${id} ${}\n`;
-
-                // cache[i] = data;
-                // cache.size++;
-                // if(cache.size === first) {
-                //     renderLoadingScreen();
-                // } else if(cache.size === last) {
-                //     removeLoadingScreen();
-                // }
-            // })
-        // }
-    // }
-}
-// cachePokemon(POKEMON);
-// ******************************
-// ******************************
-
+// #############################################################################
+// #############################################################################
 
 // ====================================================
 // ===================== M A I N ======================

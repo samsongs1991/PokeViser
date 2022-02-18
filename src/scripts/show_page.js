@@ -2,17 +2,17 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
-// Helper methods
-import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
-
 // Cache of pokemon data
-import { SELECTED_POKEMON, POKEMON_NAMES, TYPES } from './search_page'
+import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
 // To render size comparison page
 import { loadSizePage } from './size_page'
 
 // To render index page
 import { loadIndexPage } from './index_page'
+
+// Helper methods
+import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
 
 // Chart.js
 import {

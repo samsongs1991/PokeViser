@@ -2,20 +2,15 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
-// For loadTitlePage
-import { createPokeball } from './presentation'
-
-// For goToSearchPage
+import { POKEMON_NAMES } from './store.js'
 import {
-    cachePokemonInitialState, 
-    cachePokemonHtWt,
-    cachePokemonStats,
-    cachePokemonDmgRelations,
-    cachePokemonFlavors,
+    createPokeball, loadBackgroundVid, isChild, 
+    loadInitialState, cachePokemonInitialState, 
+    cachePokemonHtWt, cachePokemonStats, 
+    cachePokemonDmgRelations, cachePokemonFlavors,
 } from './helpers'
-import { loadBackgroundVid } from './presentation'
 import { loadHeader } from './header'
-import { loadMainSearchPage, POKEMON_NAMES } from './search_page'
+import { loadMainSearchPage } from './search_page'
 import { loadFooter } from './footer'
 
 // ====================================================
@@ -102,6 +97,7 @@ export function loadTitlePage() {
     }
 
     // Cache pokemon data
+    loadInitialState(POKEMON_NAMES);
     cachePokemonInitialState(POKEMON_NAMES);
     cachePokemonHtWt(POKEMON_NAMES);
     cachePokemonStats(POKEMON_NAMES);
@@ -116,19 +112,4 @@ export function goToSearchPage() {
     loadHeader();
     loadMainSearchPage();
     loadFooter();
-}
-
-// ====================================================
-// =================== H E L P E R ====================
-// ================== M E T H O D S ===================
-// ====================================================
-
-// Checks if node is a child of parent
-function isChild(parent, node) {
-    for(let i = 0; i < parent.children.length; i++) {
-        if(parent.children[i] === node) {
-            return true;
-        }
-    }
-    return false;
 }
