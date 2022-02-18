@@ -1,3 +1,8 @@
+// ====================================================
+// ===================== M A I N ======================
+// ================== E X P O R T S ===================
+// ====================================================
+
 export function loadFooter() {
     const body = document.querySelector("body");
     const footer = document.createElement("footer");
