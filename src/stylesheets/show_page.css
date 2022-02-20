@@ -1,65 +1,93 @@
 #show_page {
     display: flex;
+    justify-content: center;
 }
 
 #stats_container {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 1050px;
     height: 100%;
     align-items: center;
+    margin-top: 70px;
+    padding: 0px;
 }
 
 #stats_container section {
     opacity: 1;
     box-shadow:0px 0px 30px 0px rgb(31, 108, 128);
+    margin: 0;
 }
 
 #main_content_container {
-    display: flex;    
+    display: flex; 
 }
 
 #main_content_container section {
-    width: 35%;
+    width: 450px;
+    height: 450px;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
-    border-radius: 10% 10% 10% 10%;
-    margin: 40px;
+    border-radius: 20% 20% 20% 20%;
+    margin: 25px 40px 25px 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.5s ease;
 }
 
-#main_content_container img {
-    height: 380px;
-    opacity: 0.95;
-    transition: all 0.5s ease;
+#img_container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
 
-#main_content_container section ul {
-    margin-right: 20px;
+#img_container img {
+    width: 400px;
+    margin: 0;
+    padding: 0;
 }
 
-#description {
-    font-size: 14px;
+#img_container div {
+    padding: 25px 0px 0px 0px;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 24px;
 }
 
-#prev {
-    width: 10%;
-    opacity: 0;
+.button_container {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
 }
 
-#next {
-    width: 10%;
-    opacity: 0;
+#prev, #next {
+    width: 90px;
+    height: 90px;
+    font-size: 50px;
+    background-color: white;
+    border-radius: 100%;
+    margin: 0px;
+    padding: 0px;
+    opacity: 0.5;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    border: none;
+    transition: all 0.1s ease;
+}
+
+#prev:hover, #next:hover {
+    box-shadow: 0px 0px 10px 5px rgb(0, 174, 255);
+}
+
+#prev:active, #next:active {
+    opacity: 0.75;
 }
 
 #sprites {
-    margin-top: 4%;
-    width: 90%;
+    width: 950px;
+    height: 100px;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
-    border-radius: 10%;
-    margin-bottom: 25px;
+    border-radius: 20%;
     display: flex;
     justify-content: space-evenly;
     transition: all 0.5s ease;
@@ -82,26 +110,21 @@
     transition: all 0.1s ease;
 }
 
-#damage_multiplier {
+#description {
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
-    opacity: 0.75;
     justify-content: space-evenly;
-    width: 90%;
-    height: 100px;
-    margin: 10px;
-    border-radius: 10%;
+    width: 950px;
+    height: 75px;
+    border-radius: 20%;
     font-size: 0.9em;
     display: flex;
     justify-content: space-evenly;
     transition: all 0.5s ease;
 }
 
-#damage_multiplier > ul {
-    display: flex;
-}
-
-#damage_multiplier > ul > li {
-    padding: 0px 1%;
+#description > p {
+    width: 75%;
+    text-align: center;
 }
 
 #new_view_container {
