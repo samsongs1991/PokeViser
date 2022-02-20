@@ -1,0 +1,33 @@
+#nav_box {
+    position: absolute;
+    top: 75px;
+    right: 55px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));    
+    text-align: right;
+    border-radius: 15px;
+}
+
+#nav_box ul {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+
+#nav_box li {
+    padding: 8px;
+}
+
+#nav_box li:hover {
+    background: linear-gradient(45deg, rgb(25, 236, 106), rgb(224, 224, 255));    
+    cursor: pointer;
+}
+
+#nav_box li:first-child:hover {
+    border-radius: 15px 15px 0px 0px;
+}
+
+#nav_box li:last-child:hover {
+    border-radius: 0px 0px 15px 15px;
+}

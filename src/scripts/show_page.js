@@ -5,14 +5,11 @@
 // Cache of pokemon data
 import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
-// To render size comparison page
-import { loadSizePage } from './size_page'
-
-// To render index page
-import { loadIndexPage } from './index_page'
-
 // Helper methods
 import { capitalize, getRandomEl, convertHeight, convertWeight } from './helpers'
+
+// To render the nav box
+import { loadNavBox } from './nav_box'
 
 // Chart.js
 import {
@@ -75,6 +72,7 @@ import {
 
 export function loadShowPage() {
     loadShowPageStructure();
+    loadNavBox();
 
     const ids = Object.keys(SELECTED_POKEMON.selection);
 
@@ -82,13 +80,6 @@ export function loadShowPage() {
     current_pokemon = setupPrevNext(current_pokemon, ids);
 
     loadSprites();
-    // * NOTE *
-    // Working on adjusting html structure of show page.
-    // Move flavor text to bottom section.
-    // Put center image into the left section.
-    // Remove damage multiplier info.
-    // Style the font / color palette.
-    // Add an event listener for click somewhere that will generate poke img that moves across screen?
     loadShowContent(current_pokemon);
 }
 
@@ -138,18 +129,6 @@ function loadShowPageStructure() {
     stats_container.appendChild(description);
     main_content_container.appendChild(stats);
     main_content_container.appendChild(img_container);
-    
-    // const new_view_container = document.createElement("div");
-    // const index_page_button = document.createElement("button");
-    // const size_page_button = document.createElement("button");
-    // new_view_container.setAttribute("id", "new_view_container");
-    // index_page_button.innerHTML = "Go to index page";
-    // size_page_button.innerHTML = "Go to size page";
-    // stats_container.appendChild(new_view_container);
-    // new_view_container.appendChild(index_page_button);
-    // new_view_container.appendChild(size_page_button);
-    // index_page_button.addEventListener("click", loadIndexPage);
-    // size_page_button.addEventListener("click", loadSizePage);
 }
 
 // Add event listeners to the prev and next buttons
