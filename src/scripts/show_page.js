@@ -114,10 +114,7 @@ function loadShowPageStructure() {
     const img_container = document.createElement("section");
     const stats = document.createElement("section");
     const description = document.createElement("section");
-    const new_view_container = document.createElement("div");
-    const index_page_button = document.createElement("button");
-    const size_page_button = document.createElement("button");
-
+    
     stats_container.setAttribute("id", "stats_container");
     prev_button_container.setAttribute("class", "button_container");
     next_button_container.setAttribute("class", "button_container");
@@ -128,13 +125,9 @@ function loadShowPageStructure() {
     img_container.setAttribute("id", "img_container");
     stats.setAttribute("id", "stats");
     description.setAttribute("id", "description");
-    new_view_container.setAttribute("id", "new_view_container");
-    
     prev_button.innerHTML = "<";
     next_button.innerHTML = ">";
-    index_page_button.innerHTML = "Go to index page";
-    size_page_button.innerHTML = "Go to size page";
-
+    
     main.appendChild(prev_button_container);
     main.appendChild(stats_container);
     main.appendChild(next_button_container);        
@@ -143,14 +136,20 @@ function loadShowPageStructure() {
     stats_container.appendChild(sprites);
     stats_container.appendChild(main_content_container);
     stats_container.appendChild(description);
-    stats_container.appendChild(new_view_container);
     main_content_container.appendChild(stats);
     main_content_container.appendChild(img_container);
-    new_view_container.appendChild(index_page_button);
-    new_view_container.appendChild(size_page_button);
     
-    index_page_button.addEventListener("click", loadIndexPage);
-    size_page_button.addEventListener("click", loadSizePage);
+    // const new_view_container = document.createElement("div");
+    // const index_page_button = document.createElement("button");
+    // const size_page_button = document.createElement("button");
+    // new_view_container.setAttribute("id", "new_view_container");
+    // index_page_button.innerHTML = "Go to index page";
+    // size_page_button.innerHTML = "Go to size page";
+    // stats_container.appendChild(new_view_container);
+    // new_view_container.appendChild(index_page_button);
+    // new_view_container.appendChild(size_page_button);
+    // index_page_button.addEventListener("click", loadIndexPage);
+    // size_page_button.addEventListener("click", loadSizePage);
 }
 
 // Add event listeners to the prev and next buttons
