@@ -29,6 +29,14 @@ export function loadNavBox() {
         let item = store[i];
         let li = document.createElement("li");
 
+        li.addEventListener("click", () => {
+            if(i < 4) {
+                item.url();
+            } else {
+                window.open(item.url, '_blank');
+            }
+        });
+
         li.innerHTML = `${item.text}   `;
 
         let img = document.createElement("img");
@@ -50,43 +58,43 @@ function items() {
         1: {
             "type": "show",
             "src": "./resources/graph.png", 
-            "href": loadShowPage,
+            "url": loadShowPage,
             "text": "Individual Stats", 
         }, 
         2: {
             "type": "index",
             "src": "./resources/sword.png", 
-            "href": loadIndexPage,
+            "url": loadIndexPage,
             "text": "Damage Relations", 
         }, 
         3: {
             "type": "size",
             "src": "./resources/human.png", 
-            "href": loadSizePage,
+            "url": loadSizePage,
             "text": "Size Comparison", 
         }, 
         4: {
             "type": "portfolio",
             "src": "./resources/portfolio.png", 
-            "href": "",
-            "text": "My Portfolio Site", 
+            "url": "",
+            "text": "Sam's Portfolio", 
         }, 
         5: {
             "type": "github",
             "src": "./resources/github.png", 
-            "href": "https://github.com/samsongs1991/PokeViser",
+            "url": "https://github.com/samsongs1991/PokeViser",
             "text": "Github", 
         }, 
         6: {
             "type": "linkedin",
             "src": "./resources/linkedin.png", 
-            "href": "https://www.linkedin.com/in/samsongs1991/",
+            "url": "https://www.linkedin.com/in/samsongs1991/",
             "text": "LinkedIn", 
         }, 
         7: {
             "type": "angellist",
             "src": "./resources/angellist.png", 
-            "href": "https://angel.co/u/samsongs",
+            "url": "https://angel.co/u/samsongs",
             "text": "AngelList", 
         }, 
     }
