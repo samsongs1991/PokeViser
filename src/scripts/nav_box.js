@@ -29,12 +29,16 @@ export function loadNavBox() {
         let item = store[i];
         let li = document.createElement("li");
 
+        // * Add event listener for being able to drag the navbox around
+        // * Perhaps add a "draggable" icon in navbox
+        // * Refactor loadIndexPage
+        // * Refactor loadSizePage
+        // * BUG - Slow load time when clicking on "Poke Search"
+        // * BUG - "Selections" box disappears after clicking "Home" then going to searchpage
+        // * Add mediaqueries to css in searchpage, showpage, navbox
+
         li.addEventListener("click", () => {
-            if(i < 4) {
-                item.url();
-            } else {
-                window.open(item.url, '_blank');
-            }
+            i < 4 ? item.url() : window.open(item.url, '_blank');
         });
 
         li.innerHTML = `${item.text}   `;
