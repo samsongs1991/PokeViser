@@ -25,7 +25,7 @@ export function loadNavBox() {
     nav_box.appendChild(ul);
 
     const store = items();
-    for(let i = 1; i < 8; i++) {
+    for(let i = 1; i < 4; i++) {
         let item = store[i];
         let li = document.createElement("li");
 
@@ -37,9 +37,7 @@ export function loadNavBox() {
         // * BUG - "Selections" box disappears after clicking "Home" then going to searchpage
         // * Add mediaqueries to css in searchpage, showpage, navbox
 
-        li.addEventListener("click", () => {
-            i < 4 ? item.url() : window.open(item.url, '_blank');
-        });
+        li.addEventListener("click", () => item.url());
 
         li.innerHTML = `${item.text}   `;
 
@@ -76,30 +74,6 @@ function items() {
             "src": "./resources/human.png", 
             "url": loadSizePage,
             "text": "Size Comparison", 
-        }, 
-        4: {
-            "type": "portfolio",
-            "src": "./resources/portfolio.png", 
-            "url": "",
-            "text": "Sam's Portfolio", 
-        }, 
-        5: {
-            "type": "github",
-            "src": "./resources/github.png", 
-            "url": "https://github.com/samsongs1991/PokeViser",
-            "text": "Github", 
-        }, 
-        6: {
-            "type": "linkedin",
-            "src": "./resources/linkedin.png", 
-            "url": "https://www.linkedin.com/in/samsongs1991/",
-            "text": "LinkedIn", 
-        }, 
-        7: {
-            "type": "angellist",
-            "src": "./resources/angellist.png", 
-            "url": "https://angel.co/u/samsongs",
-            "text": "AngelList", 
-        }, 
+        }
     }
 }

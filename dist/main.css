@@ -307,16 +307,15 @@ header {
     justify-content: space-between;
     opacity: 1.0;
     color: white;
-    z-index: 3;
 }
 
 #logo {
     width: 250px;
-    opacity: 0.4;
 }
 
 #logo:hover {
     cursor: pointer;
+    opacity: 0.6;
 }
 
 nav ul {
@@ -336,40 +335,38 @@ nav ul li:hover {
     text-shadow: 0px 0px 10px rgb(255, 255, 255);
     cursor: pointer;
     text-decoration: underline;
+    text-shadow: 0px 0px 15px rgb(255, 255, 255);
 }
 /*!**********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/footer.css ***!
   \**********************************************************************************************************/
 footer {
-    display: flex;
-    justify-content: space-between;
     opacity: 1.0;
     color: white;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
     text-shadow: 0px 0px 10px rgb(255, 255, 255);
-    z-index: -1;
 }
 
-footer:hover {
-    opacity: 1.0;
-}
-
-#footer_list {
+footer ul {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    list-style: none;
-    font-family:'Courier New', Courier, monospace;
-    font-size: 14px;
-    font-weight: lighter;
-    margin-top: 5px;
+    justify-content: center;
 }
 
-#footer_list p {
-    width: 300px;
-    margin: 0;
+footer li {
+    margin: 0px 30px;
+}
+
+footer img {
+    height: 35px;
+    filter: invert(100%) sepia(16%) saturate(7463%) hue-rotate(222deg) brightness(119%) contrast(115%);
+    transition: all 0.7s ease;
+}
+
+footer img:hover {
+    cursor: pointer;
+    filter: invert(26%) sepia(89%) saturate(1583%) hue-rotate(95deg) brightness(96%) contrast(106%);
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
 }
 /*!********************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/background_video.css ***!

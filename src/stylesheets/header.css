@@ -3,16 +3,15 @@ header {
     justify-content: space-between;
     opacity: 1.0;
     color: white;
-    z-index: 3;
 }
 
 #logo {
     width: 250px;
-    opacity: 0.4;
 }
 
 #logo:hover {
     cursor: pointer;
+    opacity: 0.6;
 }
 
 nav ul {
@@ -32,4 +31,5 @@ nav ul li:hover {
     text-shadow: 0px 0px 10px rgb(255, 255, 255);
     cursor: pointer;
     text-decoration: underline;
+    text-shadow: 0px 0px 15px rgb(255, 255, 255);
 }
