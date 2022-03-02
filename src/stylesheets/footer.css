@@ -1,10 +1,5 @@
 footer {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
     display: flex;
-    height: 7%;
     justify-content: space-between;
     opacity: 1.0;
     color: white;
