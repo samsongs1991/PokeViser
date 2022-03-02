@@ -1,15 +1,14 @@
 #searchpage {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 #searchpage section {
-    width: 33vw;
+    width: 30vw;
     height: 50vh;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     opacity: 0.85;
-    margin: 10px;
     border-radius: 5%;
     transition: all 0.2s ease;
 }

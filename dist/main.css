@@ -385,15 +385,14 @@ footer img:hover {
 #searchpage {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 #searchpage section {
-    width: 33vw;
+    width: 30vw;
     height: 50vh;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     opacity: 0.85;
-    margin: 10px;
     border-radius: 5%;
     transition: all 0.2s ease;
 }
@@ -917,14 +916,13 @@ footer img:hover {
     display: flex;
     flex-direction: column;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));    
-    text-align: right;
     border-radius: 15px;
 }
 
 #nav_box ul {
     margin: 0px;
     padding: 0px;
-    text-align: center;
+    text-align: right;
 }
 
 #nav_box li {
@@ -942,6 +940,19 @@ footer img:hover {
 
 #nav_box li:last-child:hover {
     border-radius: 0px 0px 15px 15px;
+}
+
+#nav_box img {
+    position: relative;
+    box-sizing: border-box;
+    top: 3px;
+    margin: 0px 5px 0px 10px;
+    height: 20px;
+    width: 20px;
+}
+
+#nav_box li:last-child img {
+    padding: 0px 2px;
 }
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!

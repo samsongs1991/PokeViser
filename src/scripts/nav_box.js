@@ -39,11 +39,10 @@ export function loadNavBox() {
 
         li.addEventListener("click", () => item.url());
 
-        li.innerHTML = `${item.text}   `;
+        li.innerHTML = item.text;
 
         let img = document.createElement("img");
         img.setAttribute("src", item.src);
-        img.setAttribute("height", "20px");
         li.appendChild(img);
 
         ul.appendChild(li);
