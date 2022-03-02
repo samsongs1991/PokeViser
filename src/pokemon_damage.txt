@@ -1,4 +1,4 @@
-normal|double:fighting|half|no:ghost 
+normal|double:fighting|half|no:ghost
 fighting|double:flying psychic fairy|half:rock bug dark|no
 flying|double:rock electric ice|half:fighting bug grass|no:ground
 poison|double:ground psychic|half:fighting poison bug grass fairy|no

@@ -6,21 +6,15 @@
 import { capitalize } from './helpers'
 
 // Cache of pokemon data
-import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
-
-// To render size comparison page
-import { loadSizePage } from './size_page'
-
-// To render show page
-import { loadShowPage } from './show_page'
+import { POKEMON_NAMES, SELECTED_POKEMON } from './store.js'
 
 // ====================================================
 // ===================== M A I N ======================
 // ================== E X P O R T S ===================
 // ====================================================
 
-export function loadIndexPage(selected_pokemon) {
-    loadIndexPageStructure(selected_pokemon);
+export function loadIndexPage() {
+    loadIndexPageStructure();
     loadArticles();
     loadDmgMultipliers();
 }
@@ -31,7 +25,7 @@ export function loadIndexPage(selected_pokemon) {
 // ====================================================
 
 // Setup html elements for index page
-function loadIndexPageStructure(selected_pokemon) {
+function loadIndexPageStructure() {
     const main = document.querySelector("main");
     main.innerHTML = "";
     main.setAttribute("id", "index_page");
@@ -41,25 +35,19 @@ function loadIndexPageStructure(selected_pokemon) {
     const index_container = document.createElement("div");
     const row1 = document.createElement("section");
     const row2 = document.createElement("section");
-    const show_page_button = document.createElement("button");
-    const size_page_button = document.createElement("button");
 
     instructions.setAttribute("id", "instructions");
 
     text.innerHTML = "Each card shows how much damage the Pokemon receives from which attack types. If an attack type is not shown, that Pokemon receives x1 damage from that attack type.";
-    show_page_button.innerHTML = "Go to show page";
-    size_page_button.innerHTML = "Go to size page";
 
     main.appendChild(instructions);
     main.appendChild(index_container);
-    main.appendChild(show_page_button);
-    main.appendChild(size_page_button);
     instructions.appendChild(text);
     index_container.appendChild(row1);
     index_container.appendChild(row2);
 
     let count = 0
-    for(let id in selected_pokemon.selection) {
+    for(let id in SELECTED_POKEMON.selection) {
         let article = document.createElement("article");
         article.setAttribute("id", id);
         if(count < 3) {
@@ -70,8 +58,6 @@ function loadIndexPageStructure(selected_pokemon) {
         count++;
     }
 
-    show_page_button.addEventListener("click", () => loadShowPage(selected_pokemon));
-    size_page_button.addEventListener("click", () => loadSizePage(selected_pokemon));
 }
 
 // Setup html elements for articles
@@ -82,9 +68,9 @@ function loadArticles() {
         let img = document.createElement("img");
         let dmg_multiplier = document.createElement("div");
         
-        name.innerHTML = capitalize(POKEMON[article.id].name);
-        img.setAttribute("src", POKEMON[article.id].sprites.front_default);
-        img.setAttribute("alt", `Image of ${POKEMON[article.id].name}`);
+        name.innerHTML = capitalize(POKEMON_NAMES[article.id].name);
+        img.setAttribute("src", POKEMON_NAMES[article.id].sprite_url);
+        img.setAttribute("alt", `Image of ${POKEMON_NAMES[article.id].name}`);
         
         article.appendChild(name);
         article.appendChild(img);
@@ -113,36 +99,39 @@ function dmgSort(id) {
         0: []
     };
 
-    const damage = SELECTION_DATA[id].damage;
-    for(let i = 0; i < 2; i++) {
-        if(damage[i]) {
-            updateMultipliers(sorted_multipliers, damage[i].damage_relations.double_damage_from, 2);
-            updateMultipliers(sorted_multipliers, damage[i].damage_relations.half_damage_from, 0.5);
-            updateMultipliers(sorted_multipliers, damage[i].damage_relations.no_damage_from, 0);
-        }
+    const damage = POKEMON_NAMES[id].dmg_relations;
+    for(let type in damage) {
+        updateMultipliers(sorted_multipliers, damage[type].double, 2);
+        updateMultipliers(sorted_multipliers, damage[type].half, 0.5);
+        updateMultipliers(sorted_multipliers, damage[type].no, 0);
     }
 
     return sorted_multipliers;
 }
 
 // Update sorted_multipliers appropriately
-function updateMultipliers(sorted_multipliers, damage_from, multiplier) {
+function updateMultipliers(sorted_multipliers, types, multiplier) {
     let new_multiplier = null;
-    damage_from.forEach(type => {
-        if(sorted_multipliers[2].includes(type.name)) {
-            sorted_multipliers[2] = sorted_multipliers[2].filter(item => item !== type.name)
-            new_multiplier = 2 * multiplier;
-            sorted_multipliers[new_multiplier].push(type.name);
-        } else if(sorted_multipliers[0.5].includes(type.name)) {
-            sorted_multipliers[0.5] = sorted_multipliers[0.5].filter(item => item !== type.name)
-            new_multiplier = 0.5 * multiplier;
-            sorted_multipliers[new_multiplier].push(type.name);
-        } else if(sorted_multipliers[0].includes(type.name)) {
-            // do nothing
+    types.forEach(type => {
+        let key = findKey(sorted_multipliers, type);
+        if(key === -1) {
+            sorted_multipliers[multiplier].push(type);
         } else {
-            sorted_multipliers[multiplier].push(type.name);
+            sorted_multipliers[key] = sorted_multipliers[key].filter(item => item !== type);
+            new_multiplier = key * multiplier;
+            sorted_multipliers[new_multiplier].push(type);
         }
     });
+}
+
+// Returns key from object(1st param) where the value of the key is an array and contains the el(2nd param)
+function findKey(obj, el) {
+    for(let k in obj) {
+        if(obj[k].includes(el)) {
+            return k;
+        }
+    }
+    return -1;
 }
 
 // Load dmg_container inside article with appropriate multiplier categories 
