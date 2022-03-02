@@ -84,7 +84,12 @@ function loadArticles() {
         let dmg_multiplier = document.createElement("div");
         
         name.innerHTML = capitalize(POKEMON_NAMES[article.id].name);
-        types.innerHTML = POKEMON_NAMES[article.id].types.map(el => capitalize(el)).join(" / ");
+        POKEMON_NAMES[article.id].types.forEach(type => {
+            let img = document.createElement("img");
+            img.setAttribute("src", `../../resources/types/${type}.png`);
+            img.setAttribute("height", "40px");
+            types.appendChild(img);
+        });
 
         types.setAttribute("id", "types");
         types.setAttribute("class", "hidden");
@@ -158,13 +163,22 @@ function findKey(obj, el) {
 function loadDmgContainer(dmg_container, sorted_multipliers) {
     const categories = [4, 2, 0.5, 0.25, 0];
     categories.forEach(category => {
+        let div = document.createElement("div");
+        let label = document.createElement("label");
         let ul = document.createElement("ul");
-        ul.innerHTML = `x${category}`;
+
+        div.setAttribute("class", "multiplier-list");
+        label.innerHTML = `X${category}`;
+
         sorted_multipliers[category].forEach(type => {
-            let li = document.createElement("li");
-            li.innerHTML = capitalize(type);
-            ul.appendChild(li);
-        });        
-        dmg_container.appendChild(ul);
+            let img = document.createElement("img");
+            img.setAttribute("src", `../../resources/types/${type}.png`);
+            img.setAttribute("width", "20px");
+            ul.appendChild(img);
+        });
+
+        div.appendChild(label);
+        div.appendChild(ul);
+        dmg_container.appendChild(div);
     });
 }

@@ -915,34 +915,76 @@ footer img:hover {
 
 #index_page article #types {
     margin: -10px 0px 5px 0px;
-    text-shadow: 0px 0px 10px white;
-    text-align: center;
-    padding: 5px;
+    /* text-shadow: 0px 0px 10px white; */
+    /* padding: 5px; */
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: absolute;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 10px;   
-    top: 0px;
-    left: -10px; 
-    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    top: 5px;
+    left: -5px;
+    /* background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255)); */
 }
 
 #index_page article .hidden {
     display: none;
 }
 
-#index_page article img {
+#index_page article > img {
     width: 100px;
 }
 
 #index_page article div {
     display: flex;
-    justify-content: space-evenly;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+#index_page article div .multiplier-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    font-family:monospace;
+    border: 2px solid white;
+    border-right: none;
+    background: linear-gradient(45deg, rgb(82, 82, 82), rgb(165, 165, 165));
+    color: white;
+    transition: all 0.1s ease;
+}
+
+#index_page article div .multiplier-list:hover {
+    box-shadow: -10px 5px 10px 1px rgba(0, 0, 0, 0.568);
+    transform: translate(1px, -1.5px);
+    transition: all 0.1s ease;
+}
+
+#index_page article div .multiplier-list:first-child {
+    border-radius: 5px 0px 0px 5px;
+}
+
+#index_page article div .multiplier-list:last-child {
+    border-radius: 0px 5px 5px 0px;
+    border-right: 2px solid white;
+}
+
+#index_page article div label {
+    margin: 0px 5px;
 }
 
 #index_page article div ul {
     margin: 0px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#index_page article div ul img {
+    transition: all 0.1s ease;
+}
+
+#index_page article div ul img:hover {
+    transform: scale(1.5);
+    transition: all 0.1s ease;
 }
 /*!***********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/nav_box.css ***!
