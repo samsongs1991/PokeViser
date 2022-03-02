@@ -6,7 +6,7 @@
 import { capitalize } from './helpers'
 
 // Cache of pokemon data
-import { POKEMON_NAMES, SELECTED_POKEMON } from './store.js'
+import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
 // ====================================================
 // ===================== M A I N ======================
@@ -50,6 +50,20 @@ function loadIndexPageStructure() {
     for(let id in SELECTED_POKEMON.selection) {
         let article = document.createElement("article");
         article.setAttribute("id", id);
+
+        article.addEventListener("click", () => {
+            let p = article.getElementsByTagName("p").namedItem("types");
+            if(p.classList.contains("hidden")) {
+                let type1 = POKEMON_NAMES[article.id].types[0];
+                let type2 = POKEMON_NAMES[article.id].types[1];
+                type2 = type2 ? type2 : type1;
+                article.setAttribute("style", `background: linear-gradient(45deg, ${TYPES[type1]}, ${TYPES[type2]}`);
+            } else {
+                article.setAttribute("style", "background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255))");
+            }
+            p.classList.toggle("hidden");
+        });
+        
         if(count < 3) {
             row1.appendChild(article);
         } else {
@@ -66,14 +80,20 @@ function loadArticles() {
     articles.forEach(article => {
         let name = document.createElement("p");
         let img = document.createElement("img");
+        let types = document.createElement("p");
         let dmg_multiplier = document.createElement("div");
         
         name.innerHTML = capitalize(POKEMON_NAMES[article.id].name);
+        types.innerHTML = POKEMON_NAMES[article.id].types.map(el => capitalize(el)).join(" / ");
+
+        types.setAttribute("id", "types");
+        types.setAttribute("class", "hidden");
         img.setAttribute("src", POKEMON_NAMES[article.id].sprite_url);
         img.setAttribute("alt", `Image of ${POKEMON_NAMES[article.id].name}`);
         
         article.appendChild(name);
         article.appendChild(img);
+        article.appendChild(types);
         article.appendChild(dmg_multiplier);
     });
 }

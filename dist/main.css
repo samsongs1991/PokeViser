@@ -875,11 +875,12 @@ footer img:hover {
 #index_page #instructions p {
     width: 92%;
     padding: 20px;
-    background-color: white;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     border: 1px solid black;
     border-radius: 15px;
     margin: 0px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    box-shadow: 0px 0px 20px 5px rgba(46, 212, 253, 0.5);
 }
 
 #index_page section {
@@ -891,16 +892,47 @@ footer img:hover {
 }
 
 #index_page article {
-    background-color: white;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     width: 30%;
     border: 1px solid black;
     border-radius: 15px;
     box-sizing: border-box;
+    transition: all 0.5s ease;
+    position: relative;
 }
 
-#index_page article p {
+#index_page article:hover {
+    box-shadow: 0px 0px 20px 5px rgb(0, 0, 0, 0.5);
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+#index_page article p:first-child {
     margin: 10px 0px 0px 0px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#index_page article #types {
+    margin: -10px 0px 5px 0px;
+    text-shadow: 0px 0px 10px white;
+    text-align: center;
+    padding: 5px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 10px;   
+    top: 0px;
+    left: -10px; 
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+}
+
+#index_page article .hidden {
+    display: none;
+}
+
+#index_page article img {
+    width: 100px;
 }
 
 #index_page article div {
