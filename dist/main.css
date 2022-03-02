@@ -859,7 +859,6 @@ footer img:hover {
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/index_page.css ***!
   \**************************************************************************************************************/
 #index_page {
-    margin-top: 75px;
     display: flex;
     flex-direction: column;
 }
@@ -874,32 +873,44 @@ footer img:hover {
 }
 
 #index_page #instructions p {
-    width: 50%;
+    width: 92%;
     padding: 20px;
     background-color: white;
     border: 1px solid black;
     border-radius: 15px;
+    margin: 0px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #index_page section {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     text-align: center;
+    margin-top: 15px;
 }
 
 #index_page article {
     background-color: white;
     width: 30%;
-    margin: 10px;
     border: 1px solid black;
     border-radius: 15px;
     box-sizing: border-box;
 }
 
+#index_page article p {
+    margin: 10px 0px 0px 0px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 #index_page article div {
     display: flex;
     justify-content: space-evenly;
+}
+
+#index_page article div ul {
+    margin: 0px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 /*!***********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/nav_box.css ***!
