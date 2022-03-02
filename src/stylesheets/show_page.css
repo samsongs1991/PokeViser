@@ -1,16 +1,13 @@
 #show_page {
     display: flex;
     justify-content: center;
+    margin-top: -10px;
 }
 
 #stats_container {
     display: flex;
     flex-direction: column;
-    width: 1050px;
-    height: 100%;
     align-items: center;
-    margin-top: 70px;
-    padding: 0px;
 }
 
 #stats_container section {
@@ -28,7 +25,7 @@
     height: 450px;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     border-radius: 20% 20% 20% 20%;
-    margin: 25px 40px 25px 40px;
+    margin: 20px 35px 20px 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,16 +64,14 @@
     font-size: 50px;
     background-color: white;
     border-radius: 100%;
-    margin: 90px 0px 0px 0px;
-    padding: 0px;
     opacity: 0.5;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     border: none;
-    transition: all 0.1s ease;
 }
 
 #prev:hover, #next:hover {
     opacity: 0.85;
+    cursor: pointer;
 }
 
 #prev:active, #next:active {
