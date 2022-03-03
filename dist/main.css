@@ -307,6 +307,7 @@ header {
     justify-content: space-between;
     opacity: 1.0;
     color: white;
+    z-index: 3;
 }
 
 #logo {
@@ -345,6 +346,7 @@ footer {
     color: white;
     flex-direction: column;
     text-shadow: 0px 0px 10px rgb(255, 255, 255);
+    z-index: 3;
 }
 
 footer ul {
@@ -861,26 +863,83 @@ footer img:hover {
 #index_page {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #index_page #instructions {
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    text-align: center;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    top: 0px;
+    transition: all 0.3s;
+}
+
+#index_page #instructions.hidden {
+    opacity: 0;
+    transform: translateY(-250px) scale(0.1);
+    transition: all 0.6s ease;
+    z-index: 0;
 }
 
 #index_page #instructions p {
-    width: 92%;
-    padding: 20px;
-    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
-    border: 1px solid black;
-    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 400px;
+    padding: 50px;
     margin: 0px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    box-shadow: 0px 0px 20px 5px rgba(46, 212, 253, 0.5);
+    border: 3px solid white;
+    border-radius: 15px;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    opacity: 0.95;
+    z-index: 3;
+}
+
+#index_page button {
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    font-size: 30px;
+    font-weight: bold;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+#index_page button:hover {
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5);
+}
+
+#index_page button.active {
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+#index_page button.active:hover {
+    color: red;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5);
+}
+
+#index_page button:active {
+    transform: scale(0.9);
+}
+
+#index_page #index_container {
+    width: 70%;
 }
 
 #index_page section {
@@ -894,7 +953,7 @@ footer img:hover {
 #index_page article {
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     width: 30%;
-    border: 1px solid black;
+    border: none;
     border-radius: 15px;
     box-sizing: border-box;
     transition: all 0.5s ease;
@@ -915,15 +974,11 @@ footer img:hover {
 
 #index_page article #types {
     margin: -10px 0px 5px 0px;
-    /* text-shadow: 0px 0px 10px white; */
-    /* padding: 5px; */
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: absolute;
-    /* border: 1px solid black; */
     border-radius: 10px;   
     top: 5px;
     left: -5px;
-    /* background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255)); */
 }
 
 #index_page article .hidden {
@@ -931,7 +986,7 @@ footer img:hover {
 }
 
 #index_page article > img {
-    width: 100px;
+    width: 150px;
 }
 
 #index_page article div {
@@ -996,6 +1051,7 @@ footer img:hover {
     display: flex;
     flex-direction: column;
     background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));    
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
 

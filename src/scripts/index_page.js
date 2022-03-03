@@ -8,6 +8,9 @@ import { capitalize } from './helpers'
 // Cache of pokemon data
 import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
+// To render nav box
+import { loadNavBox } from './nav_box'
+
 // ====================================================
 // ===================== M A I N ======================
 // ================== E X P O R T S ===================
@@ -15,6 +18,7 @@ import { POKEMON_NAMES, TYPES, SELECTED_POKEMON } from './store.js'
 
 export function loadIndexPage() {
     loadIndexPageStructure();
+    loadNavBox();
     loadArticles();
     loadDmgMultipliers();
 }
@@ -33,14 +37,25 @@ function loadIndexPageStructure() {
     const instructions = document.createElement("div");
     const text = document.createElement("p");
     const index_container = document.createElement("div");
+    const button = document.createElement("button");
     const row1 = document.createElement("section");
     const row2 = document.createElement("section");
 
     instructions.setAttribute("id", "instructions");
+    instructions.setAttribute("class", "hidden");
+    index_container.setAttribute("id", "index_container");
 
-    text.innerHTML = "Each card shows how much damage the Pokemon receives from which attack types. If an attack type is not shown, that Pokemon receives x1 damage from that attack type.";
+    text.innerHTML = "Each card shows how much damage a Pokemon receives from certain attack types. If an attack type is not shown, that Pokemon receives x1 damage from that attack type.";
+    button.innerHTML = "+";
+
+    button.addEventListener("click", () => {
+        let el = document.getElementById("instructions");
+        el.classList.toggle("hidden");
+        button.classList.toggle("active");
+    });
 
     main.appendChild(instructions);
+    main.appendChild(button);
     main.appendChild(index_container);
     instructions.appendChild(text);
     index_container.appendChild(row1);

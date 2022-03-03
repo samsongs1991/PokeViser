@@ -3,6 +3,7 @@ header {
     justify-content: space-between;
     opacity: 1.0;
     color: white;
+    z-index: 3;
 }
 
 #logo {
