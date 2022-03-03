@@ -50,19 +50,19 @@ function items() {
     return {
         1: {
             "type": "show",
-            "src": "./resources/graph.png", 
+            "src": "resources/graph.png", 
             "url": loadShowPage,
             "text": "Individual Stats", 
         }, 
         2: {
             "type": "index",
-            "src": "./resources/sword.png", 
+            "src": "resources/sword.png", 
             "url": loadIndexPage,
             "text": "Damage Relations", 
         }, 
         3: {
             "type": "size",
-            "src": "./resources/human.png", 
+            "src": "resources/human.png", 
             "url": loadSizePage,
             "text": "Size Comparison", 
         }

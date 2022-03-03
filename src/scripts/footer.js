@@ -36,25 +36,25 @@ function items() {
     return {
         1: {
             "type": "portfolio",
-            "src": "./resources/portfolio.png", 
+            "src": "resources/portfolio.png", 
             "url": "",
             "text": "Sam's Portfolio", 
         }, 
         2: {
             "type": "github",
-            "src": "./resources/github.png", 
+            "src": "resources/github.png", 
             "url": "https://github.com/samsongs1991/PokeViser",
             "text": "Github", 
         }, 
         3: {
             "type": "linkedin",
-            "src": "./resources/linkedin.png", 
+            "src": "resources/linkedin.png", 
             "url": "https://www.linkedin.com/in/samsongs1991/",
             "text": "LinkedIn", 
         }, 
         4: {
             "type": "angellist",
-            "src": "./resources/angellist.png", 
+            "src": "resources/angellist.png", 
             "url": "https://angel.co/u/samsongs",
             "text": "AngelList", 
         }, 

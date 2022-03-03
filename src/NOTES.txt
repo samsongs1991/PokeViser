@@ -1,3 +1,2 @@
-BUG - "Selections" box disappears after clicking "Home" then going to searchpage
 Refactor loadSizePage
 Add mediaqueries for showpage, indexpage, sizepage, navbox

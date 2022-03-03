@@ -38,7 +38,7 @@ export function loadTitlePage() {
     title_container.setAttribute("id", "title_container");
     logo.setAttribute("class", "hidden");
     logo.setAttribute("id", "logo");
-    logo.setAttribute("src", "resources/pokeviser_img.png");
+    logo.setAttribute("src", "resources/logo.png");
     logo.setAttribute("alt", "Poke Viser logo");
 
     ball.setAttribute("id", "ball");
@@ -97,12 +97,14 @@ export function loadTitlePage() {
     }
 
     // Cache pokemon data
-    loadInitialState(POKEMON_NAMES);
-    cachePokemonInitialState(POKEMON_NAMES);
-    cachePokemonHtWt(POKEMON_NAMES);
-    cachePokemonStats(POKEMON_NAMES);
-    cachePokemonDmgRelations(POKEMON_NAMES);
-    cachePokemonFlavors(POKEMON_NAMES);
+    if(POKEMON_NAMES.size === 0) {
+        loadInitialState(POKEMON_NAMES);
+        cachePokemonInitialState(POKEMON_NAMES);
+        cachePokemonHtWt(POKEMON_NAMES);
+        cachePokemonStats(POKEMON_NAMES);
+        cachePokemonDmgRelations(POKEMON_NAMES);
+        cachePokemonFlavors(POKEMON_NAMES);
+    }
 }
 
 export function goToSearchPage() {

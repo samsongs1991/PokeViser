@@ -101,7 +101,7 @@ function loadArticles() {
         name.innerHTML = capitalize(POKEMON_NAMES[article.id].name);
         POKEMON_NAMES[article.id].types.forEach(type => {
             let img = document.createElement("img");
-            img.setAttribute("src", `../../resources/types/${type}.png`);
+            img.setAttribute("src", `resources/types/${type}.png`);
             img.setAttribute("height", "40px");
             types.appendChild(img);
         });
@@ -187,7 +187,7 @@ function loadDmgContainer(dmg_container, sorted_multipliers) {
 
         sorted_multipliers[category].forEach(type => {
             let img = document.createElement("img");
-            img.setAttribute("src", `../../resources/types/${type}.png`);
+            img.setAttribute("src", `resources/types/${type}.png`);
             img.setAttribute("width", "20px");
             ul.appendChild(img);
         });

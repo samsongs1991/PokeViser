@@ -79,7 +79,7 @@ function loadTrainer() {
 
     tile.setAttribute("class", "size_tile");
     human.setAttribute("class", "trainer");
-    human.setAttribute("src", "./resources/trainer.png");
+    human.setAttribute("src", "resources/trainer.png");
     human.setAttribute("height", IMAGE_HTS.trainer);
     
     name.innerHTML = "Trainer";
