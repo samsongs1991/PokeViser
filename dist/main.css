@@ -843,12 +843,12 @@ footer img:hover {
 /*!*************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/size_page.css ***!
   \*************************************************************************************************************/
-#size_page > div {
+#size_page > div:first-child {
     display: flex;
     justify-content: center;
     position: absolute;
     top: 100px;
-    width: 100%;
+    width: 95%;
 }
 
 #size_page input {

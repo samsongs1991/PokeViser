@@ -1,3 +1,2 @@
-Refactor loadSizePage
 Refactor navbox into the navbar
 Add mediaqueries for showpage, indexpage, sizepage, navbox

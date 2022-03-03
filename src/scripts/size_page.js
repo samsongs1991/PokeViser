@@ -8,6 +8,9 @@ import { capitalize, convertHeight } from './helpers'
 // Cache of pokemon data
 import { POKEMON_NAMES, SELECTED_POKEMON } from './store.js'
 
+// To render the nav box
+import { loadNavBox } from './nav_box'
+
 // ====================================================
 // =============== C O N S T A N T S ==================
 // ====================================================
@@ -22,8 +25,10 @@ const IMAGE_HTS = { trainer: 400 };
 
 export function loadSizePage() {
     loadSizePageStructure();
+    loadNavBox();
     loadTrainer();
     loadSprites();
+    setDefaultMagnify();
 }
 
 // ====================================================
@@ -44,7 +49,7 @@ function loadSizePageStructure() {
     size_container.setAttribute("id", "size_container");
     slider.setAttribute("id", "slider");
     slider.setAttribute("type", "range");
-    slider.setAttribute("min", 10);
+    slider.setAttribute("min", 5);
     slider.setAttribute("max", 150);
     slider.setAttribute("value", 100);
 
@@ -123,4 +128,34 @@ function magnify(percent) {
         let new_pokemon_ht = IMAGE_HTS[poke.id] * (percent / 100);
         poke.height = new_pokemon_ht;
     });
+}
+
+// Sets the slider based on largest sprite so that all sprites can be seen
+function setDefaultMagnify() {
+    const trainer = document.getElementsByClassName("trainer")[0];
+    const pokemon = document.getElementsByClassName("pokemon");
+    let arr = [trainer];
+    for(let i = 0; i < pokemon.length; i++) {
+        arr.push(pokemon[i]);
+    }
+    const px = findLargestHeight(arr);
+    const percent = (trainer.height / px) * 100;
+    magnify(percent);
+    
+    const slider = document.getElementById("slider");
+    slider.setAttribute("value", percent);
+
+    console.log(percent);
+}
+
+// Returns largest el ht from array
+function findLargestHeight(arr) {
+    let max = 0;
+    for(let i = 0; i < arr.length; i++) {
+        let el = arr[i];
+        if(el.height > max) {
+            max = el.height;
+        }
+    }
+    return max;
 }
