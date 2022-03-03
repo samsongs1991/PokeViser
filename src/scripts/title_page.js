@@ -56,7 +56,7 @@ export function loadTitlePage() {
     
     // Set text describing to users how to use the website
     instructions.innerHTML = "INSTRUCTIONS";
-    instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar to input the name of a Pokemon. Use the filters to tell the auto suggestor to only display Pokemon of a type you have selected. You can select up to 6 Pokemon to view and when you are ready click the VIEW STATS button to learn all about the Pokemon you selected.";
+    instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar find Pokemon. Use the filters to show Pokemon of a specific type. Choose up to 6 Pokemon and click the VIEW button to learn about your selected Pokemon.";
     
     // Set ability to click on title & center circle --> leads to search page
     logo.addEventListener("click", goToSearchPage);
