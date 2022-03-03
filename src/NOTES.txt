@@ -1,4 +1,3 @@
-Refactor loadSizePage
-BUG - Slow load time when clicking on "Poke Search"
 BUG - "Selections" box disappears after clicking "Home" then going to searchpage
-Add mediaqueries to css in searchpage, showpage, navbox
+Refactor loadSizePage
+Add mediaqueries for showpage, indexpage, sizepage, navbox
