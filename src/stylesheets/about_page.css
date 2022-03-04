@@ -98,6 +98,11 @@
     z-index: -1;
 }
 
-#about_page marquee img.sprite {
+#about_page marquee .sprite {
     height: 200px;
+    transition: opacity 1s ease-in-out;
+}
+
+#about_page marquee .hidden {
+    opacity: 0;
 }

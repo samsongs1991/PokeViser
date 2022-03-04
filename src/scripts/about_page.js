@@ -62,7 +62,19 @@ export function loadAboutPage() {
     p3.innerHTML = "Thank you!";
     
     const limitedParade = limitFn(createParade);
-    h1.addEventListener("click", limitedParade);
+    for(let i = 0; i < 5; i++) {
+        limitedParade();
+    }
+
+    setTimeout(() => {
+        const sprites = document.getElementsByClassName("sprite");
+        sprites.forEach(sprite => sprite.classList.toggle("hidden"));
+    }, 3000);
+    
+    h1.addEventListener("click", () => {
+        const sprites = document.getElementsByClassName("sprite");
+        sprites.forEach(sprite => sprite.classList.toggle("hidden"));
+    });
     p1.addEventListener("click", () => img.setAttribute("style", "opacity: 1; z-index: 2;"));
     img.addEventListener("click", () => img.setAttribute("style", "opacity: 0; z-index: -1; transition: all 2s ease;"));
     
@@ -82,12 +94,12 @@ export function loadAboutPage() {
 
 function createParade() {
     const marquee = document.createElement("marquee");
-    marquee.setAttribute("scrollamount", Math.floor(Math.random() * 10) + 3);
+    marquee.setAttribute("scrollamount", Math.floor(Math.random() * 12) + 3);
     for(let i = 0; i < 12; i++) {
         let rand = Math.floor((Math.random() * 898) + 1);
         let img = document.createElement("img");
         img.setAttribute("src", POKEMON_NAMES[rand].sprite_url);
-        img.setAttribute("class", "sprite");
+        img.setAttribute("class", "sprite hidden");
         marquee.appendChild(img);
     }
     const main = document.querySelector("main");
