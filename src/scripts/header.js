@@ -4,6 +4,9 @@
 
 import { loadTitlePage, goToSearchPage } from './title_page'
 
+import { loadAboutPage } from './about_page'
+
+
 // ====================================================
 // ===================== M A I N ======================
 // ================== E X P O R T S ===================
@@ -36,6 +39,7 @@ export function loadHeader() {
     // Set ability for navbar elements to be clickable
     logo.addEventListener("click", loadTitlePage);
     search.addEventListener("click", goToSearchPage);
+    about.addEventListener("click", loadAboutPage);
         
     // Set text of navbar elements
     search.innerHTML = "Search";

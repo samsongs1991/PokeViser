@@ -1,0 +1,37 @@
+#about_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#about_page section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border: 5px solid black;
+    border-radius: 30px;
+    padding: 20px 50px;
+}
+
+#about_page h1 {
+    text-align: center;
+}
+
+#about_page article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#about_page p {
+    width: 600px;
+}
+
+#about_page a {
+    color: blue;
+}
+
+#about_page img {
+    height: 200px;
+}
