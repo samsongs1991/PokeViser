@@ -1127,37 +1127,103 @@ footer img:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 #about_page section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: white;
-    border: 5px solid black;
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+    box-shadow:0px 0px 30px 10px rgb(31, 108, 128);
+    border: 5px solid white;
     border-radius: 30px;
-    padding: 20px 50px;
+    width: 50%;
+    box-sizing: border-box;
+    height: 430px;
+    width: 570px;
+    position: relative;
 }
 
 #about_page h1 {
     text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: 10px;
+    padding-bottom: 0px;
+}
+
+#about_page h1:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+#about_page h1:active {
+    transform: scale(0.95);
 }
 
 #about_page article {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #about_page p {
-    width: 600px;
+    width: 75%;
+    text-indent: 40px;
+}
+
+#about_page p:last-child {
+    text-indent: 0px;
+}
+
+#about_page span {
+    color: blue;
+    font-weight: bold;
+}
+
+#about_page span:hover {
+    cursor: pointer;
+    position: relative;
+    top: -2px;
+    z-index: 1;
 }
 
 #about_page a {
     color: blue;
 }
 
-#about_page img {
+#about_page a:hover {
+    position: relative;
+    top: -2px;
+}
+
+#about_page #photo {
+    height: 420px;
+    border: 5px solid white;
+    border-radius: 30px;
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 3s ease-in;
+}
+
+#about_page #photo:hover {
+    cursor: pointer;
+}
+
+#about_page marquee {
+    height: 200px;
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: -180px;
+    z-index: -1;
+}
+
+#about_page marquee img.sprite {
     height: 200px;
 }
 /*!*************************************************************************************************************************************!*\

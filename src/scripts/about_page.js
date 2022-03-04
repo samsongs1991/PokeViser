@@ -2,7 +2,7 @@
 // ================= I M P O R T S ====================
 // ====================================================
 
-
+import { POKEMON_NAMES } from './store'
 
 // ====================================================
 // ===================== M A I N ======================
@@ -21,23 +21,33 @@ export function loadAboutPage() {
     const p1 = document.createElement("p");
     const p2 = document.createElement("p");
     const p3 = document.createElement("p");
+    const nephew = document.createElement("span");
     const pokeapi = document.createElement("a");
     const github = document.createElement("a");
     const linkedin = document.createElement("a");
     const angellist = document.createElement("a");
-
+    
     img.setAttribute("src", "resources/jihoon+me.jpg");
+    img.setAttribute("id", "photo");
     pokeapi.setAttribute("href", "https://www.pokeapi.co");
-    pokeapi.innerHTML = "PokeApi";
+    pokeapi.setAttribute("target", "_blank");
     github.setAttribute("href", "https://www.github.com/samsongs1991/pokeviser");
-    github.innerHTML = "Github";
+    github.setAttribute("target", "_blank");
     linkedin.setAttribute("href", "https://www.linkedin.com/in/samsongs1991/");
-    linkedin.innerHTML = "LinkedIn";
+    linkedin.setAttribute("target", "_blank");
     angellist.setAttribute("href", "https://angel.co/u/samsongs");
+    angellist.setAttribute("target", "_blank");
+
+    nephew.innerHTML = "nephew";
+    pokeapi.innerHTML = "PokeApi";
+    github.innerHTML = "Github";
+    linkedin.innerHTML = "LinkedIn";
     angellist.innerHTML = "AngelList";
     
     h1.innerHTML = "About Poke Viser";
-    p1.innerHTML = "I dedicate Poke Viser to my nephew who inspires me to be a better person everyday. He has endless curiosity for all things Pokemon and I love connecting with him through the wonderful world that Nintendo has imagined. I want to cherish what little time I have with my loved ones through these little connections. That's all we really have. Please enjoy exploring Pokemon through the Poke Viser.";
+    p1.innerHTML = "I dedicate Poke Viser to my ";
+    p1.appendChild(nephew);
+    p1.innerHTML = p1.innerHTML + " who inspires me to be a better person everyday. He has endless curiosity for all things Pokemon and I love connecting with him through the wonderful world that Nintendo has imagined. I want to cherish the time that I have with my loved ones through these little connections. That's all we really have. Please enjoy exploring Pokemon through the Poke Viser.";
 
     p2.innerHTML = "This web application was built using Vanilla JavaScript and ";
     p2.appendChild(pokeapi);
@@ -50,14 +60,19 @@ export function loadAboutPage() {
     p2.innerHTML = p2.innerHTML + ".";
     
     p3.innerHTML = "Thank you!";
-
+    
+    const limitedParade = limitFn(createParade);
+    h1.addEventListener("click", limitedParade);
+    p1.addEventListener("click", () => img.setAttribute("style", "opacity: 1; z-index: 2;"));
+    img.addEventListener("click", () => img.setAttribute("style", "opacity: 0; z-index: -1; transition: all 2s ease;"));
+    
     main.appendChild(section);
+    main.appendChild(img);
     section.appendChild(h1);
     section.appendChild(article);
     article.appendChild(p1);
     article.appendChild(p2);
     article.appendChild(p3);
-    article.appendChild(img);
 }
 
 // ====================================================
@@ -65,4 +80,26 @@ export function loadAboutPage() {
 // ================== M E T H O D S ===================
 // ====================================================
 
+function createParade() {
+    const marquee = document.createElement("marquee");
+    marquee.setAttribute("scrollamount", Math.floor(Math.random() * 10) + 3);
+    for(let i = 0; i < 12; i++) {
+        let rand = Math.floor((Math.random() * 898) + 1);
+        let img = document.createElement("img");
+        img.setAttribute("src", POKEMON_NAMES[rand].sprite_url);
+        img.setAttribute("class", "sprite");
+        marquee.appendChild(img);
+    }
+    const main = document.querySelector("main");
+    main.appendChild(marquee);
+}
 
+function limitFn(cb) {
+    let limit = 5;
+    return function() {
+        if(limit !== 0) {
+            cb();
+            limit--;
+        }
+    }
+}

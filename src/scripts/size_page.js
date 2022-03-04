@@ -144,8 +144,6 @@ function setDefaultMagnify() {
     
     const slider = document.getElementById("slider");
     slider.setAttribute("value", percent);
-
-    console.log(percent);
 }
 
 // Returns largest el ht from array
