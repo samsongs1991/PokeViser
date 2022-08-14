@@ -68,24 +68,6 @@ export function loadTitlePage() {
     red.append(logo);
     const white = document.getElementById("white");
     white.append(instructions, instructions_text);
-    // body.appendChild(title_container);
-    // title_container.appendChild(logo);
-
-    // title_container.appendChild(instructions);
-    // title_container.appendChild(instructions_text);
-
-    // On window resize, below certain window.innerHeight remove instructions
-    // window.onresize = () => {
-    //     if(window.innerHeight < 300) {
-    //         if(isChild(title_container, instructions)) {
-    //             title_container.removeChild(instructions);
-    //             title_container.removeChild(instructions_text);
-    //         }
-    //     } else {
-    //         title_container.appendChild(instructions);
-    //         title_container.appendChild(instructions_text);
-    //     }
-    // }
 
     // Cache pokemon data
     if(POKEMON_NAMES.size === 0) {
