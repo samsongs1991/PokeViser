@@ -1,8 +1,7 @@
-# Poke Viser
+# [PokeViser](https://samsongs1991.github.io/PokeViser)
 ## Web Application
 
-* Live Site
-    - https://samsongs1991.github.io/PokeViser/
+* [Live Site](https://samsongs1991.github.io/PokeViser)
 
 * Core functionality
     - Display stats of selected Pokemon.
