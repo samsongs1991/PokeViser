@@ -36,8 +36,8 @@ function items() {
     return {
         1: {
             "type": "portfolio",
-            "src": "https://www.iamsamsong.com",
-            "url": "",
+            "src": "resources/portfolio.png",
+            "url": "https://www.iamsamsong.com",
             "text": "Sam's Portfolio",
         },
         2: {
