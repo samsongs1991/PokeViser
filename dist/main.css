@@ -24,8 +24,12 @@ a {
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/title_page.css ***!
   \**************************************************************************************************************/
 #pokeball {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 #title_container {
@@ -35,100 +39,122 @@ a {
     justify-content: space-between;
 }
 
-#red, #black, #white {
-    position: absolute;
-    opacity: 1;
-    z-index: -1;
-    top: 0;
-}
-
 #red {
-    left: 0px;
-    top: 0px;
-    height: 45vh;
-    width: 100%;
     background-image: linear-gradient(45deg, rgb(49, 0, 0), rgb(255, 35, 35));
+    height: 50vh;
+    width: 100vw;
+    position: absolute;
+    top: 0px;
 }
 
 #black {
-    z-index: -2;
-    left: 0px;
-    top: 0px;
-    height: 100%;
-    width: 100%;     
     background-image: linear-gradient(45deg, rgb(0, 0, 0), rgb(44, 44, 44));
+    height: 80px;
+    width: 100vw;
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #white {
-    left:0px;
-    top: 55vh;
-    height: 45vh;
-    width: 100%;    
     background-image: linear-gradient(45deg, rgb(37, 37, 37), rgb(255, 255, 255));
-    box-shadow: 0px 0px 20px 10px black;
+    height: 50vh;
+    width: 100vw;
+    position: absolute;
+    bottom: 0px;
 }
 
-@media only screen {
+#b_circle {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, rgb(0, 0, 0), rgb(53, 53, 53));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#w_circle {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, rgb(59, 59, 59), rgb(255, 255, 255));
+    transition: all 0.70s ease;
+    box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
+}
+
+#w_circle:hover {
+    height: 240px;
+    width: 240px;
+    cursor: pointer;
+    box-shadow: 0px 0px 200px 30px red;
+}
+
+/* @media only screen {
     #title_container > #logo {
         cursor: pointer;
         opacity: 0;
-        transition: 
-            opacity 1s ease-in, 
+        transition:
+            opacity 1s ease-in,
             width 0.2s ease-out;
         width: auto;
         height: 50vh;
     }
-    
+
     #title_container > #logo.load {
         opacity: 1;
     }
-    
+
     #title_container > #logo.load:hover {
         opacity: 0.7;
         transition: opacity 0.2s ease-out;
     }
-}
+} */
 
-@media only screen and (min-height: 300px) {
+/* @media only screen and (min-height: 300px) {
     #title_container > #logo {
         cursor: pointer;
         opacity: 0;
-        transition: 
-            opacity 1s ease-in, 
+        transition:
+            opacity 1s ease-in,
             width 0.2s ease-out;
         width: auto;
         height: 75px;
         margin-top: 5vh;
     }
-    
+
     #title_container > #logo.load {
         opacity: 1;
     }
-    
+
     #title_container > #logo.load:hover {
         opacity: 0.7;
         transition: opacity 0.2s ease-out;
     }
-    
+
     #title_container > #instructions_title {
         margin-top: 10px;
         font-size: 32px;
         cursor: pointer;
     }
-    
+
     #title_container > #instructions_title:hover {
         font-weight: bold;
     }
-    
+
     #title_container > #instructions_text {
         width: 500px;
         margin-top: -30px;
-        text-align: center; 
-        transition: 
-            opacity 0.5s ease-in, 
+        text-align: center;
+        transition:
+            opacity 0.5s ease-in,
             text-shadow 0.2s ease-in;
     }
-    
+
     #instructions_title, #instructions_text {
         z-index: 3;
         transition: text-shadow 0.2s ease-in;
@@ -139,53 +165,53 @@ a {
         transition: text-shadow 0.2s ease-in;
         text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
     }
-    
+
     .hide {
         transition: opacity 0.5s ease-in;
         opacity: 0;
     }
-}
+} */
 
-@media only screen and (min-height: 400px) {
+/* @media only screen and (min-height: 400px) {
     #title_container > #logo {
         cursor: pointer;
         opacity: 0;
-        transition: 
-            opacity 1s ease-in, 
+        transition:
+            opacity 1s ease-in,
             width 0.2s ease-out;
         width: auto;
         height: 20vh;
         margin-top: 10vh;
     }
-    
+
     #title_container > #logo.load {
         opacity: 1;
     }
-    
+
     #title_container > #logo.load:hover {
         opacity: 0.7;
         transition: opacity 0.2s ease-out;
     }
-    
+
     #title_container > #instructions_title {
         margin-top: 15vh;
         font-size: 32px;
         cursor: pointer;
     }
-    
+
     #title_container > #instructions_title:hover {
         font-weight: bold;
     }
-    
+
     #title_container > #instructions_text {
         width: 500px;
         margin-top: 0;
-        text-align: center; 
-        transition: 
-            opacity 0.5s ease-in, 
+        text-align: center;
+        transition:
+            opacity 0.5s ease-in,
             text-shadow 0.2s ease-in;
     }
-    
+
     #instructions_title, #instructions_text {
         z-index: 3;
         transition: text-shadow 0.2s ease-in;
@@ -196,18 +222,18 @@ a {
         transition: text-shadow 0.2s ease-in;
         text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
     }
-    
+
     .hide {
         transition: opacity 0.5s ease-in;
         opacity: 0;
     }
-}
+} */
 
-@media only screen and (min-height: 750px) {
+/* @media only screen and (min-height: 750px) {
     #ball {
         position: relative;
     }
-    
+
     #b_circle {
         position: absolute;
         top: 25px;
@@ -217,7 +243,7 @@ a {
         border-radius: 50%;
         background-image: linear-gradient(45deg, rgb(0, 0, 0), rgb(53, 53, 53));
     }
-    
+
     #w_circle {
         position: absolute;
         top: 50px;
@@ -230,7 +256,7 @@ a {
         box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
         z-index: 1;
     }
-    
+
     #w_circle:hover {
         top: 57px;
         left: -120px;
@@ -239,49 +265,49 @@ a {
         cursor: pointer;
         box-shadow: 0px 0px 200px 30px red;
     }
-    
+
     #title_container > #logo {
         cursor: pointer;
         opacity: 0;
-        transition: 
-            opacity 1s ease-in, 
+        transition:
+            opacity 1s ease-in,
             width 0.2s ease-out;
         width: 500px;
         height: 124px;
         margin-top: 10vh;
     }
-    
+
     #title_container > #logo.load {
         opacity: 1;
     }
-    
+
     #title_container > #logo.load:hover {
         width: 515px;
         height: 124px;
-        transition: 
-            width 0.2s ease-out, 
+        transition:
+            width 0.2s ease-out,
             opacity 0.3s ease-in-out;
     }
-    
+
     #title_container > #instructions_title {
         margin-top: 45vh;
         font-size: 32px;
         cursor: pointer;
     }
-    
+
     #title_container > #instructions_title:hover {
         font-weight: bold;
     }
-    
+
     #title_container > #instructions_text {
         width: 500px;
         margin-top: -20px;
-        text-align: center; 
-        transition: 
-            opacity 0.5s ease-in, 
+        text-align: center;
+        transition:
+            opacity 0.5s ease-in,
             text-shadow 0.2s ease-in;
     }
-    
+
     #instructions_title, #instructions_text {
         z-index: 3;
         transition: text-shadow 0.2s ease-in;
@@ -292,12 +318,12 @@ a {
         transition: text-shadow 0.2s ease-in;
         text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
     }
-    
+
     .hide {
         transition: opacity 0.5s ease-in;
         opacity: 0;
     }
-}
+} */
 
 /*!**********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/header.css ***!

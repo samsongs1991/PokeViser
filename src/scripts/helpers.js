@@ -1,3 +1,9 @@
+// ====================================================
+// ================= I M P O R T S ====================
+// ====================================================
+
+import { goToSearchPage } from "./title_page";
+
 // ===============================
 // ==== CUSTOM HELPER METHODS ====
 // ===============================
@@ -10,12 +16,20 @@ export function createPokeball() {
     const black_background = document.createElement("div");
     const white_background = document.createElement("div");
 
+    const b_circle = document.createElement("div");
+    const w_circle = document.createElement("div");
+
+    b_circle.setAttribute("id", "b_circle");
+    w_circle.setAttribute("id", "w_circle");
+
+    w_circle.addEventListener("click", goToSearchPage);
+
     // Nest above css elements inside the body element
     const body = document.querySelector("body");
     body.appendChild(pokeball);
-    pokeball.appendChild(red_background);
-    pokeball.appendChild(black_background);
-    pokeball.appendChild(white_background);
+    pokeball.append(red_background, black_background, white_background);
+    black_background.append(b_circle);
+    b_circle.append(w_circle);
 
     // Set ids for css elements
     pokeball.setAttribute("id", "pokeball");
@@ -30,11 +44,11 @@ export function loadBackgroundVid() {
     const body = document.querySelector("body");
     const video = document.createElement("video");
     const source = document.createElement("source");
-    
+
     // Set up html structure
     body.appendChild(video);
     video.appendChild(source);
-    
+
     // Set attributes to play the mp4 file
     video.setAttribute("autoplay", "");
     video.setAttribute("muted", "");
@@ -86,7 +100,7 @@ export function capitalize(word) {
 // Returns number of keys in the object
 export function size(object) {
     let count = 0;
-    for(let k in object) { 
+    for(let k in object) {
         count++;
     }
     return count;
@@ -115,12 +129,12 @@ export function loadInitialState(cache) {
     for(let i = 1; i <= 898; i++) {
         cache[i] = {
             id: null,
-            name: null, 
-            height: null, 
-            weight: null, 
-            types: null, 
-            stats: null, 
-            species_url: null, 
+            name: null,
+            height: null,
+            weight: null,
+            types: null,
+            stats: null,
+            species_url: null,
             sprite_url: null,
             dmg_relations: null,
             flavor_texts: null,
@@ -183,8 +197,8 @@ export function cachePokemonStats(cache) {
                 let speed = temp[6];
                 cache[id].stats = {
                     hp: hp, speed: speed,
-                    atk: atk, sp_atk: sp_atk, 
-                    def: def, sp_def: sp_def, 
+                    atk: atk, sp_atk: sp_atk,
+                    def: def, sp_def: sp_def,
                 };
             }
         })
@@ -198,24 +212,24 @@ export function cachePokemonDmgRelations(cache) {
         .then(text => {
             let lines = text.split("\n");
             for(let i = 0; i < lines.length; i++) {
-                let data = lines[i].split("|");                
+                let data = lines[i].split("|");
                 let double = data[1].split(":")[1];
                 let half = data[2].split(":")[1];
                 let no = data[3].split(":")[1];
-                
+
                 double = double === undefined ? [] : double.split(" ");
                 half = half === undefined ? [] : half.split(" ");
                 no = no === undefined ? [] : no.split(" ");
-                
+
                 const type = data[0];
                 dmg_relations[type] = {
                     "double": double,
-                    "half": half, 
+                    "half": half,
                     "no": no,
                 };
-            }            
+            }
             for(let i = 1; i < cache.size; i++) {
-                cache[i]["dmg_relations"] = {}; 
+                cache[i]["dmg_relations"] = {};
                 cache[i].types.forEach(type => {
                     cache[i].dmg_relations[type] = dmg_relations[type];
                 });
