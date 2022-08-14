@@ -14,7 +14,7 @@ import { loadShowPage } from './show_page'
 // #############################################################################
 // Loads fetched data from pokeapi
 const POKEMON = { "size": 0 };
-function cachePokemon(cache) {    
+function cachePokemon(cache) {
     const first = 1;
     const last = 1;
     for(let i = first; i <= last; i++) {
@@ -38,14 +38,14 @@ function cachePokemon(cache) {
 export function loadMainSearchPage() {
     SELECTED_POKEMON.size = 0;
     SELECTED_POKEMON.selection = {};
-    
+
     const body = document.querySelector("body");
     const main = document.createElement("main");
 
     main.setAttribute("id", "searchpage");
-    
+
     body.appendChild(main);
-    
+
     loadFilterContainer();
     loadSearchContainer();
     loadSelectionContainer();
@@ -62,19 +62,14 @@ function loadFilterContainer() {
     const filter_container = document.createElement("section");
     const title = document.createElement("h3");
     const filter = document.createElement("form");
-    const button = document.createElement("button");
 
     filter_container.setAttribute("id", "filter_container");
     filter_container.setAttribute("title", "Choose a type of Pokemon to search for");
     title.innerHTML = "Filters";
-    button.innerHTML = "Apply";
-
-    button.addEventListener("click", e => handleBtn(e));
 
     searchpage.appendChild(filter_container);
     filter_container.appendChild(title);
     filter_container.appendChild(filter);
-    filter_container.appendChild(button);
 
     createFilterOptions(TYPES, filter);
 }
@@ -82,7 +77,6 @@ function loadFilterContainer() {
 function handleApplyFilters() {
     const filters_to_apply = getUserFilters();
     updateOptions(filters_to_apply);
-    signalUpdate();
 }
 
 function updateOptions(filters) {
@@ -91,7 +85,7 @@ function updateOptions(filters) {
     for(let i = 1; i <= POKEMON_NAMES.size; i++) {
         let types = POKEMON_NAMES[i].types;
         if(filters.length === 0 ||
-            filters.includes(types[0]) || 
+            filters.includes(types[0]) ||
             (types[1] && filters.includes(types[1]))) {
             let option = document.createElement("option");
             option.setAttribute("value", `#${i} ${capitalize(POKEMON_NAMES[i].name)}`);
@@ -100,13 +94,11 @@ function updateOptions(filters) {
     }
 }
 
-function signalUpdate() {
+function signalUpdate(type) {
     const input = document.getElementById("search_input");
-    const types = getUserFilters();
-    const i = Math.floor(Math.random() * types.length);
-    input.classList.add(types[i]);
-    window.setTimeout(() => {        
-        input.classList.remove(types[i]);
+    input.classList.add(type);
+    window.setTimeout(() => {
+        input.classList.remove(type);
     }, 450);
 }
 
@@ -116,13 +108,13 @@ function loadSearchContainer() {
     const search_container = document.createElement("section");
     const search_title = document.createElement("h3");
     const search_form = document.createElement("form");
-    
+
     search_container.setAttribute("id", "search_container");
     search_form.setAttribute("id", "search_form");
     search_form.setAttribute("autocomplete", "off");
-    
+
     search_title.innerHTML = "Search";
-    
+
     searchpage.appendChild(search_container);
     search_container.appendChild(search_title);
     search_container.appendChild(search_form);
@@ -145,15 +137,15 @@ function loadSearchButtons() {
     add_button.innerHTML = "Add";
     random_button.innerHTML = "Random";
     view_button.innerHTML = "View";
-    
+
     button_container.appendChild(add_button);
     button_container.appendChild(random_button);
     button_container.appendChild(view_button);
     search_form.appendChild(button_container)
-    
+
     add_button.addEventListener("click", e => handleBtn(e));
     random_button.addEventListener("click", e => handleBtn(e));
-    view_button.addEventListener("click", e => handleBtn(e)); 
+    view_button.addEventListener("click", e => handleBtn(e));
 }
 
 // Setup html dropdown in the search container
@@ -183,8 +175,6 @@ function handleBtn(e) {
         handleRandom();
     } else if(e.target.innerHTML === "View") {
         handleView();
-    } else if(e.target.innerHTML === "Apply") {
-        handleApplyFilters();
     } else if(e.target.innerHTML === "Clear") {
         handleClearSelection();
     }
@@ -228,7 +218,7 @@ function handleAdd() {
     } else {
         const value = search_input.value.split(" ");
         const id = parseInt(value[0].slice(1, value[0].length));
-        const name = value[1] ? value[1].toLowerCase() : null;  
+        const name = value[1] ? value[1].toLowerCase() : null;
         if(SELECTED_POKEMON.selection[id]) {
             displayError("Pokemon already selected");
         } else if(name && POKEMON_NAMES[id].name === name) {
@@ -251,8 +241,8 @@ function handleRandom() {
             random_pokemon = getValidRandomPokemon(SELECTED_POKEMON);
             value[0] = random_pokemon.id;
             value[1] = capitalize(random_pokemon.name);
-        }        
-        
+        }
+
         addToList(value);
     }
 }
@@ -313,7 +303,7 @@ function addToList(value) {
     let id = value[0];
     let name = value[1];
     SELECTED_POKEMON.selection[id] = name;
-    
+
     const item = document.createElement("li");
     item.setAttribute("id", name);
     item.addEventListener("click", () => {
@@ -334,7 +324,7 @@ function loadErrors() {
     search_container.appendChild(error_container);
 }
 
-// Remove error message for user if one already exists 
+// Remove error message for user if one already exists
 function errorAlreadyExists() {
     const error_container = document.getElementById("error_container");
     if(error_container.innerHTML !== "") {
@@ -349,7 +339,7 @@ function displayError(msg) {
     error_container.innerHTML = msg;
     setTimeout(() => {
         error_container.innerHTML = "";
-    }, 5000);  
+    }, 5000);
 }
 
 // Setup filter options in filter_container
@@ -365,15 +355,15 @@ function createFilterOptions(TYPES, form) {
         filter_option_label.innerHTML = capitalize(type);
 
         filter_option_label.addEventListener("click", () => {
-            filter_option.checked ? 
-            filter_option.checked = false :
-            filter_option.checked = true;
+            filter_option.checked = !filter_option.checked;
+            handleApplyFilters();
+            signalUpdate(type);
         })
 
         li.appendChild(filter_option);
         li.appendChild(filter_option_label);
         list.appendChild(li);
-        
+
         if(list.children.length >= 6) {
             form.appendChild(list);
             list = document.createElement("ul")
@@ -390,6 +380,6 @@ function getUserFilters() {
             filters_to_apply.push(box.value);
         }
     });
-    
+
     return filters_to_apply;
 }
