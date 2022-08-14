@@ -134,18 +134,6 @@ a {
         opacity 0.3s ease-in-out;
 }
 
-#white > #instructions_title {
-    font-size: 32px;
-    cursor: pointer;
-
-    position: relative;
-    z-index: 2;
-}
-
-#white > #instructions_title:hover {
-    font-weight: bold;
-}
-
 #white > #instructions_text {
     width: 500px;
     text-align: center;
@@ -157,12 +145,12 @@ a {
     z-index: 2;
 }
 
-#instructions_title, #instructions_text {
+#instructions_text {
     transition: text-shadow 0.2s ease-in;
     text-shadow:1px 1px 10px rgb(22, 145, 245), 1px 1px 10px #ccc;
 }
 
-#instructions_title:hover, #instructions_text:hover {
+#instructions_text:hover {
     transition: text-shadow 0.2s ease-in;
     text-shadow:1px 1px 10px rgb(97, 255, 105), 1px 1px 10px #ccc;
 }

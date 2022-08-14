@@ -30,7 +30,7 @@ export function loadTitlePage() {
     const title_container = document.createElement("div");
     const logo = document.createElement("img");
 
-    const instructions = document.createElement("p");
+    // const instructions = document.createElement("p");
     const instructions_text = document.createElement("p");
 
     // Set ids and classes on created elements
@@ -40,34 +40,27 @@ export function loadTitlePage() {
     logo.setAttribute("src", "resources/logo.png");
     logo.setAttribute("alt", "Poke Viser logo");
 
-    instructions.setAttribute("id", "instructions_title");
+    // instructions.setAttribute("id", "instructions_title");
     instructions_text.setAttribute("id", "instructions_text");
-    instructions_text.setAttribute("class", "hide");
+    instructions_text.classList.add("hide");
 
     // Set title's class to load so it fades in
     window.setTimeout(() => {
         logo.setAttribute("class", "load");
+        instructions_text.classList.remove("hide");
     }, 1000);
 
     // Set text describing to users how to use the website
-    instructions.innerHTML = "INSTRUCTIONS";
     instructions_text.innerHTML = "Click on the Poke Viser logo to start searching for you favorite Pokemon. Use the search bar find Pokemon. Use the filters to show Pokemon of a specific type. Choose up to 6 Pokemon and click the VIEW button to learn about your selected Pokemon.";
 
     // Set ability to click on title & center circle --> leads to search page
     logo.addEventListener("click", goToSearchPage);
 
-    // Set ability to hover or click on INSTRUCTIONS --> reveal/hide instructions text
-    instructions.addEventListener("click", () => {
-        instructions_text.classList.contains("hide") ?
-        instructions_text.classList.remove("hide") :
-        instructions_text.setAttribute("class", "hide")
-    });
-
     // Set up the html structure
     const red = document.getElementById("red");
     red.append(logo);
     const white = document.getElementById("white");
-    white.append(instructions, instructions_text);
+    white.append(instructions_text);
 
     // Cache pokemon data
     if(POKEMON_NAMES.size === 0) {
