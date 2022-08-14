@@ -36,27 +36,27 @@ function items() {
     return {
         1: {
             "type": "portfolio",
-            "src": "resources/portfolio.png", 
+            "src": "https://www.iamsamsong.com",
             "url": "",
-            "text": "Sam's Portfolio", 
-        }, 
+            "text": "Sam's Portfolio",
+        },
         2: {
             "type": "github",
-            "src": "resources/github.png", 
+            "src": "resources/github.png",
             "url": "https://github.com/samsongs1991/PokeViser",
-            "text": "Github", 
-        }, 
+            "text": "Github",
+        },
         3: {
             "type": "linkedin",
-            "src": "resources/linkedin.png", 
+            "src": "resources/linkedin.png",
             "url": "https://www.linkedin.com/in/samsongs1991/",
-            "text": "LinkedIn", 
-        }, 
+            "text": "LinkedIn",
+        },
         4: {
             "type": "angellist",
-            "src": "resources/angellist.png", 
+            "src": "resources/angellist.png",
             "url": "https://angel.co/u/samsongs",
-            "text": "AngelList", 
-        }, 
+            "text": "AngelList",
+        },
     }
 }
