@@ -26,9 +26,9 @@ Data: PokeAPI
     - Tiles with typing and damage relations
     - Slider to magnify relative sizes
 
-<img src="./Pokeviser/IndividualStats.png" />
-<img src="./Pokeviser/DamageRelations.png" />
-<img src="./Pokeviser/SizeComparison.png" />
+<img src="./PokeViser/IndividualStats.png" />
+<img src="./PokeViser/DamageRelations.png" />
+<img src="./PokeViser/SizeComparison.png" />
 
 ## Bonus Features
 - Update the UI for improved responsive design
