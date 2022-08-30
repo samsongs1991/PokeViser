@@ -3,7 +3,11 @@
 <img src="./PokeViser/Home.png" />
 
 ## 🕹️ About
-While playing Pokemon GO 📱 I got sick of searching for pokemon weaknesses one by one. Thus came my inspiration for PokeViser. In PokeViser, a single-page web app, users can search through 898 Pokemon and select six at a time to learn about. Users can easily search using the search bar and apply filters to hone in on the Pokemon they are looking for. Once a selection is made users can view sprite images 👾, base stats 📈, info text ✏️, typings 🍃🔥💧, damage relations 🏹, and relative heights 📐 of their selected Pokemon. For a surprise Pokemon parade click on the "About" page 🎊.!
+While playing Pokemon GO 📱 I got sick of searching for pokemon weaknesses one by one. Thus came my inspiration for PokeViser.
+
+In PokeViser, a single-page web app, users can search through 898 Pokemon and select six at a time to learn about. Users can easily search using the search bar and apply filters to hone in on the Pokemon they are looking for.
+
+Once a selection is made users can view sprite images 👾, base stats 📈, info text ✏️, typings 🍃🔥💧, damage relations 🏹, and relative heights 📐 of their selected Pokemon. For a surprise Pokemon parade click on the "About" page 🎊.!
 
 ## ⚡ Languages & Technologies
 Languages: HTML, CSS, JavaScript
