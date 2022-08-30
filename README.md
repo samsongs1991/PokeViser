@@ -11,18 +11,20 @@ Once a selection is made users can view sprite images 👾, base stats 📈, inf
 
 ## ⚡ Languages & Technologies
 Languages: HTML, CSS, JavaScript
+
 Technologies: ChartJS, Webpack
+
 Data: PokeAPI
 
 ## ⚙️ Functionalities
 - Search bar
-- - Auto suggestion based on user input
+    - Auto suggestion based on user input
 - Search filters
-- - Auto filter application and animation
+    - Auto filter application and animation
 - Data Visualization
-- - Radar chart for base stats
-- - Tiles with typing and damage relations
-- - Slider to magnify relative sizes
+    - Radar chart for base stats
+    - Tiles with typing and damage relations
+    - Slider to magnify relative sizes
 
 ## Bonus Features
 - Update the UI for improved responsive design
