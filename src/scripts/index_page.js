@@ -66,19 +66,21 @@ function loadIndexPageStructure() {
         let article = document.createElement("article");
         article.setAttribute("id", id);
 
+        let type1 = POKEMON_NAMES[id].types[0];
+        let type2 = POKEMON_NAMES[id].types[1];
+        type2 = type2 ? type2 : type1;
+        article.setAttribute("style", `background: linear-gradient(45deg, ${TYPES[type1]}, ${TYPES[type2]}`);
+
         article.addEventListener("click", () => {
             let p = article.getElementsByTagName("p").namedItem("types");
             if(p.classList.contains("hidden")) {
-                let type1 = POKEMON_NAMES[article.id].types[0];
-                let type2 = POKEMON_NAMES[article.id].types[1];
-                type2 = type2 ? type2 : type1;
                 article.setAttribute("style", `background: linear-gradient(45deg, ${TYPES[type1]}, ${TYPES[type2]}`);
             } else {
                 article.setAttribute("style", "background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255))");
             }
             p.classList.toggle("hidden");
         });
-        
+
         if(count < 3) {
             row1.appendChild(article);
         } else {
@@ -97,7 +99,7 @@ function loadArticles() {
         let img = document.createElement("img");
         let types = document.createElement("p");
         let dmg_multiplier = document.createElement("div");
-        
+
         name.innerHTML = capitalize(POKEMON_NAMES[article.id].name);
         POKEMON_NAMES[article.id].types.forEach(type => {
             let img = document.createElement("img");
@@ -107,10 +109,9 @@ function loadArticles() {
         });
 
         types.setAttribute("id", "types");
-        types.setAttribute("class", "hidden");
         img.setAttribute("src", POKEMON_NAMES[article.id].sprite_url);
         img.setAttribute("alt", `Image of ${POKEMON_NAMES[article.id].name}`);
-        
+
         article.appendChild(name);
         article.appendChild(img);
         article.appendChild(types);
@@ -132,10 +133,10 @@ function loadDmgMultipliers() {
 function dmgSort(id) {
     const sorted_multipliers = {
         4: [],
-        2: [], 
+        2: [],
         1: [],
-        0.5: [], 
-        0.25: [], 
+        0.5: [],
+        0.25: [],
         0: []
     };
 
@@ -174,7 +175,7 @@ function findKey(obj, el) {
     return -1;
 }
 
-// Load dmg_container inside article with appropriate multiplier categories 
+// Load dmg_container inside article with appropriate multiplier categories
 function loadDmgContainer(dmg_container, sorted_multipliers) {
     const categories = [4, 2, 0.5, 0.25, 0];
     categories.forEach(category => {
