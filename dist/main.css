@@ -916,8 +916,6 @@ footer img:hover {
 }
 
 @media (max-width: 520px) {
-
-
     #size_page > #nav_box {
         position: static;
         border-radius: 0;
