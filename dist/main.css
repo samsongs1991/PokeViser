@@ -1034,7 +1034,7 @@ footer img:hover {
     margin: -10px 0px 5px 0px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: absolute;
-    border-radius: 10px;   
+    border-radius: 10px;
     top: 5px;
     left: -5px;
 }
@@ -1099,6 +1099,44 @@ footer img:hover {
     transform: scale(1.5);
     transition: all 0.1s ease;
 }
+
+@media (max-width: 520px) {
+    #index_page > #instructions, #index_page > button {
+        display: none;
+    }
+
+    #index_page > #index_container {
+        width: 100vw;
+    }
+
+    #index_page > #index_container > section {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    #index_page > #index_container > section > article {
+        width: 100vw;
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    #index_page > #index_container > section > article:hover {
+        transform: none;
+    }
+
+    #index_page > #nav_box {
+        position: static;
+        border-radius: 0;
+        width: 100vw;
+    }
+
+    #index_page > #nav_box > ul > li {
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+}
+
 /*!***********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/nav_box.css ***!
   \***********************************************************************************************************/
