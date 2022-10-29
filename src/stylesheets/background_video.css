@@ -6,3 +6,10 @@
     min-height: 100%;
     z-index: -1;
 }
+
+@media (max-width: 520px) {
+    #background_video {
+        height: 100vh;
+        left: -350px;
+    }
+}
