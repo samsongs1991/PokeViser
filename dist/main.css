@@ -880,7 +880,7 @@ footer img:hover {
 }
 
 #size_page input {
-    background: transparent; 
+    background: transparent;
     border-color: transparent;
     color: transparent;
     width: 75%;
@@ -914,6 +914,22 @@ footer img:hover {
     color: white;
     text-shadow: 0px 0px 10px white;
 }
+
+@media (max-width: 520px) {
+
+
+    #size_page > #nav_box {
+        position: static;
+        border-radius: 0;
+        width: 100vw;
+    }
+
+    #size_page > #nav_box > ul > li {
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+}
+
 /*!**************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/index_page.css ***!
   \**************************************************************************************************************/
@@ -1107,6 +1123,8 @@ footer img:hover {
 
     #index_page > #index_container {
         width: 100vw;
+        height: 525px;
+        overflow: auto;
     }
 
     #index_page > #index_container > section {
@@ -1123,6 +1141,11 @@ footer img:hover {
 
     #index_page > #index_container > section > article:hover {
         transform: none;
+    }
+
+    #index_page > #index_container > section > article > #types{
+        top: 15px;
+        left: 5px;
     }
 
     #index_page > #nav_box {

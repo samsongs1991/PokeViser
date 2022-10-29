@@ -188,6 +188,8 @@
 
     #index_page > #index_container {
         width: 100vw;
+        height: 525px;
+        overflow: auto;
     }
 
     #index_page > #index_container > section {
@@ -204,6 +206,11 @@
 
     #index_page > #index_container > section > article:hover {
         transform: none;
+    }
+
+    #index_page > #index_container > section > article > #types{
+        top: 15px;
+        left: 5px;
     }
 
     #index_page > #nav_box {
