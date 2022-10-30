@@ -106,3 +106,46 @@
 #about_page marquee .hidden {
     opacity: 0;
 }
+
+@media (max-width: 520px) {
+    #about_page {
+        overflow: hidden;
+    }
+
+    #about_page > section {
+        width: 100vw;
+        height: 60vh;
+        border: none;
+        border-radius: 0;
+    }
+
+    #about_page > section > h1 {
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    #about_page > section > article > p {
+        margin: 0;
+        padding: 0;
+        width: 80vw;
+    }
+
+    #about_page > #photo {
+        width: auto;
+        height: 60vh;
+        border: none;
+        border-radius: 0;
+    }
+
+    #about_page > #parade {
+        position: relative;
+    }
+
+    #about_page > #parade > marquee:first-child {
+        position: static;
+    }
+
+    #about_page > #parade > marquee {
+        top: 0;
+    }
+}

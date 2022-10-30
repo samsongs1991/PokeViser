@@ -18,6 +18,7 @@ export function loadAboutPage() {
     const h1 = document.createElement("h1");
     const article = document.createElement("article");
     const img = document.createElement("img");
+    const parade = document.createElement("div");
     const p1 = document.createElement("p");
     const p2 = document.createElement("p");
     const p3 = document.createElement("p");
@@ -26,9 +27,10 @@ export function loadAboutPage() {
     const github = document.createElement("a");
     const linkedin = document.createElement("a");
     const angellist = document.createElement("a");
-    
+
     img.setAttribute("src", "resources/jihoon+me.jpg");
     img.setAttribute("id", "photo");
+    parade.setAttribute("id", "parade");
     pokeapi.setAttribute("href", "https://www.pokeapi.co");
     pokeapi.setAttribute("target", "_blank");
     github.setAttribute("href", "https://www.github.com/samsongs1991/pokeviser");
@@ -43,7 +45,7 @@ export function loadAboutPage() {
     github.innerHTML = "Github";
     linkedin.innerHTML = "LinkedIn";
     angellist.innerHTML = "AngelList";
-    
+
     h1.innerHTML = "About Poke Viser";
     p1.innerHTML = "I dedicate Poke Viser to my ";
     p1.appendChild(nephew);
@@ -58,9 +60,25 @@ export function loadAboutPage() {
     p2.innerHTML = p2.innerHTML + " or ";
     p2.appendChild(angellist);
     p2.innerHTML = p2.innerHTML + ".";
-    
+
     p3.innerHTML = "Thank you!";
-    
+
+    h1.addEventListener("click", () => {
+        const sprites = document.getElementsByClassName("sprite");
+        sprites.forEach(sprite => sprite.classList.toggle("hidden"));
+    });
+    p1.addEventListener("click", () => img.setAttribute("style", "opacity: 1; z-index: 2;"));
+    img.addEventListener("click", () => img.setAttribute("style", "opacity: 0; z-index: -1; transition: all 2s ease;"));
+
+    main.appendChild(section);
+    main.appendChild(img);
+    main.appendChild(parade);
+    section.appendChild(h1);
+    section.appendChild(article);
+    article.appendChild(p1);
+    article.appendChild(p2);
+    article.appendChild(p3);
+
     const limitedParade = limitFn(createParade);
     for(let i = 0; i < 5; i++) {
         limitedParade();
@@ -70,21 +88,6 @@ export function loadAboutPage() {
         const sprites = document.getElementsByClassName("sprite");
         sprites.forEach(sprite => sprite.classList.toggle("hidden"));
     }, 3000);
-    
-    h1.addEventListener("click", () => {
-        const sprites = document.getElementsByClassName("sprite");
-        sprites.forEach(sprite => sprite.classList.toggle("hidden"));
-    });
-    p1.addEventListener("click", () => img.setAttribute("style", "opacity: 1; z-index: 2;"));
-    img.addEventListener("click", () => img.setAttribute("style", "opacity: 0; z-index: -1; transition: all 2s ease;"));
-    
-    main.appendChild(section);
-    main.appendChild(img);
-    section.appendChild(h1);
-    section.appendChild(article);
-    article.appendChild(p1);
-    article.appendChild(p2);
-    article.appendChild(p3);
 }
 
 // ====================================================
@@ -102,8 +105,8 @@ function createParade() {
         img.setAttribute("class", "sprite hidden");
         marquee.appendChild(img);
     }
-    const main = document.querySelector("main");
-    main.appendChild(marquee);
+    const parade = document.querySelector("#parade");
+    parade.appendChild(marquee);
 }
 
 function limitFn(cb) {
