@@ -89,6 +89,10 @@
     cursor: pointer;
 }
 
+#about_page #parade {
+    width: 100vw;
+}
+
 #about_page marquee {
     height: 200px;
     display: flex;
@@ -141,6 +145,7 @@
 
     #about_page > #parade {
         position: relative;
+        width: 100vw;
     }
 
     #about_page > #parade > marquee:first-child {
