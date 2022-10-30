@@ -329,3 +329,39 @@
     }
 
 }
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #searchpage {
+        height: 90vh;
+    }
+
+    #searchpage > section {
+        height: 90%;
+    }
+
+    #searchpage > section > h3 {
+        margin: 1vh 0 1vh 0;
+    }
+
+    #searchpage > #search_container {
+        justify-content: space-between;
+    }
+
+    #searchpage > #search_container > #search_form > #search_input {
+        font-size: 14px;
+        height: 10vh;
+        text-align: center;
+    }
+
+    #searchpage > #search_container > #error_container {
+        height: 20%;
+    }
+
+    #searchpage > #selection_container {
+        justify-content: space-between;
+    }
+
+    #searchpage > #selection_container > button {
+        margin-bottom: 20px;
+    }
+}
