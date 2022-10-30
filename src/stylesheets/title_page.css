@@ -128,7 +128,12 @@
         justify-content: flex-start;
     }
 
-    #red #logo {
+    #red > #logo {
+        width: 100vw;
+        height: auto;
+    }
+
+    #red > #logo.load:hover {
         width: 100vw;
         height: auto;
     }

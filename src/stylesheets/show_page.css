@@ -147,6 +147,9 @@
 
     #show_page > #stats_container > #main_content_container {
         position: relative;
+        margin: 10px 0;
+        border-radius: 15px;
+        overflow: hidden;
     }
 
     #show_page > #stats_container > #main_content_container > #stats {
@@ -154,6 +157,7 @@
         background: none;
         box-shadow: none;
         width: 100vw;
+        margin: 0;
     }
 
     #show_page > #stats_container > #main_content_container > #img_container {
@@ -162,6 +166,10 @@
         box-shadow: none;
         width: 100vw;
         border-radius: 0;
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
+        opacity: 0.9;
     }
 
     #show_page > #stats_container > #main_content_container > #img_container > div {
