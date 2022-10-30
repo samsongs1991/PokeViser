@@ -114,9 +114,11 @@
 
     #about_page > section {
         width: 100vw;
-        height: 60vh;
+        height: 65vh;
         border: none;
         border-radius: 0;
+        overflow: auto;
+
     }
 
     #about_page > section > h1 {
@@ -132,7 +134,7 @@
 
     #about_page > #photo {
         width: auto;
-        height: 60vh;
+        height: 65vh;
         border: none;
         border-radius: 0;
     }
@@ -147,5 +149,10 @@
 
     #about_page > #parade > marquee {
         top: 0;
+        height: 25vh;
+    }
+
+    #about_page > #parade > marquee > img {
+        height: 25vh;
     }
 }

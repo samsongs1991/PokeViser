@@ -1127,7 +1127,7 @@ footer img:hover {
 
     #index_page > #index_container {
         width: 100vw;
-        height: 525px;
+        height: calc(100vh - 10vh - 126px);
         overflow: auto;
     }
 
@@ -1335,9 +1335,11 @@ footer img:hover {
 
     #about_page > section {
         width: 100vw;
-        height: 60vh;
+        height: 65vh;
         border: none;
         border-radius: 0;
+        overflow: auto;
+
     }
 
     #about_page > section > h1 {
@@ -1353,7 +1355,7 @@ footer img:hover {
 
     #about_page > #photo {
         width: auto;
-        height: 60vh;
+        height: 65vh;
         border: none;
         border-radius: 0;
     }
@@ -1368,6 +1370,11 @@ footer img:hover {
 
     #about_page > #parade > marquee {
         top: 0;
+        height: 25vh;
+    }
+
+    #about_page > #parade > marquee > img {
+        height: 25vh;
     }
 }
 

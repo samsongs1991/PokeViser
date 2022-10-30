@@ -188,7 +188,7 @@
 
     #index_page > #index_container {
         width: 100vw;
-        height: 525px;
+        height: calc(100vh - 10vh - 126px);
         overflow: auto;
     }
 
