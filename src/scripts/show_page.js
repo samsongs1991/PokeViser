@@ -38,7 +38,7 @@ import {
     Title,
     Tooltip
   } from 'chart.js';
-  
+
   Chart.register(
     ArcElement,
     LineElement,
@@ -93,35 +93,35 @@ function loadShowPageStructure() {
     const main = document.querySelector("main");
     main.setAttribute("id", "show_page");
     main.innerHTML = "";
-    
+
     const prev_button_container = document.createElement("div");
     const prev_button = document.createElement("button");
     const stats_container = document.createElement("div");
     const next_button_container = document.createElement("div");
     const next_button = document.createElement("button");
-    
+
     const sprites = document.createElement("section");
     const main_content_container = document.createElement("div");
     const img_container = document.createElement("section");
     const stats = document.createElement("section");
     const description = document.createElement("section");
-    
+
     stats_container.setAttribute("id", "stats_container");
     prev_button_container.setAttribute("class", "button_container");
     next_button_container.setAttribute("class", "button_container");
     prev_button.setAttribute("id", "prev");
     next_button.setAttribute("id", "next");
     sprites.setAttribute("id", "sprites");
-    main_content_container.setAttribute("id", "main_content_container");       
+    main_content_container.setAttribute("id", "main_content_container");
     img_container.setAttribute("id", "img_container");
     stats.setAttribute("id", "stats");
     description.setAttribute("id", "description");
     prev_button.innerHTML = "<";
     next_button.innerHTML = ">";
-    
+
     main.appendChild(prev_button_container);
     main.appendChild(stats_container);
-    main.appendChild(next_button_container);        
+    main.appendChild(next_button_container);
     prev_button_container.appendChild(prev_button);
     next_button_container.appendChild(next_button);
     stats_container.appendChild(sprites);
@@ -195,7 +195,7 @@ function loadSprites() {
     }
 }
 
-// Handle sprite img click => 
+// Handle sprite img click =>
 function handleSpriteClick(e) {
     const sprites = document.getElementById('sprites').children;
     for(let i = 0; i < sprites.length; i++) {
@@ -238,7 +238,7 @@ function loadImage(pokemon) {
     image.setAttribute("src", pokemon.sprite_url);
     image.setAttribute("alt", `Image of ${pokemon.name}`);
 
-    img_container.appendChild(name);    
+    img_container.appendChild(name);
     img_container.appendChild(image);
 }
 
@@ -267,29 +267,29 @@ function loadStats(current_pokemon) {
                         current_pokemon.stats.sp_atk,
                         current_pokemon.stats.atk,
                     ],
-                    fill: true, 
+                    fill: true,
                     backgroundColor: TYPES[types[0]],
                     borderColor: TYPES[types[1]] || TYPES[types[0]],
 
                     pointBackgroundColor: TYPES[types[1]] || TYPES[types[0]],
                     pointBorderColor: 'white',
-                    pointBorderWidth: 2, 
-                    pointHitRadius: 10, 
+                    pointBorderWidth: 2,
+                    pointHitRadius: 10,
                     pointRadius: 3,
                     pointHoverBackgroundColor: 'white',
-                    pointHoverBorderColor: TYPES[types[1]] || TYPES[types[0]], 
+                    pointHoverBorderColor: TYPES[types[1]] || TYPES[types[0]],
                     pointHoverBorderWidth: 4,
                     pointHoverRadius: 8,
                 }
             ]
-        }, 
+        },
         options: {
             scale: {
                 r: {
-                    beginAtZero: true, 
-                    max: 160, 
+                    beginAtZero: true,
+                    max: 160,
                     min: 0
-                }, 
+                },
             }
         }
     });

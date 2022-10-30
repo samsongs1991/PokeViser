@@ -13,3 +13,10 @@
         left: -350px;
     }
 }
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #background_video {
+        left: -400px;
+        top: -100px;
+    }
+}
