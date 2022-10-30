@@ -20,6 +20,13 @@ a {
     color: white;
     text-decoration: none;
 }
+
+@media (max-width: 520px) {
+    body {
+        justify-content: flex-end;
+    }
+}
+
 /*!**************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/title_page.css ***!
   \**************************************************************************************************************/
@@ -217,7 +224,9 @@ nav ul li:hover {
     header {
         flex-direction: column;
         align-items: center;
-
+        position: absolute;
+        top: 0;
+        height: 10vh;
     }
 
     header > div > #logo{
@@ -237,6 +246,7 @@ nav ul li:hover {
 
     header > nav > ul > li {
         margin: 0;
+        font-size: 20px;
     }
 }
 
@@ -766,26 +776,33 @@ footer img:hover {
 @media (max-width: 520px) {
     #show_page {
         flex-direction: column;
+        height: 90vh;
+        justify-content: flex-end;
     }
 
     #show_page > .button_container {
         display: none;
     }
 
+    #show_page > #stats_container {
+        height: calc(100vh - 10vh - 126px);
+    }
+
     #show_page > #stats_container > #sprites {
         width: 100vw;
-        height: auto;
+        height: 8vh;
         border-radius: 0;
         justify-content: space-around;
+        align-items: center
     }
 
     #show_page > #stats_container > #sprites > img {
-        height: 50px;
+        width: calc(100vw/6);
     }
 
     #show_page > #stats_container > #main_content_container {
         position: relative;
-        margin: 10px 0;
+        margin: auto 0;
         border-radius: 15px;
         overflow: hidden;
     }
@@ -820,17 +837,6 @@ footer img:hover {
 
     #show_page > #stats_container > #description {
         display: none;
-    }
-
-    #show_page > #nav_box {
-        position: static;
-        border-radius: 0;
-        width: 100vw;
-    }
-
-    #show_page > #nav_box > ul > li {
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -926,19 +932,6 @@ footer img:hover {
     padding: 0px;
     color: white;
     text-shadow: 0px 0px 10px white;
-}
-
-@media (max-width: 520px) {
-    #size_page > #nav_box {
-        position: static;
-        border-radius: 0;
-        width: 100vw;
-    }
-
-    #size_page > #nav_box > ul > li {
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-    }
 }
 
 /*!**************************************************************************************************************!*\
@@ -1158,17 +1151,6 @@ footer img:hover {
         top: 15px;
         left: 5px;
     }
-
-    #index_page > #nav_box {
-        position: static;
-        border-radius: 0;
-        width: 100vw;
-    }
-
-    #index_page > #nav_box > ul > li {
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-    }
 }
 
 /*!***********************************************************************************************************!*\
@@ -1180,7 +1162,7 @@ footer img:hover {
     right: 55px;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));    
+    background: linear-gradient(45deg, rgb(25, 141, 236), rgb(224, 224, 255));
     box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
@@ -1196,7 +1178,7 @@ footer img:hover {
 }
 
 #nav_box li:hover {
-    background: linear-gradient(45deg, rgb(25, 236, 106), rgb(224, 224, 255));    
+    background: linear-gradient(45deg, rgb(25, 236, 106), rgb(224, 224, 255));
     cursor: pointer;
 }
 
@@ -1220,6 +1202,20 @@ footer img:hover {
 #nav_box li:last-child img {
     padding: 0px 2px;
 }
+
+@media (max-width: 520px) {
+    #nav_box {
+        position: static;
+        border-radius: 0;
+        width: 100vw;
+    }
+
+    #nav_box > ul > li {
+        text-align: center;
+        border-top: 1px solid rgba(0, 0, 0, 0.5);
+    }
+}
+
 /*!**************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/about_page.css ***!
   \**************************************************************************************************************/

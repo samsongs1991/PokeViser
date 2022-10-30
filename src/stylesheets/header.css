@@ -39,7 +39,9 @@ nav ul li:hover {
     header {
         flex-direction: column;
         align-items: center;
-
+        position: absolute;
+        top: 0;
+        height: 10vh;
     }
 
     header > div > #logo{
@@ -59,5 +61,6 @@ nav ul li:hover {
 
     header > nav > ul > li {
         margin: 0;
+        font-size: 20px;
     }
 }

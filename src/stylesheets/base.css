@@ -17,3 +17,9 @@ a {
     color: white;
     text-decoration: none;
 }
+
+@media (max-width: 520px) {
+    body {
+        justify-content: flex-end;
+    }
+}

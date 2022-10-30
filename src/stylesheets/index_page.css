@@ -212,15 +212,4 @@
         top: 15px;
         left: 5px;
     }
-
-    #index_page > #nav_box {
-        position: static;
-        border-radius: 0;
-        width: 100vw;
-    }
-
-    #index_page > #nav_box > ul > li {
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-    }
 }

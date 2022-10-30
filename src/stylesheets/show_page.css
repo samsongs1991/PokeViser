@@ -128,26 +128,33 @@
 @media (max-width: 520px) {
     #show_page {
         flex-direction: column;
+        height: 90vh;
+        justify-content: flex-end;
     }
 
     #show_page > .button_container {
         display: none;
     }
 
+    #show_page > #stats_container {
+        height: calc(100vh - 10vh - 126px);
+    }
+
     #show_page > #stats_container > #sprites {
         width: 100vw;
-        height: auto;
+        height: 8vh;
         border-radius: 0;
         justify-content: space-around;
+        align-items: center
     }
 
     #show_page > #stats_container > #sprites > img {
-        height: 50px;
+        width: calc(100vw/6);
     }
 
     #show_page > #stats_container > #main_content_container {
         position: relative;
-        margin: 10px 0;
+        margin: auto 0;
         border-radius: 15px;
         overflow: hidden;
     }
@@ -182,16 +189,5 @@
 
     #show_page > #stats_container > #description {
         display: none;
-    }
-
-    #show_page > #nav_box {
-        position: static;
-        border-radius: 0;
-        width: 100vw;
-    }
-
-    #show_page > #nav_box > ul > li {
-        text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     }
 }
