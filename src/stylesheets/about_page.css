@@ -161,3 +161,56 @@
         height: 25vh;
     }
 }
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #about_page {
+        overflow: hidden;
+    }
+
+    #about_page > section {
+        width: 100vw;
+        height: 65vh;
+        border: none;
+        border-radius: 0;
+        overflow: auto;
+    }
+
+    #about_page > section > h1 {
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    #about_page > section > article > p {
+        margin: 0;
+        padding: 0;
+        width: 80vw;
+    }
+
+    #about_page > #photo {
+        width: 100vw;
+        height: auto;
+        border: none;
+        border-radius: 0;
+        position: absolute;
+        bottom: -10vh;
+    }
+
+    #about_page > #parade {
+        position: relative;
+        width: 100vw;
+    }
+
+    #about_page > #parade > marquee:first-child {
+        position: static;
+    }
+
+    #about_page > #parade > marquee {
+        top: 0;
+        height: 25vh;
+    }
+
+    #about_page > #parade > marquee > img {
+        height: 25vh;
+    }
+
+}

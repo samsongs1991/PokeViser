@@ -213,3 +213,51 @@
         left: 5px;
     }
 }
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #index_page {
+        height: 90vh;
+    }
+
+    #index_page > #instructions {
+        display: none;
+    }
+
+    #index_page > button {
+        display: none;
+    }
+
+    #index_page > #index_container {
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        overflow: auto;
+    }
+
+    #index_page > #index_container > section {
+        height: 80vh;
+        margin: 0;
+    }
+
+    #index_page > #index_container > section > article {
+        width: 50vw;
+        border-radius: 0;
+        box-shadow: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    #index_page > #index_container > section > article:hover {
+        transform: none;
+    }
+
+    #index_page > #index_container > section > article > img {
+        height: 50vh;
+        width: 50vh;
+    }
+
+    #index_page > #index_container > section > article > #types {
+        top: 5px;
+        left: 5px;
+        margin: 0;
+    }
+}

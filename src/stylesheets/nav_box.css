@@ -61,12 +61,14 @@
 
 @media (max-width: 915px) and (max-height: 415px) {
     #nav_box {
-        position: static;
+        position: sticky;
+        bottom: 0;
         border-radius: 0;
         width: 100vw;
         height: 10vh;
         justify-content: center;
         box-shadow: 0px 0px 10px 1px rgb(0 0 0 / 50%);
+        z-index: 1;
     }
 
     #nav_box > ul {

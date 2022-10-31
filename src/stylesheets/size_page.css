@@ -41,3 +41,9 @@
     color: white;
     text-shadow: 0px 0px 10px white;
 }
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #size_page > div:first-child {
+        top: 10vh;
+    }
+}

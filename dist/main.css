@@ -1063,6 +1063,12 @@ footer img:hover {
     text-shadow: 0px 0px 10px white;
 }
 
+@media (max-width: 915px) and (max-height: 415px) {
+    #size_page > div:first-child {
+        top: 10vh;
+    }
+}
+
 /*!**************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/index_page.css ***!
   \**************************************************************************************************************/
@@ -1282,6 +1288,54 @@ footer img:hover {
     }
 }
 
+@media (max-width: 915px) and (max-height: 415px) {
+    #index_page {
+        height: 90vh;
+    }
+
+    #index_page > #instructions {
+        display: none;
+    }
+
+    #index_page > button {
+        display: none;
+    }
+
+    #index_page > #index_container {
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        overflow: auto;
+    }
+
+    #index_page > #index_container > section {
+        height: 80vh;
+        margin: 0;
+    }
+
+    #index_page > #index_container > section > article {
+        width: 50vw;
+        border-radius: 0;
+        box-shadow: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    #index_page > #index_container > section > article:hover {
+        transform: none;
+    }
+
+    #index_page > #index_container > section > article > img {
+        height: 50vh;
+        width: 50vh;
+    }
+
+    #index_page > #index_container > section > article > #types {
+        top: 5px;
+        left: 5px;
+        margin: 0;
+    }
+}
+
 /*!***********************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheets/nav_box.css ***!
   \***********************************************************************************************************/
@@ -1348,12 +1402,14 @@ footer img:hover {
 
 @media (max-width: 915px) and (max-height: 415px) {
     #nav_box {
-        position: static;
+        position: sticky;
+        bottom: 0;
         border-radius: 0;
         width: 100vw;
         height: 10vh;
         justify-content: center;
         box-shadow: 0px 0px 10px 1px rgb(0 0 0 / 50%);
+        z-index: 1;
     }
 
     #nav_box > ul {
@@ -1531,6 +1587,59 @@ footer img:hover {
     #about_page > #parade > marquee > img {
         height: 25vh;
     }
+}
+
+@media (max-width: 915px) and (max-height: 415px) {
+    #about_page {
+        overflow: hidden;
+    }
+
+    #about_page > section {
+        width: 100vw;
+        height: 65vh;
+        border: none;
+        border-radius: 0;
+        overflow: auto;
+    }
+
+    #about_page > section > h1 {
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    #about_page > section > article > p {
+        margin: 0;
+        padding: 0;
+        width: 80vw;
+    }
+
+    #about_page > #photo {
+        width: 100vw;
+        height: auto;
+        border: none;
+        border-radius: 0;
+        position: absolute;
+        bottom: -10vh;
+    }
+
+    #about_page > #parade {
+        position: relative;
+        width: 100vw;
+    }
+
+    #about_page > #parade > marquee:first-child {
+        position: static;
+    }
+
+    #about_page > #parade > marquee {
+        top: 0;
+        height: 25vh;
+    }
+
+    #about_page > #parade > marquee > img {
+        height: 25vh;
+    }
+
 }
 
 /*!*************************************************************************************************************************************!*\
